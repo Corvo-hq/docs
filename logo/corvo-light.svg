@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112" height="32" viewBox="0 0 112 32" fill="none">
+  <g transform="translate(4 4)">
+    <path d="M3.2 11.6C5 7.7 8.5 5.6 12.5 5.6c2.1 0 4 .6 5.5 1.7L22 5.5 19.6 9c.9 1.1 1.4 2.5 1.4 4 0 3.7-3.2 6.5-7.4 6.5H8.2l1.4-1.9c-2.5-.9-4.8-2.9-6.4-6Z" fill="#09090b"/>
+    <circle cx="16.6" cy="10.6" r=".85" fill="#fff"/>
+    <path d="m11 19.5-.6 2.5m2.8-2.5-.2 2.5" stroke="#09090b" stroke-width="1.1" stroke-linecap="round"/>
+  </g>
+  <text x="38" y="21" fill="#09090b" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="600" letter-spacing="-.3">Corvo</text>
+</svg>
