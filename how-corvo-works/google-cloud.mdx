@@ -1,0 +1,41 @@
+---
+title: "Google Cloud Architecture"
+description: "Follow GCP authorization, alert streaming, and agent access."
+---
+
+## Two paths into an investigation
+
+Corvo uses an alert stream to receive matching errors and service account impersonation to read supporting data during an investigation.
+
+## Authorize the connection
+
+During setup, a Google user authorizes Corvo to configure the project. Setup creates or reuses the `corvo-agent` service account, grants the selected read roles, and allows Corvo's runtime identity to impersonate that service account.
+
+The runtime uses the IAM Credentials API to request a short-lived access token for the customer service account. The current implementation requests a one-hour token and refreshes it before expiry.
+
+## How the agent reads GCP
+
+Corvo makes the short-lived token available to the agent's GCP command environment. The configured project determines the default project for its requests.
+
+Google Cloud IAM determines what that identity can access. The standard setup grants read access; the optional services selected during onboarding determine additional read capabilities.
+
+The agent can use the resulting access to gather evidence for an investigation. It does not need a downloaded service account key for this impersonation flow.
+
+## How errors reach Corvo
+
+1. A Cloud Run service writes an error to Cloud Logging.
+2. The configured log sink selects entries matching the service and severity filter.
+3. The sink's writer identity publishes those entries to Corvo's central Pub/Sub topic.
+4. Corvo receives the entries and checks whether an investigation is needed.
+5. Events that need processing are dispatched for an agent run.
+6. The investigation uses available GCP data and repository context, then produces findings and any resulting PR.
+
+Repeated events pass through [Deduplication](/how-corvo-works/deduplication) before a new investigation starts.
+
+## Keep access and streaming separate
+
+The customer service account provides read access for investigation. The log sink writer provides publishing access for the alert stream.
+
+Stopping streaming removes the writer's access to Corvo's central topic. It leaves the log sink in the customer project and does not by itself remove the service account's read roles.
+
+See [Google Cloud setup](/integrations/google-cloud) for the configuration steps.
