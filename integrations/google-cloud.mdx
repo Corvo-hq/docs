@@ -1,0 +1,64 @@
+---
+title: "Google Cloud"
+description: "Connect your project and stream Cloud Run errors to Corvo."
+---
+
+## Connect your project
+
+Open **Integrations**, then **Manage** on the GCP card.
+
+1. Enter your **GCP project ID**.
+2. Review the requested read access and optional services.
+3. Select **Connect with Google**.
+4. Complete the Google authorization.
+5. Review the setup results when you return to Corvo.
+
+Setup enables required APIs, creates or reuses the Corvo service account, grants read roles, and configures service account impersonation.
+
+Check for **CONNECTED**, the project ID, and the impersonation service account.
+
+<Frame caption="Google Cloud connection, alert streaming, and service bindings">
+  ![Connected Google Cloud integration with alert streaming and repository binding controls](/assets/screenshots/gcp.png)
+</Frame>
+
+## Map services to repositories
+
+Use **Bind services to their GitHub repos** on this page to associate each Cloud Run service with its source repository. See [GitHub](/integrations/github#bind-a-cloud-run-service-to-a-repository) for the steps.
+
+## Start alert streaming
+
+Read access and streaming are separate setup stages.
+
+1. Find **Alert streaming**.
+2. Choose a Cloud Run service, or all services.
+3. Choose the severity filter.
+4. Select **Start streaming with Google**.
+5. Complete the authorization to create the log sink.
+
+Check for **STREAMING** and review the active filter. Only log entries matching that filter enter this stream.
+
+## Change the watched service
+
+Select **Change service**, update the filter, and select **Update streaming with Google**. Check the active filter after the update.
+
+## Stop streaming
+
+Select **Stop streaming** and confirm the action. Corvo revokes the log sink writer's publisher access to its central topic. The log sink remains in your project.
+
+## Reconfigure read access
+
+Select **Reconfigure read access with Google** to review and update the read access configuration.
+
+## Troubleshooting
+
+### Google authorization was denied
+
+Restart the connection and review the requested authorization with a project administrator.
+
+### A setup step failed
+
+Review the setup timeline. Correct the reported permission or API issue, then run setup again. Some IAM changes can take time to become available.
+
+### No errors arrive
+
+Check that streaming is active and that the filter matches the service and severity you expect. Confirm that the service is producing matching log entries.

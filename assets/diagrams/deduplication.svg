@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 760" role="img" aria-labelledby="title desc">
+  <title id="title">Incident deduplication decision flow</title>
+  <desc id="desc">How Corvo drops a recent duplicate, points to an open pull request, or investigates again.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0l10 5-10 5z" fill="#a1a1aa"/></marker>
+    <style>
+      .bg{fill:#09090b}.box{fill:#111113;stroke:#3f3f46;stroke-width:1.5}.decision{fill:#18181b;stroke:#71717a;stroke-width:2}.ok{fill:#0c1f17;stroke:#1f7a4d;stroke-width:2}.warn{fill:#1f1605;stroke:#e0a52e;stroke-width:2}.label{fill:#fff;font:600 17px Arial,sans-serif}.body{fill:#b4b4bb;font:14px Arial,sans-serif}.small{fill:#a1a1aa;font:12px Arial,sans-serif}.line{fill:none;stroke:#a1a1aa;stroke-width:2;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="bg" width="1100" height="760" rx="24"/>
+  <rect class="box" x="420" y="35" width="260" height="72" rx="14"/>
+  <text class="label" x="550" y="67" text-anchor="middle">Alert arrives</text>
+  <text class="small" x="550" y="90" text-anchor="middle">Match the error fingerprint</text>
+
+  <rect class="decision" x="350" y="155" width="400" height="86" rx="14"/>
+  <text class="label" x="550" y="189" text-anchor="middle">Was it handled within the duplicate window?</text>
+  <text class="small" x="550" y="216" text-anchor="middle">Check the last meaningful event</text>
+  <path class="line" d="M550 107v48"/>
+
+  <rect class="warn" x="50" y="280" width="280" height="105" rx="14"/>
+  <text class="label" x="190" y="316" text-anchor="middle">Record silently</text>
+  <text class="body" x="190" y="344" text-anchor="middle">No agent run</text>
+  <text class="body" x="190" y="366" text-anchor="middle">No notification</text>
+  <path class="line" d="M350 198H190v82"/>
+  <text class="small" x="245" y="187">Yes</text>
+
+  <rect class="decision" x="420" y="290" width="330" height="86" rx="14"/>
+  <text class="label" x="585" y="324" text-anchor="middle">Is there a previous fix PR?</text>
+  <text class="small" x="585" y="351" text-anchor="middle">Use the most recent PR for this error</text>
+  <path class="line" d="M550 241v49"/>
+  <text class="small" x="565" y="272">No recent duplicate</text>
+
+  <rect class="ok" x="50" y="470" width="280" height="105" rx="14"/>
+  <text class="label" x="190" y="506" text-anchor="middle">Investigate</text>
+  <text class="body" x="190" y="534" text-anchor="middle">Start a new agent run</text>
+  <text class="small" x="190" y="558" text-anchor="middle">No previous PR</text>
+  <path class="line" d="M420 333h-55v189h-35"/>
+  <text class="small" x="374" y="322">No</text>
+
+  <rect class="decision" x="420" y="440" width="330" height="86" rx="14"/>
+  <text class="label" x="585" y="474" text-anchor="middle">What is the PR status?</text>
+  <text class="small" x="585" y="501" text-anchor="middle">Open, closed, or merged</text>
+  <path class="line" d="M585 376v64"/>
+  <text class="small" x="600" y="410">Yes</text>
+
+  <rect class="warn" x="790" y="430" width="270" height="116" rx="14"/>
+  <text class="label" x="925" y="466" text-anchor="middle">Keep the existing PR</text>
+  <text class="body" x="925" y="494" text-anchor="middle">Skip a new investigation</text>
+  <text class="small" x="925" y="518" text-anchor="middle">Limit reminder frequency</text>
+  <path class="line" d="M750 483h40"/>
+  <text class="small" x="765" y="470">Open or unknown</text>
+
+  <rect class="ok" x="275" y="625" width="280" height="105" rx="14"/>
+  <text class="label" x="415" y="661" text-anchor="middle">Investigate with context</text>
+  <text class="body" x="415" y="689" text-anchor="middle">Previous PR was closed</text>
+  <text class="small" x="415" y="713" text-anchor="middle">Check why the fix was not accepted</text>
+  <path class="line" d="M520 526v65q0 34-34 34h-71"/>
+  <text class="small" x="474" y="584">Closed</text>
+
+  <rect class="ok" x="600" y="625" width="300" height="105" rx="14"/>
+  <text class="label" x="750" y="661" text-anchor="middle">Investigate as a regression</text>
+  <text class="body" x="750" y="689" text-anchor="middle">Previous PR was merged</text>
+  <text class="small" x="750" y="713" text-anchor="middle">Use the merged fix as evidence</text>
+  <path class="line" d="M650 526v65q0 34 34 34h66"/>
+  <text class="small" x="674" y="584">Merged</text>
+</svg>

@@ -1,0 +1,40 @@
+---
+title: "Deduplication"
+description: "How Corvo handles repeated alerts and existing fix pull requests."
+---
+
+## What happens when an error repeats
+
+Corvo checks earlier events for the same error before starting an investigation. The decision uses the error fingerprint, recent processing activity, and the latest recorded fix PR.
+
+<Frame caption="Decision path for repeated alerts">
+  ![Deduplication flow from a matching alert to silent recording, an existing pull request reminder, or a new investigation](/assets/diagrams/deduplication.svg)
+</Frame>
+
+## Ignore a recent duplicate
+
+If Corvo has recently processed the error or handled it through the deduplication decision, another occurrence within the duplicate window is recorded silently. It does not start an agent run or send a notification.
+
+Silent duplicates do not extend this window indefinitely. The window is measured from the last meaningful event.
+
+**Example:** A service emits the same exception repeatedly over a short period. Corvo handles the first occurrence and records the nearby repeats without starting an investigation for each one.
+
+## Keep the existing fix in view
+
+Outside the duplicate window, Corvo checks the most recent PR recorded for the error. If that PR is open, Corvo skips a new investigation. A separate notification window limits reminders that point to the existing PR.
+
+A PR whose status has not yet been recorded is treated as open until its status is updated.
+
+**Example:** A fix is waiting for review while the service continues to emit the same error. Corvo can remind you about the existing PR without creating another fix for each occurrence.
+
+## Investigate again
+
+Outside the duplicate window, Corvo starts an investigation when there is no earlier fix PR, when the previous PR was closed without merging, or when a merged fix is followed by the same error.
+
+For a closed or merged PR, Corvo passes the previous fix as context to the agent.
+
+**Example:** You merge a fix and the same error returns later. Corvo investigates with the merged PR as context for a possible regression.
+
+## Webhook closure events
+
+A webhook event that reports an incident as closed bypasses the recent-duplicate check and enters processing. Corvo still includes context from a previously closed or merged fix PR. Log streaming entries do not carry this incident closure state.

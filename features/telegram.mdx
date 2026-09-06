@@ -1,0 +1,28 @@
+---
+title: "Telegram Conversations"
+description: "Talk with Corvo and receive incident updates in Telegram."
+---
+
+## Talk with Corvo
+
+Connect a direct message or group through the [Telegram integration](/integrations/telegram). Use the connected conversation to ask about an error or provide context for an investigation.
+
+Include the service name, time range, and what you observed. For example:
+
+> Check the recent errors for checkout-api and summarize what changed.
+
+Corvo's answers and available actions depend on the data sources, repositories, tools, and permissions you have configured.
+
+## Receive incident updates
+
+Corvo sends incident updates to the connected destination. Review the findings and any linked fix PR.
+
+Repeated errors may be recorded silently or produce a reminder about an existing PR. See [Deduplication](/how-corvo-works/deduplication) for how Corvo makes that decision.
+
+## Request a daily report
+
+Send `/daily_report` to request a summary of recent error activity. See [Daily Reports](/features/daily-reports) for report contents and scheduled delivery.
+
+## Choose where updates arrive
+
+Each account has one active Telegram destination. To move updates from a direct message to a group, or from a group to a direct message, disconnect the existing destination in **Integrations** and connect the new one.

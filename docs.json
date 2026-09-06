@@ -1,0 +1,103 @@
+{
+  "theme": "mint",
+  "name": "Corvo Docs",
+  "colors": {
+    "primary": "#52525b",
+    "light": "#a1a1aa",
+    "dark": "#52525b"
+  },
+  "logo": {
+    "light": "/logo/corvo-light.svg",
+    "dark": "/logo/corvo-dark.svg"
+  },
+  "favicon": "/favicon.ico",
+  "navbar": {
+    "links": [
+      {
+        "href": "https://corvoai.io/",
+        "label": "Corvo"
+      }
+    ]
+  },
+  "footer": {
+    "links": [
+      {
+        "items": [
+          {
+            "label": "Contact",
+            "href": "mailto:contact@corvoai.io"
+          },
+          {
+            "label": "Privacy Policy",
+            "href": "https://corvoai.io/terms/privacy-policy"
+          },
+          {
+            "label": "Terms of Service",
+            "href": "https://corvoai.io/terms/terms-of-service"
+          }
+        ],
+        "header": "Corvo"
+      }
+    ]
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ],
+    "display": "header"
+  },
+  "appearance": {
+    "default": "system",
+    "strict": false
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get Started",
+        "pages": [
+          "index",
+          "quickstart"
+        ]
+      },
+      {
+        "group": "Features",
+        "pages": [
+          "features/incident-response",
+          "features/daily-reports",
+          "features/agent-settings",
+          "features/telegram"
+        ]
+      },
+      {
+        "group": "Integrations",
+        "pages": [
+          "integrations/telegram",
+          "integrations/github",
+          "integrations/google-cloud"
+        ]
+      },
+      {
+        "group": "How Corvo Works",
+        "pages": [
+          "how-corvo-works/deduplication",
+          "how-corvo-works/agent-permissions",
+          "how-corvo-works/google-cloud"
+        ]
+      },
+      {
+        "group": "Coming Soon",
+        "pages": [
+          "coming-soon/workspace"
+        ]
+      }
+    ]
+  },
+  "description": "Corvo investigates Google Cloud production errors, reports findings in Telegram, and can open fix pull requests for review."
+}

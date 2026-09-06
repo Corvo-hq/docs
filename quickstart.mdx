@@ -1,0 +1,62 @@
+---
+title: "Quickstart"
+description: "Connect Telegram, GitHub, and Google Cloud to start investigating alerts."
+---
+
+## Before you start
+
+Have your GCP project ID, a GitHub repository for the service you want Corvo to investigate, and a Telegram account ready. You will need permission to authorize the Google Cloud setup and install the Corvo GitHub App. If your organization requires approval, ask the relevant administrator to complete those steps.
+
+## 1. Sign in to Corvo
+
+Open Corvo and sign in. Use the sidebar to open **Integrations**.
+
+**Check:** You can see the Telegram, GCP, and GitHub integration cards.
+
+## 2. Connect Telegram
+
+On the Telegram bot card, choose a direct message or group connection. Follow the link or scan the QR code to open Telegram, then complete the connection there. If the bot is already in your group, use the binding command shown in Corvo.
+
+**Check:** The card shows **DM CONNECTED** or **GROUP CONNECTED**.
+
+Each account has one active Telegram destination. Disconnect the current destination before switching between a direct message and a group.
+
+## 3. Connect GitHub
+
+Open the GitHub integration and select **Install the Corvo GitHub App**. Choose the GitHub account and repositories Corvo should access, then complete the authorization. An organization administrator may need to approve the installation.
+
+**Check:** Corvo displays the connected GitHub account and repository access.
+
+## 4. Connect your GCP project
+
+Open the Google Cloud integration. Enter your **GCP project ID**, review the requested read access, and select **Connect with Google**. Complete the Google authorization and review the setup results when you return to Corvo.
+
+**Check:** The integration shows **CONNECTED**, your project ID, and the impersonation service account.
+
+Connecting the project establishes read access. Alert streaming is configured separately.
+
+## 5. Bind your service to its repository
+
+On the Google Cloud integration page, find **Bind services to their GitHub repos**. Enter the Cloud Run service name, GitHub owner, and repository name, then select **Bind**.
+
+Choose a repository included in the GitHub App installation from step 3.
+
+**Check:** The service and repository appear in the bindings list.
+
+Without a service binding, the alert workflow falls back to reporting its findings without opening a fix PR for that service.
+
+## 6. Start alert streaming
+
+In the **Alert streaming** section, choose the Cloud Run service to watch, or select all services. Review the severity filter and select **Start streaming with Google**. Complete the authorization that allows Corvo to create the log sink.
+
+**Check:** The status shows **STREAMING**, and the active filter matches the services and severity you selected.
+
+## Check your setup
+
+- Telegram shows a connected destination.
+- The GitHub App has access to the intended repository.
+- The GCP integration shows the intended project and a connected status.
+- The Cloud Run service is bound to the correct repository.
+- Alert streaming is active with the intended filter.
+
+When a matching error arrives, check **Incidents** for its processing status. Open the available log and PR links to review the evidence and proposed fix. A completed investigation may produce findings without a PR; review the result for that event.

@@ -1,0 +1,44 @@
+---
+title: "GitHub"
+description: "Install the Corvo GitHub App and map services to repositories."
+---
+
+## Install the GitHub App
+
+1. Open **Integrations**, then **Manage** on the GitHub card.
+2. Select **Install the Corvo GitHub App**.
+3. Choose the account and repositories the app can access.
+4. Complete GitHub's authorization and return to Corvo.
+
+Check that Corvo lists the connected account and intended repositories. Organization policies may require administrator approval.
+
+## Change repository access
+
+Select **Add or configure repositories** on the GitHub integration page. Review the repositories granted to the app.
+
+The GitHub App provides Corvo's bot identity for repository operations. Agent operations also depend on [Agent Permissions](/how-corvo-works/agent-permissions).
+
+## Bind a Cloud Run service to a repository
+
+The binding form is on the **Google Cloud integration** page.
+
+1. Find **Bind services to their GitHub repos**.
+2. Enter the **Cloud Run service name**.
+3. Enter the **GitHub owner** and **Repo**.
+4. Select **Bind** and check the resulting mapping.
+
+The repository must be available to the GitHub App. Without a binding, the alert workflow falls back to reporting findings.
+
+## Troubleshooting
+
+### Installation needs approval
+
+Ask a GitHub organization administrator to approve the installation request. Return to Corvo after approval and check the integration status.
+
+### Installation could not be linked
+
+Start the installation from Corvo again. Use a GitHub account that can access the installation. An installation already connected to another Corvo account cannot be linked again.
+
+### No fix PR appears
+
+Check the service mapping, repository access, and agent permissions. A completed investigation does not always produce a code change.

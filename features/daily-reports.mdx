@@ -1,0 +1,45 @@
+---
+title: "Daily Reports"
+description: "Review recent errors and follow the status of their fixes."
+---
+
+## Review the last 24 hours
+
+Daily Reports summarize recent error activity. A report contains a summary and groups of related errors, including occurrence counts, observed times, handling status, and available PR or log links.
+
+## Request a report in Telegram
+
+Send `/daily_report` to your connected Corvo Telegram conversation. Corvo generates a report and delivers it through Telegram. If a report is already being generated or a cooldown applies, follow the response before requesting another.
+
+## Set a delivery time
+
+1. Open **Settings**.
+2. Find the **Daily report** section.
+3. Set **Timezone** to the timezone you want Corvo to use.
+4. Choose a **Push time** for scheduled Telegram delivery.
+
+Leave the push time unscheduled to request reports on demand.
+
+## Open past reports
+
+Open **Daily reports** in the sidebar. Select a report from **Report history** to view its covered time range, summary, and error groups.
+
+<Frame caption="Daily report history">
+  ![Daily report history list](/assets/screenshots/reports-list.png)
+</Frame>
+
+Use the time range displayed on the report to understand which events it covers.
+
+## Read the error groups
+
+Each group represents a distinct error. Check its occurrence count and status, then follow the available **Pull request** or **Error log** link.
+
+<Frame caption="A daily report with its summary and error groups">
+  ![Daily report detail with summary and grouped errors](/assets/screenshots/report-detail.png)
+</Frame>
+
+A **PR OPEN** label means a proposed fix is awaiting further action. Review the PR to assess the change.
+
+## If a report does not arrive
+
+Check that Telegram is connected and that the configured timezone and push time match your expectations. You can request a report with `/daily_report` to check delivery.

@@ -1,0 +1,39 @@
+---
+title: "Agent Permissions"
+description: "Control the Git and GitHub operations available to Corvo."
+---
+
+## Configure allowed operations
+
+Open **Permissions** in the sidebar. Review each operation and use its switch to enable or disable it. Changes are saved as you update each switch. If saving fails, the interface restores the previous value and displays an error.
+
+These controls govern the agent's Git and GitHub operations. Repository access also depends on the repositories granted to the Corvo GitHub App.
+
+## Git permissions
+
+| Permission | What it allows | Effect |
+| --- | --- | --- |
+| Create branch | Create local branches for a fix. | Gives the agent a branch for its changes. |
+| Checkout branch | Switch to an existing branch. | Changes the branch used for local work. |
+| Commit | Create local commits. | Records changes locally. |
+| Push | Push commits to a remote branch. | Makes the commits available to people with repository access. |
+| Create tag | Create and push Git tags. | May trigger CI or deployment workflows configured for tags. |
+| Delete branch | Delete local or remote branches. | Can remove branches containing work. |
+
+## GitHub permissions
+
+| Permission | What it allows | Effect |
+| --- | --- | --- |
+| Create draft PR | Open draft pull requests. | Makes a proposed fix available for review. |
+| Edit PR | Change PR metadata such as its title and body. | Updates the PR's description and details. |
+| Create issue | Open GitHub issues. | Adds an issue to the repository. |
+| Merge PR | Merge pull requests. | Applies the PR's changes to its target branch. |
+| Create release | Publish GitHub releases. | Creates a release in the repository. |
+| Delete release | Delete GitHub releases. | Removes a release. |
+| Rerun workflow | Rerun GitHub Actions workflows. | May rerun a deployment pipeline. |
+
+## Check a blocked operation
+
+If Corvo cannot perform an operation, review the corresponding permission and the GitHub App's repository access. For a fix PR, check the permissions needed to create a branch, commit, push, and create a draft PR.
+
+Enable an operation only when you want the agent to be able to perform it in repositories it can access.
