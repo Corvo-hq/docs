@@ -10,7 +10,7 @@
     "light": "/logo/corvo-light.svg",
     "dark": "/logo/corvo-dark.svg"
   },
-  "favicon": "/favicon.ico",
+  "favicon": "/favicon.png",
   "navbar": {
     "links": [
       {
