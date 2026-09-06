@@ -7,6 +7,10 @@ description: "Follow GCP authorization, alert streaming, and agent access."
 
 Corvo uses an alert stream to receive matching errors and service account impersonation to read supporting data during an investigation.
 
+<Frame caption="Google Cloud authorization, alert delivery, and agent investigation">
+  ![Architecture diagram showing Cloud Run logs flowing through Cloud Logging and Pub/Sub to Corvo, with service account impersonation for agent access](/assets/diagrams/gcp-architecture.svg)
+</Frame>
+
 ## Authorize the connection
 
 During setup, a Google user authorizes Corvo to configure the project. Setup creates or reuses the `corvo-agent` service account, grants the selected read roles, and allows Corvo's runtime identity to impersonate that service account.

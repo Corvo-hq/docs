@@ -7,6 +7,10 @@ description: "How Corvo handles repeated alerts and existing fix pull requests."
 
 Corvo checks earlier events for the same error before starting an investigation. The decision uses the error fingerprint, recent processing activity, and the latest recorded fix PR.
 
+<Frame caption="Decision path for repeated alerts">
+  ![Deduplication flow from a matching alert to silent recording, an existing pull request reminder, or a new investigation](/assets/diagrams/deduplication.svg)
+</Frame>
+
 ## Ignore a recent duplicate
 
 If Corvo has recently processed the error or handled it through the deduplication decision, another occurrence within the duplicate window is recorded silently. It does not start an agent run or send a notification.

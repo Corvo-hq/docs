@@ -7,10 +7,10 @@
     "dark": "#52525b"
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/corvo-light.svg",
+    "dark": "/logo/corvo-dark.svg"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.ico",
   "navbar": {
     "links": [
       {
@@ -35,7 +35,8 @@
             "label": "Terms of Service",
             "href": "https://corvoai.io/terms/terms-of-service"
           }
-        ]
+        ],
+        "header": "Corvo"
       }
     ]
   },
@@ -97,5 +98,6 @@
         ]
       }
     ]
-  }
+  },
+  "description": "Corvo investigates Google Cloud production errors, reports findings in Telegram, and can open fix pull requests for review."
 }
