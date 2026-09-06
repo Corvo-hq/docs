@@ -67,7 +67,9 @@
       },
       {
         "group": "How Corvo Works",
-        "pages": []
+        "pages": [
+          "how-corvo-works/deduplication"
+        ]
       },
       {
         "group": "Coming Soon",
