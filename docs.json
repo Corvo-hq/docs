@@ -49,26 +49,30 @@
     "strict": false
   },
   "navigation": {
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "icon": "book-open-cover",
-          "href": "https://mintlify.com/docs"
-        },
-        {
-          "anchor": "Blog",
-          "icon": "newspaper",
-          "href": "https://mintlify.com/blog"
-        }
-      ]
-    },
     "groups": [
       {
-        "group": "Getting Started",
+        "group": "Get Started",
         "pages": [
           "index",
           "quickstart"
+        ]
+      },
+      {
+        "group": "Features",
+        "pages": []
+      },
+      {
+        "group": "Integrations",
+        "pages": []
+      },
+      {
+        "group": "How Corvo Works",
+        "pages": []
+      },
+      {
+        "group": "Coming Soon",
+        "pages": [
+          "coming-soon/workspace"
         ]
       }
     ]
