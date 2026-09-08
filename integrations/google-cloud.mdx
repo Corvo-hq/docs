@@ -1,64 +1,188 @@
 ---
 title: "Google Cloud"
-description: "Connect your project and stream Cloud Run errors to Corvo."
+description: "Grant Corvo read access and stream Cloud Run errors through a six-step setup wizard."
 ---
 
-## Connect your project
+Corvo uses two Google Cloud connections:
 
-Open **Integrations**, then **Manage** on the GCP card.
+- **Read access** lets the agent inspect logs and selected telemetry during an investigation.
+- **Alert streaming** sends matching Cloud Run errors to Corvo so an investigation can start automatically.
 
-1. Enter your **GCP project ID**.
-2. Review the requested read access and optional services.
-3. Select **Connect with Google**.
-4. Complete the Google authorization.
-5. Review the setup results when you return to Corvo.
+The setup wizard keeps these permissions visible and guides you through each change in Google Cloud Console. It does not use Google OAuth, run a setup script, or create a long-lived service account key.
 
-Setup enables required APIs, creates or reuses the Corvo service account, grants read roles, and configures service account impersonation.
+## Requirements
 
-Check for **CONNECTED**, the project ID, and the impersonation service account.
+Before opening the wizard, make sure you know the GCP project ID and can perform these actions in the project:
 
-<Frame caption="Google Cloud connection, alert streaming, and service bindings">
-  ![Connected Google Cloud integration with alert streaming and repository binding controls](/assets/screenshots/gcp.png)
+- Enable Google Cloud APIs.
+- Create a service account.
+- Grant project IAM roles.
+- Edit the IAM policy on a service account.
+- Create a Cloud Logging sink.
+
+## Choose the project and data sources
+
+Open **Integrations**, then select **Manage** on the GCP card. Enter the **GCP project ID** that contains the Cloud Run services you want Corvo to investigate.
+
+Cloud Logging is required. You can also grant read access to Cloud Run, Cloud Monitoring, and Cloud Trace. Your selections control which APIs and IAM roles appear later in the wizard, and Corvo verifies only the selected services.
+
+| Selection | API to enable | Role granted to `corvo-agent` |
+| --- | --- | --- |
+| Cloud Logging | `logging.googleapis.com` | `roles/logging.viewer` |
+| Cloud Run | `run.googleapis.com` | `roles/run.viewer` |
+| Cloud Monitoring | `monitoring.googleapis.com` | `roles/monitoring.viewer` |
+| Cloud Trace | `cloudtrace.googleapis.com` | `roles/cloudtrace.user` |
+
+Select **Continue**. Refreshing the page before verification starts the wizard again. The Google Cloud changes in steps 1 through 4 are safe to repeat.
+
+<Frame caption="Project and read-access selections at the start of the wizard">
+  ![Corvo Google Cloud onboarding form with a project ID and read-only service selections](/assets/screenshots/gcp-onboarding-project.png)
 </Frame>
+
+## Step 1: Enable required APIs
+
+The wizard creates a separate Console link for every required API. Enable these two APIs for every setup:
+
+- Cloud Logging API: `logging.googleapis.com`
+- IAM Service Account Credentials API: `iamcredentials.googleapis.com`
+
+Enable the Cloud Run, Cloud Monitoring, and Cloud Trace APIs when their corresponding services are selected. Confirm that the project selector in Google Cloud Console matches the project ID shown in Corvo before enabling an API.
+
+## Step 2: Create `corvo-agent`
+
+Corvo derives a service account email from the project ID:
+
+```text
+corvo-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com
+```
+
+Open the Service Accounts page from the wizard and create a service account with the account ID `corvo-agent`. If it already exists, confirm that its email matches the value shown in Corvo and continue. Do not create a service account key.
+
+## Step 3: Grant read roles
+
+Open the project IAM page from the wizard and grant access to the `corvo-agent` email.
+
+1. Add `roles/logging.viewer`.
+2. Add `roles/run.viewer` if Cloud Run was selected.
+3. Add `roles/monitoring.viewer` if Cloud Monitoring was selected.
+4. Add `roles/cloudtrace.user` if Cloud Trace was selected.
+5. Save the binding.
+
+The wizard provides a copy button beside every required role ID. Add all listed roles in the same **Grant access** form.
+
+## Step 4: Allow Corvo to impersonate the service account
+
+Corvo uses service account impersonation to request short-lived credentials for `corvo-agent`.
+
+1. Open **Service Accounts** in Google Cloud Console.
+2. Select `corvo-agent`.
+3. Open **Permissions** and select **Grant access**.
+4. Paste the Corvo runtime service account shown in the wizard as the principal.
+5. Grant `roles/iam.serviceAccountTokenCreator`.
+6. Save the service account IAM policy.
+
+The Token Creator binding belongs on the `corvo-agent` service account. The wizard displays the Corvo-owned principal and the customer-owned service account side by side so you can verify the direction of the grant.
+
+## Step 5: Review and verify
+
+The review page summarizes the project, `corvo-agent` email, read roles, enabled APIs, and impersonation binding. These rows show the values you entered until you select **Bind & Verify**.
+
+Verification then checks:
+
+1. Corvo can impersonate `corvo-agent`.
+2. The service account can read Cloud Logging.
+3. The service account can read each optional service selected at the start.
+
+Each successful check changes to **VERIFIED** as it completes. A failure marks the affected row and provides a **Back to Step** link when the cause maps to the API, role, or impersonation setup.
+
+Google Cloud may take a short time to apply new API and IAM settings. Corvo retries checks that can fail during propagation and displays the affected permission with the current attempt count. Let the retry sequence complete before selecting **Bind & Verify** again.
+
+<Frame caption="Configuration review before Corvo runs live checks">
+  ![Corvo GCP review screen with the six-step progress rail and configuration summary](/assets/screenshots/gcp-onboarding-review.png)
+</Frame>
+
+## Step 6: Turn on alert streaming
+
+Connecting read access does not start automatic monitoring. Alert streaming creates the path that sends matching Cloud Run log entries into Corvo.
+
+Choose a minimum severity and either one Cloud Run service or all services. Corvo generates the exact sink values for your selection.
+
+1. Open **Log Router** from the wizard and select **Create sink**.
+2. Enter `corvo-alert-sink` as the sink name.
+3. Select **Cloud Pub/Sub topic** as the sink destination.
+4. Paste the destination shown by Corvo. It uses the form `projects/PROJECT_ID/topics/TOPIC_ID`.
+5. Paste the inclusion filter shown by Corvo.
+6. Create the sink.
+7. Return to Corvo and select **Connect**.
+
+The base filter is:
+
+```text
+severity>=ERROR AND resource.type="cloud_run_revision"
+```
+
+Your severity selection replaces `ERROR`. Selecting one service adds:
+
+```text
+AND resource.labels.service_name="YOUR_SERVICE_NAME"
+```
+
+Corvo verifies these conditions before reporting a successful connection:
+
+- `corvo-alert-sink` exists and is enabled.
+- The destination matches Corvo's central Pub/Sub topic.
+- The live sink filter matches the filter generated by the wizard.
+- The sink writer can publish to the destination.
+- Corvo's ingest topic and subscription are healthy.
+
+Select **Finish** after the checks pass. If you select **Skip for now**, the project remains available for read-only investigations but cannot send Corvo new Cloud Run errors on its own.
 
 ## Map services to repositories
 
-Use **Bind services to their GitHub repos** on this page to associate each Cloud Run service with its source repository. See [GitHub](/integrations/github#bind-a-cloud-run-service-to-a-repository) for the steps.
+Use **Bind services to their GitHub repos** on the Google Cloud integration page to associate each Cloud Run service with its source repository. See [GitHub](/integrations/github#bind-a-cloud-run-service-to-a-repository) for the complete steps.
 
-## Start alert streaming
+An alert for an unbound service can still produce an investigation report. Corvo needs a binding to open a fix pull request against the correct repository.
 
-Read access and streaming are separate setup stages.
+## Change the streaming filter
 
-1. Find **Alert streaming**.
-2. Choose a Cloud Run service, or all services.
-3. Choose the severity filter.
-4. Select **Start streaming with Google**.
-5. Complete the authorization to create the log sink.
-
-Check for **STREAMING** and review the active filter. Only log entries matching that filter enter this stream.
-
-## Change the watched service
-
-Select **Change service**, update the filter, and select **Update streaming with Google**. Check the active filter after the update.
+In **Alert streaming**, select **Edit streaming filter**. Choose a different minimum severity or Cloud Run service. Update the inclusion filter on `corvo-alert-sink` in Google Cloud Log Router, then return to Corvo and select **Update streaming**. Corvo verifies the live sink filter before saving the new setting.
 
 ## Stop streaming
 
-Select **Stop streaming** and confirm the action. Corvo revokes the log sink writer's publisher access to its central topic. The log sink remains in your project.
+Select **Stop streaming** and confirm the action. Corvo removes the sink writer's permission to publish to its central topic. The `corvo-alert-sink` remains in your project, and the read roles on `corvo-agent` remain unchanged.
 
 ## Reconfigure read access
 
-Select **Reconfigure read access with Google** to review and update the read access configuration.
+Select **Reconfigure access** to reopen the project and optional service form. Complete the wizard again to change the selected read sources or repair a permission.
 
 ## Troubleshooting
 
-### Google authorization was denied
+### Step 1 reports an unavailable API
 
-Restart the connection and review the requested authorization with a project administrator.
+Open the API link again and confirm that it is enabled in the project shown by Corvo. Check the Google Cloud project selector before making changes. IAM Service Account Credentials API is required even when no optional services are selected.
 
-### A setup step failed
+### Step 3 reports a missing viewer permission
 
-Review the setup timeline. Correct the reported permission or API issue, then run setup again. Some IAM changes can take time to become available.
+Open project IAM and find the `corvo-agent` principal. Add the exact role named by the failed row. Verify that the role was granted in the same project entered at the beginning of the wizard.
 
-### No errors arrive
+### Step 4 reports a missing Token Creator binding
 
-Check that streaming is active and that the filter matches the service and severity you expect. Confirm that the service is producing matching log entries.
+Open the `corvo-agent` service account, then review its **Permissions** tab. The principal must be the Corvo runtime email displayed by the wizard, and its role must be `roles/iam.serviceAccountTokenCreator` on that service account.
+
+### Verification keeps retrying
+
+API activation and IAM changes can take time to propagate. Leave the page open until Corvo completes its retry attempts. If the final attempt fails, use the reported step link, confirm the setting in Google Cloud Console, and retry verification.
+
+### The log sink cannot connect
+
+Open `corvo-alert-sink` in Log Router and check all three editable values:
+
+- The sink is enabled.
+- The Pub/Sub destination exactly matches the value shown by Corvo.
+- The inclusion filter exactly matches the current severity and service selection.
+
+Save any changes in Google Cloud Console, return to Corvo, and select **Retry**. Corvo may retry while the sink or publisher permission propagates.
+
+### No incidents arrive
+
+Confirm that the Google Cloud integration shows **STREAMING**. Review the active filter and make sure the selected Cloud Run service is producing log entries at or above the configured severity. Read access by itself does not deliver alerts.

@@ -1,17 +1,26 @@
 ---
 title: "Quickstart"
-description: "Connect Telegram, GitHub, and Google Cloud to start investigating alerts."
+description: "Connect Telegram, GitHub, and Google Cloud, then start receiving Cloud Run alerts."
 ---
+
+This guide takes a new Corvo account from its first sign-in to a working Cloud Run alert flow. Plan for about 15 minutes if you already have access to the required accounts.
 
 ## Before you start
 
-Have your GCP project ID, a GitHub repository for the service you want Corvo to investigate, and a Telegram account ready. You will need permission to authorize the Google Cloud setup and install the Corvo GitHub App. If your organization requires approval, ask the relevant administrator to complete those steps.
+Have the following ready:
+
+- A Telegram account or group where Corvo can send updates.
+- Permission to install the Corvo GitHub App on the repositories you want Corvo to use.
+- The Google Cloud project ID that contains the Cloud Run services you want to monitor.
+- Permission to enable APIs, create a service account, and edit IAM policies in that Google Cloud project.
+
+Keep Corvo and Google Cloud Console open in separate tabs during the GCP setup. Corvo provides a direct Console link and copyable value for each task. You do not need to run a script or download a service account key.
 
 ## 1. Sign in to Corvo
 
-Open Corvo and sign in. Use the sidebar to open **Integrations**.
+Open [Corvo](https://corvoai.io/) and sign in. Select **Integrations** in the sidebar.
 
-**Check:** You can see the Telegram, GCP, and GitHub integration cards.
+**Check:** The Integrations page shows Telegram, GCP, and GitHub cards.
 
 ## 2. Connect Telegram
 
@@ -23,40 +32,143 @@ Each account has one active Telegram destination. Disconnect the current destina
 
 ## 3. Connect GitHub
 
-Open the GitHub integration and select **Install the Corvo GitHub App**. Choose the GitHub account and repositories Corvo should access, then complete the authorization. An organization administrator may need to approve the installation.
+Open the GitHub integration and select **Install the Corvo GitHub App**. Choose the GitHub account and repositories Corvo should access, then complete the installation. An organization administrator may need to approve it.
 
 **Check:** Corvo displays the connected GitHub account and repository access.
 
-## 4. Connect your GCP project
+## 4. Complete Google Cloud onboarding
 
-Open the Google Cloud integration. Enter your **GCP project ID**, review the requested read access, and select **Connect with Google**. Complete the Google authorization and review the setup results when you return to Corvo.
+Open **Integrations**, select **Manage** on the GCP card, and enter your **GCP project ID**.
 
-**Check:** The integration shows **CONNECTED**, your project ID, and the impersonation service account.
+Under **Which services should Corvo read?**, Cloud Logging is always selected. Choose any additional sources Corvo should use during investigations:
 
-Connecting the project establishes read access. Alert streaming is configured separately.
+| Service | API | Read role |
+| --- | --- | --- |
+| Cloud Logging | `logging.googleapis.com` | `roles/logging.viewer` |
+| Cloud Run | `run.googleapis.com` | `roles/run.viewer` |
+| Cloud Monitoring | `monitoring.googleapis.com` | `roles/monitoring.viewer` |
+| Cloud Trace | `cloudtrace.googleapis.com` | `roles/cloudtrace.user` |
 
-## 5. Bind your service to its repository
+Select **Continue** to open the six-step setup wizard. Steps 1 through 4 guide you through changes in Google Cloud Console. Corvo checks the result in step 5.
 
-On the Google Cloud integration page, find **Bind services to their GitHub repos**. Enter the Cloud Run service name, GitHub owner, and repository name, then select **Bind**.
+<Frame caption="Choose the Google Cloud project and investigation data sources">
+  ![Corvo Google Cloud onboarding form with a project ID and read-only service selections](/assets/screenshots/gcp-onboarding-project.png)
+</Frame>
+
+### Wizard step 1: Enable APIs
+
+Use each **Open in Console** link and select **Enable** for the API shown. Every setup requires:
+
+- Cloud Logging API: `logging.googleapis.com`
+- IAM Service Account Credentials API: `iamcredentials.googleapis.com`
+
+The wizard also lists the API for each optional service you selected. Return to Corvo after enabling every listed API, then select **Continue**.
+
+**Check:** Google Cloud Console shows each listed API as enabled for the project ID displayed in Corvo.
+
+### Wizard step 2: Create the service account
+
+Copy the service account email shown by Corvo. It follows this format:
+
+```text
+corvo-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com
+```
+
+Select **Open in Console**, then create a service account with the exact account ID `corvo-agent`. The display name and description can follow your organization's naming policy. You do not need to create or download a key.
+
+**Check:** The Service Accounts page contains the exact email shown in Corvo.
+
+### Wizard step 3: Grant read roles
+
+Select **Open IAM in Console**, then select **Grant access**.
+
+1. Paste the `corvo-agent` service account email into **New principals**.
+2. Add `roles/logging.viewer`.
+3. Use **Add another role** for every optional service role listed by Corvo.
+4. Save the IAM binding.
+
+Only grant roles shown in the wizard. Optional services that were left clear on the first screen do not appear in this step.
+
+**Check:** The project IAM page lists `corvo-agent` with Logs Viewer and the roles for your selected services.
+
+### Wizard step 4: Allow impersonation
+
+This grant lets Corvo mint short-lived credentials for `corvo-agent`. It does not require a long-lived service account key.
+
+1. Select **Open Service Accounts in Console**.
+2. Open the `corvo-agent` service account.
+3. Open its **Permissions** tab and select **Grant access**.
+4. Paste the Corvo-owned runtime service account shown in the wizard into **New principals**.
+5. Grant `roles/iam.serviceAccountTokenCreator` and save.
+
+Apply this role on the `corvo-agent` service account. Do not add Token Creator as a general project role.
+
+**Check:** The Permissions tab for `corvo-agent` lists the Corvo runtime principal as Service Account Token Creator.
+
+### Wizard step 5: Review, bind, and verify
+
+Review the project ID, service account, APIs, roles, and impersonation grant. Select **Bind & Verify**.
+
+Corvo checks the configuration in order and updates each row as it passes. The checks cover service account impersonation, Cloud Logging access, and each optional service you selected. When a check fails, the wizard identifies the failed row and links back to the step that can fix it.
+
+IAM and API changes can take a short time to propagate. When Corvo detects a change that may still be propagating, the page stays open and shows the current retry attempt. Wait for the retries to finish before changing the configuration again.
+
+**Check:** Every row shows **VERIFIED**, and the page states that the project is bound and verified.
+
+<Frame caption="Review every API, role, and identity before verification">
+  ![Corvo GCP review screen with the six-step progress rail and configuration summary](/assets/screenshots/gcp-onboarding-review.png)
+</Frame>
+
+### Wizard step 6: Turn on alert streaming
+
+Read access lets Corvo investigate a project after it receives an event. Alert streaming lets Corvo discover matching Cloud Run errors automatically. Complete this step if you want automatic investigations.
+
+1. Choose the minimum severity: **WARNING and above**, **ERROR and above**, or **CRITICAL and above**.
+2. Choose one Cloud Run service or **All Cloud Run services**.
+3. In Google Cloud Console, open **Log Router** and select **Create sink**.
+4. Set the sink name to `corvo-alert-sink`.
+5. Choose **Cloud Pub/Sub topic** as the sink destination and paste the topic shown by Corvo.
+6. Paste Corvo's inclusion filter. For all Cloud Run services at ERROR severity, it has this form:
+
+   ```text
+   severity>=ERROR AND resource.type="cloud_run_revision"
+   ```
+
+   A service-specific selection also includes `resource.labels.service_name`.
+7. Create the sink in Google Cloud Console.
+8. Return to Corvo and select **Connect**.
+
+Corvo confirms that the sink exists, is enabled, points to Corvo's ingest topic, and has the expected filter. It also checks publish access and the health of Corvo's ingest topic and subscription. Select **Finish** after all checks pass.
+
+**Check:** Corvo shows **STREAMING** and the active filter matches your selection.
+
+<Warning>
+  Selecting **Skip for now** leaves the project connected with read access. Corvo will not discover new Cloud Run errors from this project until alert streaming is connected.
+</Warning>
+
+## 5. Bind a Cloud Run service to its repository
+
+On the Google Cloud integration page, find **Bind services to their GitHub repos**.
+
+1. Enter the exact Cloud Run service name.
+2. Enter the GitHub owner.
+3. Enter the repository name.
+4. Select **Bind**.
 
 Choose a repository included in the GitHub App installation from step 3.
 
 **Check:** The service and repository appear in the bindings list.
 
-Without a service binding, the alert workflow falls back to reporting its findings without opening a fix PR for that service.
-
-## 6. Start alert streaming
-
-In the **Alert streaming** section, choose the Cloud Run service to watch, or select all services. Review the severity filter and select **Start streaming with Google**. Complete the authorization that allows Corvo to create the log sink.
-
-**Check:** The status shows **STREAMING**, and the active filter matches the services and severity you selected.
+Without a service binding, Corvo can report its findings for that service but cannot open a fix pull request against its repository.
 
 ## Check your setup
 
 - Telegram shows a connected destination.
 - The GitHub App has access to the intended repository.
-- The GCP integration shows the intended project and a connected status.
-- The Cloud Run service is bound to the correct repository.
-- Alert streaming is active with the intended filter.
+- The GCP integration shows the intended project and **CONNECTED**.
+- Alert streaming shows **STREAMING** with the intended service and severity filter.
+- Each Cloud Run service is bound to the correct GitHub repository.
 
-When a matching error arrives, check **Incidents** for its processing status. Open the available log and PR links to review the evidence and proposed fix. A completed investigation may produce findings without a PR; review the result for that event.
+When a matching error arrives, open **Incidents** to follow its processing status. Use the Google Cloud log and pull request links to review the evidence and any proposed fix. A completed investigation may produce findings without a pull request.
+
+If a check fails, use the [Google Cloud troubleshooting guide](/integrations/google-cloud#troubleshooting) for the exact setup stage.
