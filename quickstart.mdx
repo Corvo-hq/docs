@@ -55,7 +55,7 @@ Select **Continue** to open the six-step setup wizard. Steps 1 through 4 guide y
   ![Corvo Google Cloud onboarding form with a project ID and read-only service selections](/assets/screenshots/gcp-onboarding-project.png)
 </Frame>
 
-### Wizard step 1: Enable APIs
+### Step 1: Enable APIs
 
 Use each **Open in Console** link and select **Enable** for the API shown. Every setup requires:
 
@@ -66,7 +66,11 @@ The wizard also lists the API for each optional service you selected. Return to 
 
 **Check:** Google Cloud Console shows each listed API as enabled for the project ID displayed in Corvo.
 
-### Wizard step 2: Create the service account
+<Frame caption="Step 1 lists every API required for the selected data sources">
+  ![Step 1 of Corvo GCP onboarding with links for enabling required Google Cloud APIs](/assets/screenshots/gcp-onboarding-step-1.png)
+</Frame>
+
+### Step 2: Create the service account
 
 Copy the service account email shown by Corvo. It follows this format:
 
@@ -78,7 +82,11 @@ Select **Open in Console**, then create a service account with the exact account
 
 **Check:** The Service Accounts page contains the exact email shown in Corvo.
 
-### Wizard step 3: Grant read roles
+<Frame caption="Step 2 provides the exact service account email and Console link">
+  ![Step 2 of Corvo GCP onboarding with the corvo-agent service account email](/assets/screenshots/gcp-onboarding-step-2.png)
+</Frame>
+
+### Step 3: Grant read roles
 
 Select **Open IAM in Console**, then select **Grant access**.
 
@@ -91,7 +99,11 @@ Only grant roles shown in the wizard. Optional services that were left clear on 
 
 **Check:** The project IAM page lists `corvo-agent` with Logs Viewer and the roles for your selected services.
 
-### Wizard step 4: Allow impersonation
+<Frame caption="Step 3 lists the read roles selected for the project">
+  ![Step 3 of Corvo GCP onboarding with the required read-only IAM roles](/assets/screenshots/gcp-onboarding-step-3.png)
+</Frame>
+
+### Step 4: Allow impersonation
 
 This grant lets Corvo mint short-lived credentials for `corvo-agent`. It does not require a long-lived service account key.
 
@@ -105,7 +117,11 @@ Apply this role on the `corvo-agent` service account. Do not add Token Creator a
 
 **Check:** The Permissions tab for `corvo-agent` lists the Corvo runtime principal as Service Account Token Creator.
 
-### Wizard step 5: Review, bind, and verify
+<Frame caption="Step 4 shows the impersonation principal, role, and target service account">
+  ![Step 4 of Corvo GCP onboarding with the Service Account Token Creator grant](/assets/screenshots/gcp-onboarding-step-4.png)
+</Frame>
+
+### Step 5: Review, bind, and verify
 
 Review the project ID, service account, APIs, roles, and impersonation grant. Select **Bind & Verify**.
 
@@ -116,10 +132,10 @@ IAM and API changes can take a short time to propagate. When Corvo detects a cha
 **Check:** Every row shows **VERIFIED**, and the page states that the project is bound and verified.
 
 <Frame caption="Review every API, role, and identity before verification">
-  ![Corvo GCP review screen with the six-step progress rail and configuration summary](/assets/screenshots/gcp-onboarding-review.png)
+  ![Step 5 of Corvo GCP onboarding with the six-step progress rail and configuration summary](/assets/screenshots/gcp-onboarding-step-5.png)
 </Frame>
 
-### Wizard step 6: Turn on alert streaming
+### Step 6: Turn on alert streaming
 
 Read access lets Corvo investigate a project after it receives an event. Alert streaming lets Corvo discover matching Cloud Run errors automatically. Complete this step if you want automatic investigations.
 
@@ -141,6 +157,10 @@ Read access lets Corvo investigate a project after it receives an event. Alert s
 Corvo confirms that the sink exists, is enabled, points to Corvo's ingest topic, and has the expected filter. It also checks publish access and the health of Corvo's ingest topic and subscription. Select **Finish** after all checks pass.
 
 **Check:** Corvo shows **STREAMING** and the active filter matches your selection.
+
+<Frame caption="Step 6 provides the complete Log Router sink configuration">
+  ![Step 6 of Corvo GCP onboarding with alert severity, Cloud Run service, Pub/Sub destination, and inclusion filter](/assets/screenshots/gcp-onboarding-step-6.png)
+</Frame>
 
 <Warning>
   Selecting **Skip for now** leaves the project connected with read access. Corvo will not discover new Cloud Run errors from this project until alert streaming is connected.
