@@ -1,6 +1,6 @@
 ---
 title: "Google Cloud Architecture"
-description: "Follow GCP authorization, alert streaming, and agent access."
+description: "Follow GCP onboarding, alert streaming, and agent access."
 ---
 
 ## Two paths into an investigation
@@ -11,9 +11,9 @@ Corvo uses an alert stream to receive matching errors and service account impers
   ![Architecture diagram showing Cloud Run logs flowing through Cloud Logging and Pub/Sub to Corvo, with service account impersonation for agent access](/assets/diagrams/gcp-architecture.svg)
 </Frame>
 
-## Authorize the connection
+## Configure the connection
 
-During setup, a Google user authorizes Corvo to configure the project. Setup creates or reuses the `corvo-agent` service account, grants the selected read roles, and allows Corvo's runtime identity to impersonate that service account.
+The onboarding wizard sends the user to Google Cloud Console for each project change. The user enables the required APIs, creates or reuses the `corvo-agent` service account, grants the selected read roles, and allows Corvo's runtime identity to impersonate that service account. Corvo verifies the resulting access before saving the connection.
 
 The runtime uses the IAM Credentials API to request a short-lived access token for the customer service account. The current implementation requests a one-hour token and refreshes it before expiry.
 
