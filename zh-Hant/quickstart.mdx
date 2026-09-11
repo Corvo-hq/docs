@@ -1,0 +1,194 @@
+---
+title: "快速入門"
+description: "連接 Telegram、GitHub 與 Google Cloud，開始接收 Cloud Run 告警。"
+---
+
+本指南會帶你從第一次登入 Corvo 開始，完成 Cloud Run 告警流程。如果已經取得各平台所需的權限，整個設定約需 15 分鐘。
+
+## 開始前的準備
+
+請先準備：
+
+- 可接收 Corvo 更新的 Telegram 帳號或群組。
+- 在 Corvo 要使用的儲存庫安裝 GitHub App 的權限。
+- 包含待監控 Cloud Run 服務的 Google Cloud Project ID。
+- 在該 Google Cloud 專案啟用 API、建立 Service Account 與編輯 IAM Policy 的權限。
+
+設定 GCP 時，建議分別開啟 Corvo 與 Google Cloud Console 分頁。Corvo 會為每項操作提供 Console 連結及可複製的值，不需要執行 Script 或下載 Service Account Key。
+
+## 1. 登入 Corvo
+
+開啟 [Corvo](https://corvoai.io/) 並登入，然後從側欄選擇 **Integrations**。
+
+**確認結果：** Integrations 頁面會顯示 Telegram、GCP 與 GitHub 卡片。
+
+## 2. 連接 Telegram
+
+在 Telegram bot 卡片選擇私訊或群組。開啟連結或掃描 QR Code 前往 Telegram，並在 Telegram 完成連接。如果 Bot 已經在群組中，請使用 Corvo 顯示的綁定指令。
+
+**確認結果：** 卡片顯示 **DM CONNECTED** 或 **GROUP CONNECTED**。
+
+每個帳號只能有一個有效的 Telegram 目的地。若要在私訊與群組之間切換，請先中斷目前的目的地。
+
+## 3. 連接 GitHub
+
+開啟 GitHub 整合並選擇 **Install the Corvo GitHub App**。選擇 Corvo 可以存取的 GitHub 帳號與儲存庫，再完成安裝。GitHub 組織可能要求管理員核准。
+
+**確認結果：** Corvo 顯示已連接的 GitHub 帳號與儲存庫存取範圍。
+
+## 4. 完成 Google Cloud 設定
+
+開啟 **Integrations**，在 GCP 卡片選擇 **Manage**，然後輸入 **GCP project ID**。
+
+在 **Which services should Corvo read?** 中，Cloud Logging 會固定啟用。另可選擇 Corvo 在調查時應讀取的資料來源：
+
+| 服務 | API | 讀取 Role |
+| --- | --- | --- |
+| Cloud Logging | `logging.googleapis.com` | `roles/logging.viewer` |
+| Cloud Run | `run.googleapis.com` | `roles/run.viewer` |
+| Cloud Monitoring | `monitoring.googleapis.com` | `roles/monitoring.viewer` |
+| Cloud Trace | `cloudtrace.googleapis.com` | `roles/cloudtrace.user` |
+
+選擇 **Continue**，開啟六步驟設定流程。步驟 1 至 4 會引導你在 Google Cloud Console 完成變更，Corvo 會在步驟 5 驗證結果。
+
+<Frame caption="選擇 Google Cloud 專案與調查資料來源">
+  ![Corvo Google Cloud 設定表單顯示 Project ID 與唯讀服務選項](/assets/screenshots/gcp-onboarding-project.png)
+</Frame>
+
+### 步驟 1：啟用 API
+
+使用每個 **Open in Console** 連結，在 Google Cloud Console 選擇 **Enable**。所有設定都需要以下 API：
+
+- Cloud Logging API：`logging.googleapis.com`
+- IAM Service Account Credentials API：`iamcredentials.googleapis.com`
+
+頁面也會列出每項選用服務所需的 API。啟用所有列出的 API 後回到 Corvo，然後選擇 **Continue**。
+
+**確認結果：** Google Cloud Console 顯示所有列出的 API 已在 Corvo 指定的 Project ID 中啟用。
+
+<Frame caption="步驟 1 列出所選資料來源需要的每個 API">
+  ![Corvo GCP 設定步驟 1 顯示啟用 Google Cloud API 的連結](/assets/screenshots/gcp-onboarding-step-1.png)
+</Frame>
+
+### 步驟 2：建立 Service Account
+
+複製 Corvo 顯示的 Service Account Email，格式如下：
+
+```text
+corvo-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com
+```
+
+選擇 **Open in Console**，使用確切的 Account ID `corvo-agent` 建立 Service Account。Display Name 與 Description 可依組織的命名規範填寫。請勿建立或下載 Key。
+
+**確認結果：** Service Accounts 頁面中有一個 Email 與 Corvo 顯示內容完全相同的帳號。
+
+<Frame caption="步驟 2 提供 Service Account Email 與 Console 連結">
+  ![Corvo GCP 設定步驟 2 顯示 corvo-agent Service Account Email](/assets/screenshots/gcp-onboarding-step-2.png)
+</Frame>
+
+### 步驟 3：授予讀取 Role
+
+選擇 **Open IAM in Console**，再選擇 **Grant access**。
+
+1. 將 `corvo-agent` Service Account Email 貼到 **New principals**。
+2. 加入 `roles/logging.viewer`。
+3. 使用 **Add another role** 加入 Corvo 列出的每個選用服務 Role。
+4. 儲存 IAM 綁定。
+
+只需授予設定頁面列出的 Role。第一個畫面中未選擇的服務不會出現在此步驟。
+
+**確認結果：** 專案 IAM 頁面顯示 `corvo-agent` 具有 Logs Viewer，以及所選服務需要的 Role。
+
+<Frame caption="步驟 3 列出專案需要授予的讀取 Role">
+  ![Corvo GCP 設定步驟 3 顯示必要的唯讀 IAM Role](/assets/screenshots/gcp-onboarding-step-3.png)
+</Frame>
+
+### 步驟 4：允許 Impersonation
+
+這項綁定讓 Corvo 能為 `corvo-agent` 取得短期憑證，因此不需要長期有效的 Service Account Key。
+
+1. 選擇 **Open Service Accounts in Console**。
+2. 開啟 `corvo-agent` Service Account。
+3. 開啟 **Permissions**，然後選擇 **Grant access**。
+4. 將頁面顯示的 Corvo Runtime Service Account 貼到 **New principals**。
+5. 授予 `roles/iam.serviceAccountTokenCreator` 並儲存。
+
+請將這個 Role 設定在 `corvo-agent` Service Account 上，不要將 Token Creator 設為一般的專案 Role。
+
+**確認結果：** `corvo-agent` 的 Permissions 頁面顯示 Corvo Runtime Principal 具有 Service Account Token Creator。
+
+<Frame caption="步驟 4 顯示 Impersonation Principal、Role 與目標 Service Account">
+  ![Corvo GCP 設定步驟 4 顯示 Service Account Token Creator 綁定](/assets/screenshots/gcp-onboarding-step-4.png)
+</Frame>
+
+### 步驟 5：檢查、綁定與驗證
+
+檢查 Project ID、Service Account、API、Role 與 Impersonation 綁定，然後選擇 **Bind & Verify**。
+
+Corvo 會依序驗證設定，並在每項檢查通過時更新對應列。檢查項目包含 Service Account Impersonation、Cloud Logging 存取，以及一開始選擇的每項服務。若檢查失敗，頁面會標示失敗項目，並連回可以修正問題的步驟。
+
+IAM 與 API 變更可能需要一些時間才會生效。Corvo 發現設定仍可能在傳播時，會保持頁面開啟並顯示目前的重試次數。請等待所有重試結束，再修改設定。
+
+**確認結果：** 每一列都顯示 **VERIFIED**，頁面顯示專案已完成綁定與驗證。
+
+<Frame caption="驗證前檢查每個 API、Role 與身分">
+  ![Corvo GCP 設定步驟 5 顯示六步驟進度與設定摘要](/assets/screenshots/gcp-onboarding-step-5.png)
+</Frame>
+
+### 步驟 6：啟用告警串流
+
+讀取權讓 Corvo 在收到事件後調查專案。告警串流則讓 Corvo 可以自動發現符合條件的 Cloud Run 錯誤。若要自動開始調查，請完成此步驟。
+
+1. 選擇最低嚴重程度：**WARNING and above**、**ERROR and above** 或 **CRITICAL and above**。
+2. 選擇一項 Cloud Run 服務或 **All Cloud Run services**。
+3. 在 Google Cloud Console 開啟 **Log Router**，然後選擇 **Create sink**。
+4. 將 Sink Name 設為 `corvo-alert-sink`。
+5. 選擇 **Cloud Pub/Sub topic** 作為 Sink Destination，並貼上 Corvo 顯示的 Topic。
+6. 貼上 Corvo 顯示的 Inclusion Filter。若監控所有 Cloud Run 服務且最低嚴重程度為 ERROR，格式如下：
+
+   ```text
+   severity>=ERROR AND resource.type="cloud_run_revision"
+   ```
+
+   若選擇單一服務，Filter 也會包含 `resource.labels.service_name`。
+7. 在 Google Cloud Console 建立 Sink。
+8. 回到 Corvo 並選擇 **Connect**。
+
+Corvo 會確認 Sink 已存在、已啟用、指向 Corvo 的 Ingest Topic，且使用預期的 Filter。系統也會檢查發佈權限，以及 Corvo Ingest Topic 與 Subscription 的健康狀態。所有檢查通過後，選擇 **Finish**。
+
+**確認結果：** Corvo 顯示 **STREAMING**，且 Active Filter 符合所選條件。
+
+<Frame caption="步驟 6 提供完整的 Log Router Sink 設定">
+  ![Corvo GCP 設定步驟 6 顯示告警嚴重程度、Cloud Run 服務、Pub/Sub Destination 與 Inclusion Filter](/assets/screenshots/gcp-onboarding-step-6.png)
+</Frame>
+
+<Warning>
+  選擇 **Skip for now** 後，專案會保留讀取權連線。啟用告警串流前，Corvo 不會自動發現這個專案中的新 Cloud Run 錯誤。
+</Warning>
+
+## 5. 將 Cloud Run 服務綁定至儲存庫
+
+在 Google Cloud 整合頁面找到 **Bind services to their GitHub repos**。
+
+1. 輸入完整的 Cloud Run Service Name。
+2. 輸入 GitHub Owner。
+3. 輸入 Repository Name。
+4. 選擇 **Bind**。
+
+請選擇步驟 3 中已授予 GitHub App 存取權的儲存庫。
+
+**確認結果：** 綁定清單會顯示該服務與儲存庫。
+
+若未設定服務綁定，Corvo 仍可回報該服務的調查發現，但無法在正確的儲存庫建立修正 Pull Request。
+
+## 檢查完整設定
+
+- Telegram 顯示已連接的目的地。
+- GitHub App 可以存取預期的儲存庫。
+- GCP 整合顯示正確的專案及 **CONNECTED**。
+- 告警串流顯示 **STREAMING**，且服務與嚴重程度 Filter 符合預期。
+- 每項 Cloud Run 服務都已綁定至正確的 GitHub 儲存庫。
+
+收到符合條件的錯誤後，開啟 **Incidents** 追蹤處理狀態。使用 Google Cloud 日誌與 Pull Request 連結檢視證據及修正提案。調查完成後不一定會建立 Pull Request。
+
+若檢查失敗，請依發生問題的設定階段查看 [Google Cloud 疑難排解](./integrations/google-cloud#疑難排解)。

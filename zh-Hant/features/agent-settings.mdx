@@ -1,0 +1,57 @@
+---
+title: "Agent 設定"
+description: "新增固定指示並連接外部 MCP 工具。"
+---
+
+## 新增自訂指示
+
+在側欄開啟 **Agent**，找到 **Custom instructions**。以 Markdown 輸入團隊指示，然後選擇 **Save**。
+
+這些指示會套用至 Agent 的對話、告警調查與 PR 回覆。Agent 仍會遵循既有的安全規則與工具限制。
+
+例如：
+
+```text
+提出修正方案前，先閱讀 docs/runbooks/。
+每份 PR 說明都要列出受影響的服務與驗證結果。
+檢查近期變更時，使用團隊的部署分支。
+```
+
+自訂指示適合保存 Agent 在不同任務中都需要的背景資訊。若要控制允許的 Git 與 GitHub 操作，請使用 [Agent 權限](../how-corvo-works/agent-permissions)。
+
+## 連接 MCP Server
+
+MCP Server 會提供 Corvo 可呼叫的外部工具。Corvo 支援透過 HTTP 或 SSE 連接遠端 Server。
+
+1. 在 **Agent** 中找到 **MCP servers**，然後選擇 **Add server**。
+2. 輸入 **Name** 與 Server 的 **URL**。
+3. 選擇該 Server 支援的驗證方式。
+4. 完成連接並確認狀態。
+
+名稱只能使用小寫英文字母、數字與連字號，且必須以英文字母或數字開頭。
+
+### OAuth
+
+選擇 **OAuth**，再選擇 **Save & connect**。Corvo 會檢查 Server；需要授權時，系統會開啟登入流程。不需要登入的 Server 可以直接建立連線。
+
+完成服務提供者的授權後回到 Corvo，確認連線狀態。
+
+### API Headers
+
+選擇 **API headers**，輸入 Server 要求的 Header 名稱與值。先選擇 **Test connection** 檢查存取，再選擇 **Add** 儲存 Server。
+
+編輯已儲存的 Server 時，未修改的 Header 值會保留原值。若要更新，請輸入新的值。
+
+## 管理連線
+
+使用 Server 的開關啟用或停用連線。進入編輯畫面可以更新設定或測試存取。
+
+**AUTHORIZED** 代表 OAuth 授權已完成。**CONNECTED** 代表連線檢查成功。若顯示 **ERROR** 或 **AUTHORIZATION REQUIRED**，請先處理該狀態再使用工具。
+
+## 了解外部工具的存取範圍
+
+MCP 工具會使用已連接的 Server 與其憑證。Git 與 GitHub 的權限開關不會限制這些外部呼叫。請確認 MCP 服務提供者取得的存取權符合團隊需求。
+
+## 疑難排解
+
+如果 Corvo 無法連接 Server，請檢查 URL 及服務狀態。需要授權時，請完成登入流程。如果 Server 不支援 Corvo 的 OAuth 流程，請改用該服務支援的 API Header 驗證方式。

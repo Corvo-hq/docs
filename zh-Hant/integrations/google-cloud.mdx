@@ -1,0 +1,188 @@
+---
+title: "Google Cloud"
+description: "透過六步驟設定流程授予 Corvo 讀取權，並串流 Cloud Run 錯誤。"
+---
+
+Corvo 會使用兩種 Google Cloud 連線：
+
+- **讀取權**讓 Agent 在調查時檢視日誌與選定的遙測資料。
+- **告警串流**會將符合條件的 Cloud Run 錯誤傳送給 Corvo，自動開始調查。
+
+設定流程會清楚列出各項權限，並引導你在 Google Cloud Console 完成每項變更。流程不使用 Google OAuth、不執行設定 Script，也不會建立長期有效的 Service Account Key。
+
+## 必要條件
+
+開始前，請準備 GCP Project ID，並確認你可以在該專案執行下列操作：
+
+- 啟用 Google Cloud API。
+- 建立 Service Account。
+- 授予專案 IAM Role。
+- 編輯 Service Account 的 IAM Policy。
+- 建立 Cloud Logging Sink。
+
+## 選擇專案與資料來源
+
+開啟 **Integrations**，然後在 GCP 卡片選擇 **Manage**。輸入包含待調查 Cloud Run 服務的 **GCP project ID**。
+
+Cloud Logging 為必要項目。你也可以授予 Cloud Run、Cloud Monitoring 與 Cloud Trace 的讀取權。系統會依所選項目顯示後續需要啟用的 API 與 IAM Role，且 Corvo 只會驗證選定的服務。
+
+| 選項 | 要啟用的 API | 授予 `corvo-agent` 的 Role |
+| --- | --- | --- |
+| Cloud Logging | `logging.googleapis.com` | `roles/logging.viewer` |
+| Cloud Run | `run.googleapis.com` | `roles/run.viewer` |
+| Cloud Monitoring | `monitoring.googleapis.com` | `roles/monitoring.viewer` |
+| Cloud Trace | `cloudtrace.googleapis.com` | `roles/cloudtrace.user` |
+
+選擇 **Continue**。如果在開始驗證前重新整理頁面，流程會從頭開始。步驟 1 至 4 的 Google Cloud 變更可安全地重複執行。
+
+<Frame caption="設定流程開始時的專案與讀取權選項">
+  ![Corvo Google Cloud 設定表單顯示 Project ID 與唯讀服務選項](/assets/screenshots/gcp-onboarding-project.png)
+</Frame>
+
+## 步驟 1：啟用必要 API
+
+設定頁面會為每個必要 API 提供獨立的 Console 連結。所有設定都必須啟用以下兩個 API：
+
+- Cloud Logging API：`logging.googleapis.com`
+- IAM Service Account Credentials API：`iamcredentials.googleapis.com`
+
+若選擇 Cloud Run、Cloud Monitoring 或 Cloud Trace，也要啟用對應 API。啟用前，請確認 Google Cloud Console 的專案選擇器與 Corvo 顯示的 Project ID 相同。
+
+## 步驟 2：建立 `corvo-agent`
+
+Corvo 會根據 Project ID 產生 Service Account Email：
+
+```text
+corvo-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com
+```
+
+從設定頁面開啟 Service Accounts，使用 Account ID `corvo-agent` 建立 Service Account。如果帳號已存在，請確認 Email 與 Corvo 顯示的值完全相同，再繼續下一步。請勿建立 Service Account Key。
+
+## 步驟 3：授予讀取 Role
+
+從設定頁面開啟專案 IAM，將存取權授予 `corvo-agent` Email。
+
+1. 加入 `roles/logging.viewer`。
+2. 若選擇 Cloud Run，加入 `roles/run.viewer`。
+3. 若選擇 Cloud Monitoring，加入 `roles/monitoring.viewer`。
+4. 若選擇 Cloud Trace，加入 `roles/cloudtrace.user`。
+5. 儲存綁定。
+
+每個必要的 Role ID 旁都有複製按鈕。請在同一份 **Grant access** 表單加入列出的所有 Role。
+
+## 步驟 4：允許 Corvo 模擬 Service Account
+
+Corvo 透過 Service Account Impersonation，為 `corvo-agent` 取得短期憑證。
+
+1. 在 Google Cloud Console 開啟 **Service Accounts**。
+2. 選擇 `corvo-agent`。
+3. 開啟 **Permissions**，然後選擇 **Grant access**。
+4. 將設定頁面顯示的 Corvo Runtime Service Account 貼到 Principal 欄位。
+5. 授予 `roles/iam.serviceAccountTokenCreator`。
+6. 儲存 Service Account IAM Policy。
+
+Token Creator 綁定必須設定在 `corvo-agent` Service Account 上。設定頁面會並排顯示 Corvo 擁有的 Principal 與客戶專案中的 Service Account，方便確認授權方向。
+
+## 步驟 5：檢查並驗證
+
+檢查頁面會彙整專案、`corvo-agent` Email、讀取 Role、已啟用的 API 與 Impersonation 綁定。選擇 **Bind & Verify** 前，這些列只會顯示你在前面步驟中輸入的值。
+
+開始驗證後，Corvo 會依序檢查：
+
+1. Corvo 可以模擬 `corvo-agent`。
+2. Service Account 可以讀取 Cloud Logging。
+3. Service Account 可以讀取設定開始時選擇的每項服務。
+
+成功的檢查會依序變為 **VERIFIED**。若檢查失敗，頁面會標示受影響的項目；如果問題可以對應到 API、Role 或 Impersonation 設定，也會提供 **Back to Step** 連結。
+
+Google Cloud 可能需要一些時間套用新的 API 與 IAM 設定。遇到可能仍在傳播的變更時，Corvo 會自動重試並顯示權限項目與目前次數。請等待重試結束，再次選擇 **Bind & Verify**。
+
+<Frame caption="Corvo 執行即時檢查前的設定摘要">
+  ![Corvo GCP 檢查頁面顯示六個步驟與設定摘要](/assets/screenshots/gcp-onboarding-step-5.png)
+</Frame>
+
+## 步驟 6：啟用告警串流
+
+建立讀取權後，Corvo 還不會自動監控專案。告警串流會將符合條件的 Cloud Run 日誌傳入 Corvo。
+
+選擇最低嚴重程度及一項 Cloud Run 服務，或選擇所有服務。Corvo 會依所選條件產生完整的 Sink 設定值。
+
+1. 從設定頁面開啟 **Log Router**，然後選擇 **Create sink**。
+2. 將 Sink Name 設為 `corvo-alert-sink`。
+3. 選擇 **Cloud Pub/Sub topic** 作為 Sink Destination。
+4. 貼上 Corvo 顯示的 Destination，格式為 `projects/PROJECT_ID/topics/TOPIC_ID`。
+5. 貼上 Corvo 顯示的 Inclusion Filter。
+6. 建立 Sink。
+7. 回到 Corvo 並選擇 **Connect**。
+
+基本 Filter 為：
+
+```text
+severity>=ERROR AND resource.type="cloud_run_revision"
+```
+
+你選擇的嚴重程度會取代 `ERROR`。選擇單一服務時，還會加入：
+
+```text
+AND resource.labels.service_name="YOUR_SERVICE_NAME"
+```
+
+Corvo 會先確認下列條件，再回報連接成功：
+
+- `corvo-alert-sink` 已存在且為啟用狀態。
+- Destination 符合 Corvo 的中央 Pub/Sub Topic。
+- 實際 Sink Filter 符合設定頁面產生的 Filter。
+- Sink Writer 可以發佈到 Destination。
+- Corvo 的 Ingest Topic 與 Subscription 運作正常。
+
+所有檢查通過後，選擇 **Finish**。如果選擇 **Skip for now**，Corvo 仍能使用讀取權調查專案，但該專案無法主動傳送新的 Cloud Run 錯誤。
+
+## 將服務對應至儲存庫
+
+在 Google Cloud 整合頁面的 **Bind services to their GitHub repos**，將每項 Cloud Run 服務連結至原始碼儲存庫。完整步驟請參閱 [GitHub](./github#將-cloud-run-服務綁定至儲存庫)。
+
+未綁定的服務仍可產生調查報告。Corvo 必須知道服務對應的儲存庫，才能建立修正 Pull Request。
+
+## 變更串流 Filter
+
+在 **Alert streaming** 選擇 **Edit streaming filter**，設定新的最低嚴重程度或 Cloud Run 服務。在 Google Cloud Log Router 更新 `corvo-alert-sink` 的 Inclusion Filter，再回到 Corvo 選擇 **Update streaming**。Corvo 會驗證實際 Sink Filter，再儲存新設定。
+
+## 停止串流
+
+選擇 **Stop streaming** 並確認。Corvo 會移除 Sink Writer 對中央 Topic 的發佈權限。專案中的 `corvo-alert-sink` 會保留，`corvo-agent` 的讀取 Role 也不會變更。
+
+## 重新設定讀取權
+
+選擇 **Reconfigure access**，重新開啟專案與選用服務表單。再次完成設定流程，即可變更讀取來源或修正權限問題。
+
+## 疑難排解
+
+### 步驟 1 回報 API 無法使用
+
+重新開啟 API 連結，確認該 API 已在 Corvo 顯示的專案中啟用。變更設定前，請檢查 Google Cloud 專案選擇器。即使沒有選擇任何選用服務，也必須啟用 IAM Service Account Credentials API。
+
+### 步驟 3 回報缺少 Viewer 權限
+
+開啟專案 IAM 並找到 `corvo-agent` Principal。加入失敗項目指定的 Role，並確認 Role 是在設定流程一開始所輸入的同一個專案中授予。
+
+### 步驟 4 回報缺少 Token Creator 綁定
+
+開啟 `corvo-agent` Service Account 並檢查 **Permissions**。Principal 必須是設定頁面顯示的 Corvo Runtime Email，且該 Principal 必須在這個 Service Account 上具有 `roles/iam.serviceAccountTokenCreator`。
+
+### 驗證持續重試
+
+啟用 API 與修改 IAM 後，Google Cloud 可能需要一段時間套用設定。請保持頁面開啟，等待 Corvo 完成所有重試。若最後一次仍然失敗，使用頁面提供的步驟連結檢查 Google Cloud 設定，再重新驗證。
+
+### Log Sink 無法連接
+
+在 Log Router 開啟 `corvo-alert-sink`，檢查三項可編輯設定：
+
+- Sink 已啟用。
+- Pub/Sub Destination 與 Corvo 顯示的值完全相同。
+- Inclusion Filter 符合目前選擇的嚴重程度與服務。
+
+在 Google Cloud Console 儲存變更後，回到 Corvo 選擇 **Retry**。Sink 或 Publisher 權限仍在傳播時，Corvo 可能會自動重試。
+
+### 沒有收到事件
+
+確認 Google Cloud 整合顯示 **STREAMING**。檢查 Active Filter，並確認選定的 Cloud Run 服務有產生符合嚴重程度的日誌。只有讀取權時，專案不會將告警傳送給 Corvo。

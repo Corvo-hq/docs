@@ -1,0 +1,39 @@
+---
+title: "Agent 權限"
+description: "控制 Corvo 可以執行的 Git 與 GitHub 操作。"
+---
+
+## 設定允許的操作
+
+從側欄開啟 **Permissions**。檢查每一項操作，使用開關決定是否允許。每次切換後，系統會立即儲存變更。如果儲存失敗，介面會恢復原本的設定並顯示錯誤。
+
+這些設定控制 Agent 可以執行的 Git 與 GitHub 操作。實際可存取的儲存庫仍取決於 Corvo GitHub App 的授權範圍。
+
+## Git 權限
+
+| 權限 | 允許的操作 | 影響 |
+| --- | --- | --- |
+| Create branch | 為修復建立本機分支。 | 提供 Agent 用來修改程式碼的分支。 |
+| Checkout branch | 切換至現有分支。 | 變更本機工作使用的分支。 |
+| Commit | 建立本機 commit。 | 在本機記錄程式碼變更。 |
+| Push | 將 commit 推送至遠端分支。 | 讓具有儲存庫權限的人員可以查看 commit。 |
+| Create tag | 建立並推送 Git tag。 | 可能觸發為 tag 設定的 CI 或部署流程。 |
+| Delete branch | 刪除本機或遠端分支。 | 可能移除包含工作內容的分支。 |
+
+## GitHub 權限
+
+| 權限 | 允許的操作 | 影響 |
+| --- | --- | --- |
+| Create draft PR | 建立草稿 PR。 | 讓團隊可以審查修復提案。 |
+| Edit PR | 修改 PR 的標題、內容等資料。 | 更新 PR 說明與相關資訊。 |
+| Create issue | 建立 GitHub issue。 | 在儲存庫中新增 issue。 |
+| Merge PR | 合併 PR。 | 將 PR 的變更套用至目標分支。 |
+| Create release | 發布 GitHub release。 | 在儲存庫中建立 release。 |
+| Delete release | 刪除 GitHub release。 | 移除已建立的 release。 |
+| Rerun workflow | 重新執行 GitHub Actions workflow。 | 可能重新執行部署流程。 |
+
+## 檢查被阻擋的操作
+
+如果 Corvo 無法執行某項操作，請檢查對應權限，以及 GitHub App 的儲存庫存取範圍。若要建立修復 PR，請確認 Agent 可以建立分支、建立 commit、推送分支，以及建立草稿 PR。
+
+請只開啟你希望 Agent 在已授權儲存庫中執行的操作。

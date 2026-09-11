@@ -1,0 +1,45 @@
+---
+title: "Google Cloud 架構"
+description: "了解 GCP onboarding、告警串流與 Agent 存取方式。"
+---
+
+## 調查的兩條路徑
+
+Corvo 透過告警串流接收符合條件的錯誤，並使用服務帳戶模擬身分，在調查期間讀取相關資料。
+
+<Frame caption="Google Cloud 授權、告警傳送與 Agent 調查流程">
+  ![架構圖：Cloud Run 日誌經由 Cloud Logging 與 Pub/Sub 傳送至 Corvo，Agent 則透過服務帳戶模擬身分存取資料](/assets/diagrams/gcp-architecture.svg)
+</Frame>
+
+## 設定連線
+
+Onboarding 的每個專案變更步驟都會將使用者帶到 Google Cloud Console。你需要啟用必要 API、建立或沿用 `corvo-agent` 服務帳戶、授予所選的唯讀角色，並允許 Corvo 的執行身分模擬該服務帳戶。Corvo 會先驗證存取權，再儲存連線設定。
+
+Corvo 執行環境透過 IAM Credentials API，為客戶的服務帳戶取得短期 access token。目前系統取得的 token 有效期為一小時，並會在到期前更新。
+
+## Agent 如何讀取 GCP 資料
+
+Corvo 會將短期 token 提供給 Agent 的 GCP 指令環境。連線設定中的專案會成為這些請求的預設專案。
+
+Google Cloud IAM 會決定此身分可以存取哪些資源。標準設定提供唯讀權限；onboarding 時選擇的額外服務則決定其他可用的唯讀能力。
+
+Agent 使用這些權限蒐集調查所需證據。此模擬身分流程不需要下載服務帳戶金鑰。
+
+## 錯誤如何送達 Corvo
+
+1. Cloud Run 服務將錯誤寫入 Cloud Logging。
+2. 設定好的 log sink 篩選符合服務與嚴重程度條件的項目。
+3. Log sink 的 writer 身分將這些項目發布到 Corvo 的中央 Pub/Sub topic。
+4. Corvo 接收項目，判斷是否需要調查。
+5. 需要處理的事件會交由 Agent 執行。
+6. Agent 使用可用的 GCP 資料與儲存庫內容完成調查，產生調查結果與相關 PR。
+
+在開始新調查前，重複事件會先經過[重複告警處理](./deduplication)。
+
+## 分開管理資料存取與告警串流
+
+客戶服務帳戶提供調查所需的唯讀權限。Log sink writer 則提供發布告警串流的權限。
+
+停止串流會移除 writer 對 Corvo 中央 topic 的存取權。客戶專案中的 log sink 仍會保留，服務帳戶的唯讀角色也不會因此移除。
+
+請參閱 [Google Cloud 設定](../integrations/google-cloud)完成設定。
