@@ -1,0 +1,45 @@
+---
+title: "每日報告"
+description: "檢視近期錯誤並追蹤修正狀態。"
+---
+
+## 檢視最近 24 小時
+
+每日報告會彙整近期的錯誤活動。內容包含摘要及相關錯誤群組，並列出發生次數、觀察時間、處理狀態，以及可用的 PR 或日誌連結。
+
+## 在 Telegram 要求報告
+
+在已連接的 Corvo Telegram 對話中傳送 `/daily_report`。Corvo 會產生報告並透過 Telegram 傳送。如果報告正在產生，或仍處於冷卻時間，請依 Telegram 回覆中的提示操作。
+
+## 設定傳送時間
+
+1. 開啟 **Settings**。
+2. 找到 **Daily report**。
+3. 將 **Timezone** 設為 Corvo 應使用的時區。
+4. 選擇定期傳送至 Telegram 的 **Push time**。
+
+若只想手動要求報告，請不要設定 Push time。
+
+## 開啟過去的報告
+
+在側欄開啟 **Daily reports**。從 **Report history** 選擇一份報告，即可查看涵蓋的時間範圍、摘要及錯誤群組。
+
+<Frame caption="每日報告歷史紀錄">
+  ![每日報告歷史清單](/assets/screenshots/reports-list.png)
+</Frame>
+
+請依報告顯示的時間範圍，判斷其中包含哪些事件。
+
+## 閱讀錯誤群組
+
+每個群組代表一項不同的錯誤。檢查發生次數與狀態後，可透過 **Pull request** 或 **Error log** 連結查看詳細內容。
+
+<Frame caption="包含摘要與錯誤群組的每日報告">
+  ![每日報告詳細頁顯示摘要及分組錯誤](/assets/screenshots/report-detail.png)
+</Frame>
+
+**PR OPEN** 代表修正提案仍待處理。請開啟 PR 檢視並評估變更內容。
+
+## 沒有收到報告
+
+請確認 Telegram 已連接，且設定的時區與 Push time 符合預期。你也可以傳送 `/daily_report`，確認手動傳送是否正常。

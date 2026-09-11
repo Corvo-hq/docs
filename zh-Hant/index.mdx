@@ -1,0 +1,40 @@
+---
+title: "簡介"
+description: "調查正式環境錯誤、檢視修正內容，並掌握服務狀態。"
+---
+
+Corvo 會使用 Google Cloud 日誌與 GitHub 儲存庫調查正式環境錯誤，透過 Telegram 回報結果，並可建立修正用的 Pull Request 供團隊審查。
+
+連接服務、選擇 Corvo 可以存取的儲存庫後，即可從告警開始追蹤整個調查流程與最終結果。
+
+<Card title="從快速入門開始" href="./quickstart">
+  連接 Telegram、GitHub 與 Google Cloud，確認各項連線並啟用告警串流。
+</Card>
+
+## Corvo 可以做什麼
+
+<CardGroup cols={2}>
+  <Card title="事件應變" href="./features/incident-response">
+    調查告警、查看處理狀態，並開啟相關日誌與修正 Pull Request。
+  </Card>
+
+  <Card title="Telegram" href="./features/telegram">
+    透過私訊或群組向 Agent 提問並接收事件更新。
+  </Card>
+
+  <Card title="每日報告" href="./features/daily-reports">
+    檢視近期錯誤、重複發生的錯誤群組及修正狀態。
+  </Card>
+
+  <Card title="Agent 設定" href="./features/agent-settings">
+    新增自訂指示，並依團隊工作流程設定 Agent。
+  </Card>
+</CardGroup>
+
+## 了解系統運作方式
+
+閱讀[重複告警處理機制](./how-corvo-works/deduplication)，了解 Corvo 如何處理重複告警。技術說明也涵蓋 GCP 存取方式，以及 Agent 執行 Git 與 GitHub 操作時使用的權限。
+
+## 即將推出
+
+[Workspace](./coming-soon/workspace) 將提供團隊成員、共用整合與設定的集中管理空間。

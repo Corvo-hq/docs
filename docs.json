@@ -58,43 +58,113 @@
     "strict": false
   },
   "navigation": {
-    "groups": [
+    "languages": [
       {
-        "group": "Get Started",
-        "pages": [
-          "index",
-          "quickstart"
+        "language": "en",
+        "default": true,
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "index",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              "features/incident-response",
+              "features/daily-reports",
+              "features/agent-settings",
+              "features/telegram"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/telegram",
+              "integrations/github",
+              "integrations/google-cloud"
+            ]
+          },
+          {
+            "group": "How Corvo Works",
+            "pages": [
+              "how-corvo-works/deduplication",
+              "how-corvo-works/agent-permissions",
+              "how-corvo-works/google-cloud"
+            ]
+          },
+          {
+            "group": "Coming Soon",
+            "pages": [
+              "coming-soon/workspace"
+            ]
+          }
         ]
       },
       {
-        "group": "Features",
-        "pages": [
-          "features/incident-response",
-          "features/daily-reports",
-          "features/agent-settings",
-          "features/telegram"
-        ]
-      },
-      {
-        "group": "Integrations",
-        "pages": [
-          "integrations/telegram",
-          "integrations/github",
-          "integrations/google-cloud"
-        ]
-      },
-      {
-        "group": "How Corvo Works",
-        "pages": [
-          "how-corvo-works/deduplication",
-          "how-corvo-works/agent-permissions",
-          "how-corvo-works/google-cloud"
-        ]
-      },
-      {
-        "group": "Coming Soon",
-        "pages": [
-          "coming-soon/workspace"
+        "language": "zh-Hant",
+        "footer": {
+          "links": [
+            {
+              "items": [
+                {
+                  "label": "聯絡我們",
+                  "href": "mailto:contact@corvoai.io"
+                },
+                {
+                  "label": "隱私權政策",
+                  "href": "https://corvoai.io/terms/privacy-policy"
+                },
+                {
+                  "label": "服務條款",
+                  "href": "https://corvoai.io/terms/terms-of-service"
+                }
+              ],
+              "header": "Corvo"
+            }
+          ]
+        },
+        "groups": [
+          {
+            "group": "開始使用",
+            "pages": [
+              "zh-Hant/index",
+              "zh-Hant/quickstart"
+            ]
+          },
+          {
+            "group": "功能",
+            "pages": [
+              "zh-Hant/features/incident-response",
+              "zh-Hant/features/daily-reports",
+              "zh-Hant/features/agent-settings",
+              "zh-Hant/features/telegram"
+            ]
+          },
+          {
+            "group": "整合",
+            "pages": [
+              "zh-Hant/integrations/telegram",
+              "zh-Hant/integrations/github",
+              "zh-Hant/integrations/google-cloud"
+            ]
+          },
+          {
+            "group": "Corvo 運作方式",
+            "pages": [
+              "zh-Hant/how-corvo-works/deduplication",
+              "zh-Hant/how-corvo-works/agent-permissions",
+              "zh-Hant/how-corvo-works/google-cloud"
+            ]
+          },
+          {
+            "group": "即將推出",
+            "pages": [
+              "zh-Hant/coming-soon/workspace"
+            ]
+          }
         ]
       }
     ]
