@@ -1,40 +1,27 @@
 ---
-title: "Introduction"
-description: "Investigate production errors, review fixes, and keep up with your services."
+title: "Corvo documentation"
+description: "Connect your services and follow production errors through an investigation."
 ---
 
-Corvo investigates production errors using your Google Cloud logs and GitHub repositories. It reports findings through Telegram and can open a fix pull request for review.
+Corvo receives selected Google Cloud error logs, groups related alerts into investigations, and uses your connected repositories and cloud data to find the cause. An investigation can end with a report or a draft fix pull request.
 
-Connect your services, choose the repositories Corvo can access, and follow each alert from investigation to its result.
-
-<Card title="Start with Quickstart" href="/quickstart">
-  Connect Telegram, GitHub, and Google Cloud. Check each connection and turn on alert streaming.
-</Card>
-
-## What you can do with Corvo
+<Frame caption="Investigations bring related alerts and their latest results together.">
+  ![Investigations list in Corvo](/assets/screenshots/investigations.png)
+</Frame>
 
 <CardGroup cols={2}>
-  <Card title="Incident Response" href="/features/incident-response">
-    Investigate alerts, review processing status, and follow links to logs and fix pull requests.
+  <Card title="Set up Corvo" href="/quickstart">
+    Connect a notification channel, GitHub, and Google Cloud.
   </Card>
-
-  <Card title="Telegram" href="/features/telegram">
-    Ask the agent questions and receive incident updates in a direct message or group.
+  <Card title="Follow investigations" href="/features/incident-response">
+    Read findings, inspect alerts, and review proposed fixes.
   </Card>
-
-  <Card title="Daily Reports" href="/features/daily-reports">
-    Review recent errors, recurring groups, and the status of their fixes.
+  <Card title="Configure the agent" href="/features/agent-settings">
+    Manage instructions, skills, external tools, and memory.
   </Card>
-
-  <Card title="Agent Settings" href="/features/agent-settings">
-    Add instructions and configure the agent for your workflow.
+  <Card title="Work with your team" href="/workspace">
+    Invite members and choose who can change integrations and permissions.
   </Card>
 </CardGroup>
 
-## Understand the system
-
-Learn how [deduplication](/how-corvo-works/deduplication) handles repeated alerts. The technical guides also explain GCP access and the permissions that govern the agent's Git and GitHub operations.
-
-## Coming soon
-
-[Workspace](/coming-soon/workspace) will bring team members and shared integrations into one place.
+Corvo currently supports Cloud Run, GKE, and Compute Engine log sources. See [Google Cloud setup](/integrations/google-cloud) for the exact streaming scope and access requirements.

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520" role="img" aria-labelledby="title desc">
+<title id="title">兩項 IAM 授權</title><desc id="desc">第三步授予 corvo-agent 專案讀取角色；第四步在 corvo-agent 帳戶上授予 Corvo 執行身分 Token Creator。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#315fbd" stroke-width="1.7"/></marker></defs>
+<rect width="1000" height="520" fill="#ffffff"/>
+<g font-family="Inter, Noto Sans CJK TC, Arial, sans-serif">
+<text x="40" y="48" font-size="28" fill="#202124" font-weight="600" text-anchor="start">兩項授權，各有設定位置</text>
+<text x="40" y="102" font-size="20" fill="#315fbd" font-weight="600" text-anchor="start">步驟 3・專案 IAM</text>
+<text x="40" y="148" font-size="23" fill="#202124" font-weight="600" text-anchor="start">corvo-agent</text>
+<text x="40" y="178" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">讀取資料的服務帳戶</text>
+<path d="M342 148H628" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="386" y="129" font-size="17" fill="#315fbd" font-weight="400" text-anchor="start">讀取角色</text>
+<rect x="652" y="105" width="308" height="107" rx="6" fill="#fafafa" stroke="#dadce0"/>
+<text x="674" y="146" font-size="22" fill="#202124" font-weight="600" text-anchor="start">你的專案</text>
+<text x="674" y="180" font-size="18" fill="#62656b" font-weight="400" text-anchor="start">Logging Viewer, …</text>
+<path d="M40 242L960 242" stroke="#dadce0" fill="none"/>
+<text x="40" y="286" font-size="20" fill="#315fbd" font-weight="600" text-anchor="start">步驟 4・服務帳戶存取權</text>
+<text x="40" y="334" font-size="23" fill="#202124" font-weight="600" text-anchor="start">Corvo 執行身分</text>
+<text x="40" y="364" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">從設定頁複製執行身分的地址</text>
+<path d="M342 334H628" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="355" y="315" font-size="17" fill="#315fbd" font-weight="400" text-anchor="start">Token Creator</text>
+<rect x="652" y="291" width="308" height="107" rx="6" fill="#fafafa" stroke="#dadce0"/>
+<text x="674" y="332" font-size="22" fill="#202124" font-weight="600" text-anchor="start">corvo-agent</text>
+<text x="674" y="366" font-size="18" fill="#62656b" font-weight="400" text-anchor="start">授權範圍是此帳戶</text>
+<rect x="40" y="432" width="920" height="57" rx="6" fill="#f0f4fc" stroke="none"/>
+<text x="60" y="467" font-size="20" fill="#202124" font-weight="400" text-anchor="start">Service Accounts → corvo-agent → Principals with access → Grant access</text>
+</g></svg>

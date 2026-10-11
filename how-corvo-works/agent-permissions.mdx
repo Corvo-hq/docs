@@ -5,9 +5,13 @@ description: "Control the Git and GitHub operations available to Corvo."
 
 ## Configure allowed operations
 
-Open **Permissions** in the sidebar. Review each operation and use its switch to enable or disable it. Changes are saved as you update each switch. If saving fails, the interface restores the previous value and displays an error.
+Open **Permissions** in the sidebar. An admin can enable or disable each operation; other members can review the settings. Changes save as you update each switch. If saving fails, the interface restores the previous value and displays an error.
 
-These controls govern the agent's Git and GitHub operations. Repository access also depends on the repositories granted to the Corvo GitHub App.
+These controls govern the agent's Git and GitHub operations. Repository access also depends on the Corvo GitHub App installation and the repositories in [Agent environment](/integrations/github).
+
+<Frame caption="Repository access, prepared environments, and allowed actions are configured separately.">
+  ![GitHub App access, Agent environment preparation, and Git and GitHub permission controls](/assets/diagrams/agent-access.svg)
+</Frame>
 
 ## Git permissions
 

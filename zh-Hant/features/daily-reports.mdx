@@ -1,45 +1,32 @@
 ---
 title: "每日報告"
-description: "檢視近期錯誤並追蹤修正狀態。"
+description: "查看過去 24 小時的錯誤與處理狀態。"
 ---
 
-## 檢視最近 24 小時
+每日報告彙整過去 24 小時的錯誤活動，將相關錯誤分組，列出發生次數、處理狀態，以及可用的 Cloud Logging 或 PR 連結。
 
-每日報告會彙整近期的錯誤活動。內容包含摘要及相關錯誤群組，並列出發生次數、觀察時間、處理狀態，以及可用的 PR 或日誌連結。
+## 設定定期傳送
 
-## 在 Telegram 要求報告
+在工作區開啟 **Settings → Daily report**，設定 **Timezone**、開啟 **Scheduled push**，再選擇 **Push time**。若只想手動要求報告，保持 Scheduled push 關閉即可。報告歷史紀錄會依工作區時區對應的當地日期顯示。
 
-在已連接的 Corvo Telegram 對話中傳送 `/daily_report`。Corvo 會產生報告並透過 Telegram 傳送。如果報告正在產生，或仍處於冷卻時間，請依 Telegram 回覆中的提示操作。
-
-## 設定傳送時間
-
-1. 開啟 **Settings**。
-2. 找到 **Daily report**。
-3. 將 **Timezone** 設為 Corvo 應使用的時區。
-4. 選擇定期傳送至 Telegram 的 **Push time**。
-
-若只想手動要求報告，請不要設定 Push time。
-
-## 開啟過去的報告
-
-在側欄開啟 **Daily reports**。從 **Report history** 選擇一份報告，即可查看涵蓋的時間範圍、摘要及錯誤群組。
-
-<Frame caption="每日報告歷史紀錄">
-  ![每日報告歷史清單](/assets/screenshots/reports-list.png)
+<Frame caption="在 Settings 設定時區與當地傳送時間。">
+  ![Daily report 設定，顯示 Timezone 與 Push time](/assets/screenshots/report-schedule.webp)
 </Frame>
 
-請依報告顯示的時間範圍，判斷其中包含哪些事件。
+報告使用與調查告警相同的傳送順序：優先送到綁定的 Discord 頻道，其次是 Telegram Notify bot，最後才使用 Telegram Agent bot。Telegram 目的地可以是私訊或群組；報告也可直接在 Corvo 閱讀。
 
-## 閱讀錯誤群組
+## 要求並閱讀報告
 
-每個群組代表一項不同的錯誤。檢查發生次數與狀態後，可透過 **Pull request** 或 **Error log** 連結查看詳細內容。
+若 Agent bot 綁定的是私訊，可在該私訊傳送 `/daily_report`，要求即時產生報告。群組目前不支援這個指令。若系統正在產生報告，或仍在冷卻時間內，請依 Bot 的回覆稍後再試。
 
-<Frame caption="包含摘要與錯誤群組的每日報告">
-  ![每日報告詳細頁顯示摘要及分組錯誤](/assets/screenshots/report-detail.png)
+在 Corvo 開啟 **Daily reports**。**Report history** 以新到舊排序，每個當地日期顯示一份報告。開啟報告可查看涵蓋時段、摘要及錯誤群組。若群組提供 **Pull request** 或 **Error log** 連結，可用來檢查修正或原始日誌。**PR OPEN** 表示修正提案仍待審查。
+
+<Frame caption="依當地日期排序的報告歷史紀錄">
+  ![依當地日期排序的每日報告歷史紀錄](/assets/screenshots/reports-list.png)
 </Frame>
 
-**PR OPEN** 代表修正提案仍待處理。請開啟 PR 檢視並評估變更內容。
+<Frame caption="報告摘要與第一個錯誤群組；服務主機名稱已遮蔽。">
+  ![每日報告的摘要、發生次數與 Error log 連結](/assets/screenshots/report-detail.webp)
+</Frame>
 
-## 沒有收到報告
-
-請確認 Telegram 已連接，且設定的時區與 Push time 符合預期。你也可以傳送 `/daily_report`，確認手動傳送是否正常。
+若定期報告未送達，請在 **Settings** 檢查通知目的地、時區與 Scheduled push 設定。若綁定的是私訊，也可用 `/daily_report` 測試手動傳送。

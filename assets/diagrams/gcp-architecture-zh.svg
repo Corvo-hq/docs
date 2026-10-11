@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650" role="img" aria-labelledby="title desc">
+<title id="title">Google Cloud 與 Corvo</title><desc id="desc">符合條件的日誌送到 Corvo；調查另透過你的服務帳戶讀取已授權資料。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#315fbd" stroke-width="1.7"/></marker></defs>
+<rect width="1000" height="650" fill="#ffffff"/>
+<g font-family="Inter, Noto Sans CJK TC, Arial, sans-serif">
+<text x="40" y="48" font-size="28" fill="#202124" font-weight="600" text-anchor="start">Google Cloud 與 Corvo</text>
+<rect x="40" y="82" width="450" height="521" rx="0" fill="#fafafa" stroke="none"/>
+<text x="64" y="123" font-size="22" fill="#202124" font-weight="600" text-anchor="start">你的 Google Cloud 專案</text>
+<text x="570" y="123" font-size="22" fill="#202124" font-weight="600" text-anchor="start">Corvo</text>
+<path d="M530 100L530 599" stroke="#dadce0" fill="none" stroke-dasharray="5 6"/>
+<text x="64" y="173" font-size="17" fill="#315fbd" font-weight="600" text-anchor="start">日誌傳送</text>
+<text x="64" y="218" font-size="21" fill="#202124" font-weight="600" text-anchor="start">Cloud Logging</text>
+<text x="64" y="249" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">Cloud Run・GKE・Compute Engine</text>
+<path d="M212 267V300" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="64" y="306" width="396" height="89" rx="6" fill="#ffffff" stroke="#dadce0"/>
+<text x="84" y="339" font-size="19" fill="#202124" font-weight="600" text-anchor="start">corvo-alert-sink</text>
+<text x="84" y="370" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">指定來源＋最低嚴重程度</text>
+<path d="M460 350H569" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="582" y="339" font-size="21" fill="#202124" font-weight="600" text-anchor="start">Pub/Sub</text>
+<text x="582" y="370" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">接收符合條件的日誌</text>
+<path d="M790 350H833" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="848" y="340" font-size="18" fill="#202124" font-weight="600" text-anchor="start">開始調查</text>
+<path d="M64 427L960 427" stroke="#dadce0" fill="none"/>
+<text x="64" y="466" font-size="17" fill="#315fbd" font-weight="600" text-anchor="start">調查時的讀取權</text>
+<text x="64" y="511" font-size="21" fill="#202124" font-weight="600" text-anchor="start">corvo-agent</text>
+<text x="64" y="544" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">你授予的讀取角色</text>
+<path d="M768 512H367" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="404" y="497" font-size="17" fill="#315fbd" font-weight="400" text-anchor="start">模擬身分</text>
+<text x="788" y="511" font-size="19" fill="#202124" font-weight="600" text-anchor="start">Corvo 執行身分</text>
+<text x="788" y="542" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">短期 Token</text>
+<text x="40" y="632" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">來源篩選控制日誌傳送；IAM 角色控制 Agent 可讀取的資料。</text>
+</g></svg>

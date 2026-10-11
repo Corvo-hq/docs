@@ -1,45 +1,32 @@
 ---
-title: "Daily Reports"
-description: "Review recent errors and follow the status of their fixes."
+title: "Daily reports"
+description: "Review the previous 24 hours of errors and their handling."
 ---
 
-## Review the last 24 hours
+A daily report summarizes the previous 24 hours of error activity. It groups related errors, shows occurrence counts and handling status, and includes available Cloud Logging or PR links.
 
-Daily Reports summarize recent error activity. A report contains a summary and groups of related errors, including occurrence counts, observed times, handling status, and available PR or log links.
+## Schedule delivery
 
-## Request a report in Telegram
+Open **Settings → Daily report** in your workspace. Choose a **Timezone**, turn on **Scheduled push**, and set a **Push time**. Leave Scheduled push off if you only want reports on demand. The workspace's timezone determines the local calendar day used in report history.
 
-Send `/daily_report` to your connected Corvo Telegram conversation. Corvo generates a report and delivers it through Telegram. If a report is already being generated or a cooldown applies, follow the response before requesting another.
-
-## Set a delivery time
-
-1. Open **Settings**.
-2. Find the **Daily report** section.
-3. Set **Timezone** to the timezone you want Corvo to use.
-4. Choose a **Push time** for scheduled Telegram delivery.
-
-Leave the push time unscheduled to request reports on demand.
-
-## Open past reports
-
-Open **Daily reports** in the sidebar. Select a report from **Report history** to view its covered time range, summary, and error groups.
-
-<Frame caption="Daily report history">
-  ![Daily report history list](/assets/screenshots/reports-list.png)
+<Frame caption="Set the timezone and local push time in Settings.">
+  ![Daily report settings with Timezone and Push time](/assets/screenshots/report-schedule.webp)
 </Frame>
 
-Use the time range displayed on the report to understand which events it covers.
+Reports use the same delivery order as investigation alerts: the bound Discord channel first, then the Telegram Notify bot, then the Telegram Agent bot as a fallback. Telegram destinations can be a DM or group. You can also read the report in Corvo.
 
-## Read the error groups
+## Request and read a report
 
-Each group represents a distinct error. Check its occurrence count and status, then follow the available **Pull request** or **Error log** link.
+When the Agent bot is bound to a DM, send `/daily_report` in that DM to generate a report on demand. This command is not supported in groups. If generation is already running or a cooldown applies, follow the bot's response before asking again.
 
-<Frame caption="A daily report with its summary and error groups">
-  ![Daily report detail with summary and grouped errors](/assets/screenshots/report-detail.png)
+Open **Daily reports** in Corvo. **Report history** lists the newest reports first, one per local calendar day. Open a report to read its time range, summary, and error groups. Follow a group's **Pull request** or **Error log** link when available. A **PR OPEN** label means the proposed fix still needs review.
+
+<Frame caption="Report history, ordered by local date">
+  ![Daily report history ordered by local date](/assets/screenshots/reports-list.png)
 </Frame>
 
-A **PR OPEN** label means a proposed fix is awaiting further action. Review the PR to assess the change.
+<Frame caption="Report summary and the first error group; the service hostname is hidden.">
+  ![Daily report detail with summary, occurrence count, and an Error log link](/assets/screenshots/report-detail.webp)
+</Frame>
 
-## If a report does not arrive
-
-Check that Telegram is connected and that the configured timezone and push time match your expectations. You can request a report with `/daily_report` to check delivery.
+If a scheduled report does not arrive, check the notification destination, timezone, and Scheduled push setting in **Settings**. For a bound DM, use `/daily_report` to test on-demand delivery.

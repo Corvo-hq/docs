@@ -1,36 +1,35 @@
 ---
-title: "事件應變"
-description: "從告警調查一路追蹤到分析結果與修正 Pull Request。"
+title: "調查"
+description: "在同一項調查中追蹤相關告警、分析結果與修正提案。"
 ---
 
-## 從告警到處理結果
+從工作區側欄開啟 **Investigations**。每列是一項調查，可能包含多筆原因相同的告警。**Active** 顯示執行中的調查，**Needs attention** 顯示執行失敗的調查，**Done** 顯示已完成的調查；**All** 顯示全部狀態。Corvo 收集新告警、等待調查時段結束時，頁面可能顯示 **Collecting**。
 
-Corvo 收到符合條件的告警後，會先檢查同一錯誤是否曾經發生，再決定是否開始調查。調查時會使用可存取的 Google Cloud 資料，以及受影響服務所對應的儲存庫。
-
-處理結果可能包含調查發現、Telegram 更新及修正 Pull Request。是否建立 PR 會依調查結果、服務對應、儲存庫存取權與 Agent 權限而定。
-
-## 準備服務
-
-先完成[快速入門](../quickstart)，連接 Telegram、GitHub 與 Google Cloud。接著在 Google Cloud 整合頁面，將 Cloud Run 服務綁定至對應儲存庫。
-
-若未設定儲存庫對應，Corvo 仍會回報調查發現，但不會建立修正 PR。
-
-## 檢視事件
-
-在側欄開啟 **Incidents**。事件表格會顯示時間、專案、Revision、Policy、處理狀態及可用連結。
-
-<Frame caption="事件清單中的處理狀態與相關連結">
-  ![事件表格顯示 Cloud Logging Policy、完成狀態與連結按鈕](/assets/screenshots/incidents.png)
+<Frame caption="每列是一項調查；告警數量代表這項調查包含的發生次數。">
+  ![Investigations 列表，顯示狀態篩選與告警數量](/assets/screenshots/investigations.png)
 </Frame>
 
-使用連結開啟對應的 Google Cloud 日誌或產生的 Pull Request。部分事件可能沒有 PR 或日誌連結，此時按鈕會顯示為停用狀態。
+## 閱讀調查內容
 
-**COMPLETED** 代表該次處理流程已結束。請檢視調查發現與 PR，確認造成事件的錯誤是否已修復。
+選擇一列，開啟對話與詳細資料欄。詳細資料欄包含：
 
-## 檢視修正內容
+- **Alerts**：依錯誤分組的告警，以及各筆原始日誌。
+- **Pull requests**：這項調查已記錄的 PR；若沒有 PR，會顯示空狀態。
+- **Agent summary**：Agent 最近一次的處理摘要。
+- **Links**：對應日誌的 Cloud Logging 查詢連結。
 
-開啟連結的 PR，檢查程式碼變更與驗證結果。Corvo 是否能建立分支、推送 Commit 及建立 Draft PR，取決於 **Permissions** 中的設定。
+<Frame caption="展開 Alerts 可查看每筆紀錄。範例保留了七次發生紀錄；服務網址已遮蔽。">
+  <img src="/assets/screenshots/investigation-alerts.webp" alt="調查詳細資料，顯示七筆告警、沒有 PR，以及 Cloud Logging 連結" width="380" />
+</Frame>
 
-## 錯誤再次發生時
+對話會顯示調查過程與結果。若工作區顯示訊息輸入欄，你可以在這裡追問，後續對話會沿用同一項調查。新告警在完成分派前，可能暫時沒有可用的對話。
 
-Corvo 可能只記錄近期的重複事件、提醒團隊已有尚未關閉的 PR，或在先前修正 PR 已關閉或合併後重新調查。請參閱[重複告警處理機制](../how-corvo-works/deduplication)中的範例。
+**Done** 只代表最近一次處理已結束，不代表服務已修好。調查可能產生報告、PR，也可能失敗。請閱讀結果並審查 PR，再決定是否部署。
+
+調查頁面上線前的舊告警可能列在另一個歷史區塊。你仍可查看過去的對話；新的追問請在目前的調查中進行。
+
+## 準備程式碼存取
+
+連接 GitHub，並在 [Agent environment](/zh-Hant/integrations/github) 準備 Corvo 需要的儲存庫。Corvo 可根據調查證據找出對應儲存庫，不需要舊版的 Cloud Run 服務與儲存庫綁定。建立分支、推送及開啟草稿 PR 的能力，另受 [Permissions](/zh-Hant/how-corvo-works/agent-permissions) 控制。
+
+告警如何進入調查、重複錯誤如何處理，請參閱[調查流程](/zh-Hant/how-corvo-works/investigation-pipeline)與[重複告警](/zh-Hant/how-corvo-works/deduplication)。

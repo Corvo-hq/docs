@@ -1,0 +1,28 @@
+---
+title: "工作區與成員"
+description: "邀請團隊成員並管理工作區權限。"
+---
+
+Corvo 的設定與整合都屬於工作區。使用側欄上方的切換器，可切換或建立工作區。每個工作區有自己的成員、整合、Agent 設定與調查紀錄。
+
+## 邀請成員
+
+1. 從工作區側欄開啟 **Members**。
+2. 在 **Invite** 輸入對方的電子郵件地址，選擇 **Viewer**、**Editor** 或 **Admin**。
+3. 選擇 **Send invite**。頁面會分別列出成員與待接受的邀請。邀請連結有效七天；再次邀請同一地址會取代先前的連結。
+
+<Frame caption="寄出邀請前，先選擇成員角色。">
+  ![邀請表單，顯示電子郵件、角色選單與 Send invite](/assets/screenshots/workspace-invite.webp)
+</Frame>
+
+管理員可以在 **Members** 變更成員角色或移除存取權。
+
+## 選擇角色
+
+| 角色 | 權限 |
+| --- | --- |
+| Viewer | 查看工作區資料並使用 Agent。 |
+| Editor | 具有 Viewer 權限，並可管理指示、技能、記憶與 MCP 伺服器。 |
+| Admin | 具有 Editor 權限，並可管理成員、整合與 Agent 權限。 |
+
+只有需要管理已連接帳號及 Agent 操作範圍的人，才應擁有 Admin 角色。Git 與 GitHub 的個別開關請參閱 [Agent 權限](/zh-Hant/how-corvo-works/agent-permissions)。

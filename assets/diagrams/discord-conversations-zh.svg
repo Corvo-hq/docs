@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="555" viewBox="0 0 1000 555" role="img" aria-labelledby="title desc">
+<title id="title">Discord 對話方式</title><desc id="desc">在頻道提及 Corvo 可開始一般對話；回覆告警會建立調查討論串。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#315fbd" stroke-width="1.7"/></marker></defs>
+<rect width="1000" height="555" fill="#ffffff"/>
+<g font-family="Inter, Noto Sans CJK TC, Arial, sans-serif">
+<text x="40" y="48" font-size="28" fill="#202124" font-weight="600" text-anchor="start">Discord 的兩種對話方式</text>
+<text x="40" y="111" font-size="21" fill="#202124" font-weight="600" text-anchor="start">在頻道提問</text>
+<rect x="40" y="133" width="416" height="86" rx="6" fill="#fafafa" stroke="#dadce0"/>
+<text x="60" y="169" font-size="18" fill="#315fbd" font-weight="600" text-anchor="start">@Corvo</text>
+<text x="150" y="169" font-size="18" fill="#202124" font-weight="400" text-anchor="start">檢查結帳錯誤</text>
+<text x="60" y="199" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">在 Bot 有權存取的頻道</text>
+<path d="M456 177H576" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="603" y="166" font-size="21" fill="#202124" font-weight="600" text-anchor="start">Corvo 在同一頻道回覆</text>
+<text x="603" y="199" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">各頻道的對話脈絡分開保存</text>
+<path d="M40 259L960 259" stroke="#dadce0" fill="none"/>
+<text x="40" y="307" font-size="21" fill="#202124" font-weight="600" text-anchor="start">追問某筆告警</text>
+<rect x="40" y="332" width="416" height="86" rx="6" fill="#fafafa" stroke="#dadce0"/>
+<text x="60" y="368" font-size="19" fill="#202124" font-weight="600" text-anchor="start">指定告警頻道中的通知</text>
+<text x="60" y="398" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">使用 Discord 的「回覆」</text>
+<path d="M456 376H545V481H582" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="604" y="340" width="356" height="170" rx="0" fill="#f0f4fc" stroke="none"/>
+<text x="626" y="377" font-size="22" fill="#202124" font-weight="600" text-anchor="start">調查討論串</text>
+<text x="626" y="415" font-size="18" fill="#202124" font-weight="400" text-anchor="start">首次回覆建立討論串</text>
+<text x="626" y="449" font-size="17" fill="#202124" font-weight="400" text-anchor="start">後續在串內回覆，不需再 @提及</text>
+<text x="626" y="483" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">沿用這項調查的脈絡</text>
+<text x="40" y="540" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">在要控制的對話中使用 /stop 或 /steer。</text>
+</g></svg>

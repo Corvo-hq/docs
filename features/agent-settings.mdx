@@ -1,13 +1,17 @@
 ---
 title: "Agent Settings"
-description: "Add standing instructions and connect external MCP tools."
+description: "Set custom instructions, manage skills, and connect MCP tools."
 ---
 
 ## Add custom instructions
 
 Open **Agent** in the sidebar and find **Custom instructions**. Enter your team's guidance in Markdown, then select **Save**.
 
-These instructions apply to agent runs, including chat, alert investigations, and PR replies. The agent's safety rules and tool constraints still apply.
+<Frame caption="Custom instructions apply to workspace agent runs. Save after editing.">
+  ![Custom instructions editor with team guidance and Save button](/assets/screenshots/agent-instructions.webp)
+</Frame>
+
+These instructions apply to agent runs, including chat, alert investigations, and PR replies. Use them for how the agent should work. Put facts about your services and team in [Memory](/features/memory). The agent's safety rules and tool constraints still apply.
 
 For example:
 
@@ -17,7 +21,17 @@ Include the affected service and validation results in each PR description.
 Use our deployment branch when checking recent changes.
 ```
 
-Use instructions for context the agent should have across tasks. Use [Agent Permissions](/how-corvo-works/agent-permissions) to control allowed Git and GitHub operations.
+Use [Agent Permissions](/how-corvo-works/agent-permissions) to control allowed Git and GitHub operations.
+
+## Manage skills
+
+The **Skills** section contains operating procedures the agent can read when relevant. Required built-in skills are always on. Other built-in skills can be switched on or off. To create a custom skill, select **Add skill**, fill in **Name**, **Description**, and **Instructions**, then save. Use its switch to enable it. You can edit or delete custom skills later.
+
+<Frame caption="The description tells the agent when to use the skill; instructions define its steps.">
+  <img src="/assets/screenshots/agent-skill-dialog.webp" alt="Add skill dialog with a Cloud Run rollback example" width="600" />
+</Frame>
+
+Describe when the agent should use a custom skill and the steps it should follow. Skills guide the agent; they do not grant additional Git, GitHub, or external tool access.
 
 ## Connect an MCP server
 
@@ -27,6 +41,10 @@ MCP servers expose external tools that Corvo can call. Corvo supports remote ser
 2. Enter a **Name** and the server's **URL**.
 3. Choose the authentication method supported by the server.
 4. Complete the connection and check its status.
+
+<Frame caption="Choose OAuth or API headers to match the server.">
+  <img src="/assets/screenshots/agent-mcp-dialog.webp" alt="Add MCP server dialog with name, URL, and authentication options" width="500" />
+</Frame>
 
 The name uses lowercase letters, numbers, and hyphens. It must start with a letter or number.
 

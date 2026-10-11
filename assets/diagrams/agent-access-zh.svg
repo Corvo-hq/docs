@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="440" viewBox="0 0 1000 440" role="img" aria-labelledby="title desc">
+<title id="title">儲存庫範圍與允許的操作</title><desc id="desc">GitHub App 授予儲存庫存取權，Agent environment 準備選定儲存庫，Permissions 控制 Git 與 GitHub 操作。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#315fbd" stroke-width="1.7"/></marker></defs>
+<rect width="1000" height="440" fill="#ffffff"/>
+<g font-family="Inter, Noto Sans CJK TC, Arial, sans-serif">
+<text x="40" y="48" font-size="28" fill="#202124" font-weight="600" text-anchor="start">儲存庫範圍與允許的操作</text>
+<text x="40" y="104" font-size="21" fill="#315fbd" font-weight="600" text-anchor="start">使用哪些儲存庫？</text>
+<text x="596" y="104" font-size="21" fill="#315fbd" font-weight="600" text-anchor="start">可以執行哪些操作？</text>
+<path d="M550 94L550 351" stroke="#dadce0" fill="none" stroke-dasharray="5 6"/>
+<rect x="40" y="131" width="460" height="85" rx="6" fill="#fafafa" stroke="#dadce0"/>
+<text x="61" y="164" font-size="22" fill="#202124" font-weight="600" text-anchor="start">Corvo GitHub App</text>
+<text x="61" y="194" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">授予指定儲存庫的存取權</text>
+<path d="M270 217V256" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="40" y="266" width="460" height="85" rx="6" fill="#fafafa" stroke="#dadce0"/>
+<text x="61" y="299" font-size="22" fill="#202124" font-weight="600" text-anchor="start">Agent environment</text>
+<text x="61" y="329" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">準備儲存庫與設定指令</text>
+<text x="596" y="165" font-size="24" fill="#202124" font-weight="600" text-anchor="start">Permissions</text>
+<text x="596" y="199" font-size="18" fill="#62656b" font-weight="400" text-anchor="start">允許或禁止 Git／GitHub 操作</text>
+<path d="M596 225L960 225" stroke="#dadce0" fill="none"/>
+<text x="596" y="262" font-size="18" fill="#202124" font-weight="400" text-anchor="start">建立修正草稿 PR 需要：</text>
+<text x="596" y="296" font-size="19" fill="#202124" font-weight="400" text-anchor="start">Create branch · Commit</text>
+<text x="596" y="329" font-size="19" fill="#202124" font-weight="400" text-anchor="start">Push · Create draft PR</text>
+<path d="M40 377L960 377" stroke="#dadce0" fill="none"/>
+<text x="40" y="414" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">MCP 工具另依其 Server 的憑證與存取規則執行。</text>
+</g></svg>

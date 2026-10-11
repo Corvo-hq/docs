@@ -1,0 +1,35 @@
+---
+title: "Discord"
+description: "指定告警頻道，並在伺服器中與 Corvo 對話。"
+---
+
+管理員可為工作區綁定一個 Discord 告警頻道。一個 Discord 伺服器只能對應一個 Corvo 工作區。同一個 Bot 同時負責傳送告警與回答問題。
+
+## 邀請 Bot 並選擇頻道
+
+1. 開啟 **Integrations → Discord**。
+2. 若 Bot 尚未加入伺服器，選擇 **Invite bot**，完成 Discord 授權流程。回到 Corvo，選擇 **Check again**。
+3. 先選擇伺服器，再選擇要接收調查告警的頻道。清單只顯示 Bot 可以發送訊息的頻道。
+4. 選擇 **Save channel**。
+
+<Frame caption="先選伺服器，再選告警頻道；圖中的伺服器名稱已遮蔽。">
+  ![Discord 伺服器與頻道選擇器，以及 Refresh 和 Save channel 按鈕](/assets/screenshots/discord-binding.webp)
+</Frame>
+
+儲存後，卡片會顯示 **CHANNEL BOUND**。旁邊的識別值代表所選伺服器與頻道。
+
+<Frame caption="CHANNEL BOUND 代表告警目的地已儲存；識別值已遮蔽。">
+  ![綁定後的 Discord 整合，顯示 Channel bound 與 Disconnect](/assets/screenshots/discord-bound.webp)
+</Frame>
+
+## 確認連接成功
+
+在該伺服器中，找一個 Bot 有權存取的頻道，提及 Corvo 並提出問題。Bot 應在同一頻道回覆。指定告警頻道收到調查通知後，可使用該訊息的**回覆**功能，開啟調查討論串。兩種操作方式請參閱 [Discord 對話](/zh-Hant/features/discord)。
+
+Discord 綁定會優先於 Telegram 接收調查告警與每日報告。Telegram 一般對話仍使用已綁定的 Agent bot。
+
+## 更換頻道與疑難排解
+
+選擇 **Disconnect**，再重新選擇並儲存伺服器與頻道。找不到伺服器時，請確認 Bot 已加入，且該伺服器未綁定其他工作區。找不到頻道時，請檢查 Bot 是否具有查看頻道與傳送訊息的權限，再選擇 **Refresh**。
+
+若 Bot 能發送告警卻無法開啟調查討論串，請檢查它是否可以建立公開討論串，以及在討論串內傳送訊息。

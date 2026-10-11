@@ -76,13 +76,16 @@
               "features/incident-response",
               "features/daily-reports",
               "features/agent-settings",
-              "features/telegram"
+              "features/memory",
+              "features/telegram",
+              "features/discord"
             ]
           },
           {
             "group": "Integrations",
             "pages": [
               "integrations/telegram",
+              "integrations/discord",
               "integrations/github",
               "integrations/google-cloud"
             ]
@@ -90,15 +93,16 @@
           {
             "group": "How Corvo Works",
             "pages": [
+              "how-corvo-works/investigation-pipeline",
               "how-corvo-works/deduplication",
               "how-corvo-works/agent-permissions",
               "how-corvo-works/google-cloud"
             ]
           },
           {
-            "group": "Coming Soon",
+            "group": "Workspace",
             "pages": [
-              "coming-soon/workspace"
+              "workspace"
             ]
           }
         ]
@@ -140,13 +144,16 @@
               "zh-Hant/features/incident-response",
               "zh-Hant/features/daily-reports",
               "zh-Hant/features/agent-settings",
-              "zh-Hant/features/telegram"
+              "zh-Hant/features/memory",
+              "zh-Hant/features/telegram",
+              "zh-Hant/features/discord"
             ]
           },
           {
             "group": "整合",
             "pages": [
               "zh-Hant/integrations/telegram",
+              "zh-Hant/integrations/discord",
               "zh-Hant/integrations/github",
               "zh-Hant/integrations/google-cloud"
             ]
@@ -154,20 +161,21 @@
           {
             "group": "Corvo 運作方式",
             "pages": [
+              "zh-Hant/how-corvo-works/investigation-pipeline",
               "zh-Hant/how-corvo-works/deduplication",
               "zh-Hant/how-corvo-works/agent-permissions",
               "zh-Hant/how-corvo-works/google-cloud"
             ]
           },
           {
-            "group": "即將推出",
+            "group": "工作區",
             "pages": [
-              "zh-Hant/coming-soon/workspace"
+              "zh-Hant/workspace"
             ]
           }
         ]
       }
     ]
   },
-  "description": "Corvo investigates Google Cloud production errors, reports findings in Telegram, and can open fix pull requests for review."
+  "description": "Corvo groups Google Cloud errors into investigations, reports findings, and can open fix pull requests for review."
 }

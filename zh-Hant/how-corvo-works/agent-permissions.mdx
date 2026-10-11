@@ -5,9 +5,13 @@ description: "控制 Corvo 可以執行的 Git 與 GitHub 操作。"
 
 ## 設定允許的操作
 
-從側欄開啟 **Permissions**。檢查每一項操作，使用開關決定是否允許。每次切換後，系統會立即儲存變更。如果儲存失敗，介面會恢復原本的設定並顯示錯誤。
+從側欄開啟 **Permissions**。管理員可以使用開關決定是否允許各項操作；其他成員可查看設定。每次切換後系統會儲存變更。若儲存失敗，介面會恢復原設定並顯示錯誤。
 
-這些設定控制 Agent 可以執行的 Git 與 GitHub 操作。實際可存取的儲存庫仍取決於 Corvo GitHub App 的授權範圍。
+這些設定控制 Agent 可以執行的 Git 與 GitHub 操作。實際可存取的儲存庫還取決於 Corvo GitHub App 的安裝範圍，以及 [Agent environment](/zh-Hant/integrations/github) 中加入的儲存庫。
+
+<Frame caption="儲存庫範圍、預先準備的環境與允許的操作分開設定。">
+  ![GitHub App、Agent environment 與 Permissions 各自控制的範圍](/assets/diagrams/agent-access-zh.svg)
+</Frame>
 
 ## Git 權限
 

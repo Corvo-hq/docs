@@ -1,38 +1,67 @@
 ---
 title: "Telegram"
-description: "連接私訊或群組，用於 Agent 對話與更新通知。"
+description: "連接負責對話的 Agent bot，以及負責調查通知的 Notify bot。"
 ---
 
-## 選擇目的地
+Telegram 使用兩個 Bot。Agent bot 負責回答問題與執行任務；Notify bot 負責傳送調查更新。Corvo 介面分別稱它們為 **chat bot** 與 **alerts bot**。
 
-開啟 **Integrations** 並找到 **Telegram bot**。你可以連接私訊或群組。每個帳號只能有一個有效的 Telegram 目的地。
+| Bot | 用途 | 使用位置 |
+| --- | --- | --- |
+| Agent bot（chat bot） | 接收你的要求，執行 Agent，再回覆結果。 | 已綁定的私訊或群組。在群組中，請提及這個 Bot 或回覆它的訊息。 |
+| Notify bot（alerts bot） | 傳送調查告警與進度。回覆已追蹤的告警時，會取得該調查的 Corvo 網頁連結。 | 另外綁定的私訊或群組。回覆這個 Bot 不會直接執行 Agent 任務。 |
 
-<Frame caption="Corvo 中已連接的 Telegram 目的地">
-  ![Telegram bot 卡片顯示已連接的私訊](/assets/screenshots/telegram.png)
+<Frame caption="兩個連接分別負責對話與告警通知。">
+  ![提問交給 Agent bot，調查通知由 Notify bot 傳送](/assets/diagrams/telegram-bots-zh.svg)
 </Frame>
 
-## 連接私訊
+管理員可從 **Integrations → Telegram bot** 設定。每個工作區各有一個 Agent bot 目的地及 Notify bot 目的地，兩者可使用同一群組，也可分開設定。
 
-1. 在 Telegram 卡片選擇私訊。
-2. 開啟 Telegram 連結或掃描 QR Code。
-3. 在 Telegram 完成 Bot 的啟動流程。
+## 1. 連接 Agent bot
+
+<Frame caption="先選擇要在私訊或群組中與 Agent bot 對話。">
+  ![尚未綁定的 Telegram 整合，顯示 DM 與 Group 按鈕](/assets/screenshots/telegram-start.webp)
+</Frame>
+
+連接私訊：
+
+1. 選擇 **DM**。對話框會預選 **Direct message**。
+2. 選擇 **Open DM in Telegram**，或掃描 QR code。
+3. 在 Telegram 選擇 **Start**，將綁定 Token 傳給 Agent bot。
 4. 回到 Corvo，確認卡片顯示 **DM CONNECTED**。
 
-## 連接群組
+連接群組：
 
-1. 在 Telegram 卡片選擇 **Group**。
-2. 選擇 **Add bot to group** 或掃描 QR Code。
-3. 在 Telegram 選擇群組並完成連接。
-4. 回到 Corvo，確認卡片顯示 **GROUP CONNECTED**。
+1. 選擇 **Group**，再選擇對話框中的 **Add bot to group**。
+2. 在 Telegram 選取群組並完成加入 Bot 的流程。若 Bot 已在群組中，複製 Corvo 顯示的 `/bind@…` 指令，傳送到該群組。
+3. 等 Bot 確認成功，回到 Corvo 檢查 **GROUP CONNECTED**。
 
-如果 Corvo 已經在群組中，請將連接視窗顯示的綁定指令貼到該群組。
+連結與綁定指令的有效時間為三分鐘。若已過期或已使用，請重新開啟對話框取得新的 Token。
 
-## 切換目的地
+## 2. 連接 Notify bot
 
-在 Telegram 卡片選擇 **Disconnect**，再連接新的私訊或群組。
+Agent bot 連接成功後，卡片會出現 **Connect alerts bot**。
 
-## 疑難排解
+<Frame caption="GROUP CONNECTED 代表 Agent bot 已連接；Connect alerts bot 用來設定第二個 Bot。">
+  ![Agent bot 已連接，卡片顯示 Connect alerts bot 按鈕](/assets/screenshots/telegram-chat-connected.webp)
+</Frame>
 
-如果卡片沒有顯示已連接狀態，請重新開啟 Telegram 連接流程，並完成啟動或綁定步驟。切換目的地時，請先中斷現有連接。
+1. 選擇 **Connect alerts bot**。
+2. 選擇要接收調查通知的 **Direct message** 或 **Group chat**。
+3. 私訊請選擇 **Open alerts bot in Telegram**，再按 **Start**。群組請選擇 **Add alerts bot to group**；若 Bot 已在群組中，使用這個對話框提供的 Notify bot 綁定指令。
+4. 回到 Corvo，確認 Agent bot 的狀態旁，同時出現 **ALERTS BOT**（私訊）或 **ALERTS GROUP**（群組）。
 
-日常使用方式請參閱 [Telegram 對話](../features/telegram)。
+<Frame caption="Notify bot 使用獨立的連結與綁定指令；圖中的 QR code 和 Token 已遮蔽。">
+  <img src="/assets/screenshots/telegram-notify-dialog.webp" alt="Connect alerts bot 對話框，可選私訊或群組" width="480" />
+</Frame>
+
+<Frame caption="兩個 Bot 均已連接：GROUP CONNECTED 負責對話，ALERTS GROUP 負責通知。">
+  ![Telegram 整合同時顯示 Group connected 與 Alerts group](/assets/screenshots/telegram-connected.webp)
+</Frame>
+
+## 確認告警會送到哪裡
+
+若已綁定 Discord 告警頻道，調查告警會優先送到 Discord。否則使用 Telegram Notify bot 的目的地；若 Notify bot 尚未連接，則回退到 Agent bot 的目的地。告警會送到依此順序選出的目的地，不會同時廣播到所有整合。
+
+若沒有收到通知，請檢查上述順序及 Telegram 的兩個狀態標籤。需要更換 Telegram 設定時，選擇 **Disconnect**，再依序連接 Agent bot 與 Notify bot。Disconnect 會清除兩個 Telegram 連接。
+
+提及、回覆與指令的用法，請參閱 [Telegram 對話](/zh-Hant/features/telegram)。

@@ -1,0 +1,22 @@
+---
+title: "記憶"
+description: "讓核准的長期事實供對話與調查使用。"
+---
+
+從工作區側欄開啟 **Memory**，管理 Agent 長期使用的事實，例如服務程式碼所在的儲存庫，或已知的維運限制。生效中的事實會提供給對話、告警調查與告警分派流程。
+
+## 新增或審核事實
+
+Editor 或 Admin 可輸入事實並選擇 **Add fact**。Agent 執行任務時也可以提出新事實。預設情況下，Agent 提案會留在 **Review agent proposals**，等待 Editor 或 Admin 核准或拒絕；待審核的內容不會影響後續執行。
+
+<Frame caption="關閉自動核准時，提案會等待 Approve 或 Reject；範例事實已遮蔽。">
+  ![Memory 審核設定，顯示自動核准關閉、待審核提案與 Approve 和 Reject 按鈕](/assets/screenshots/memory-review.webp)
+</Frame>
+
+Editor 或 Admin 可以編輯或移除生效中的事實。Agent 若提議替換或移除，原事實會持續生效，直到提案獲得核准。核准前請根據自己的證據確認內容。
+
+## 自動核准
+
+管理員可啟用 **Approve agent proposals automatically**。啟用後，Agent 新增、修改或移除事實會立即生效，也可能改動成員撰寫的事實。告警、日誌與網頁可能包含其他人提供的文字；請依團隊的審核需求決定是否啟用。
+
+每項事實請保持簡短、具體。長期有效的資訊放在 Memory；指示 Agent 如何工作，請使用[自訂指示](/zh-Hant/features/agent-settings)。
