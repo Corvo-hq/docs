@@ -7,20 +7,26 @@ description: "查看過去 24 小時的錯誤與處理狀態。"
 
 ## 設定定期傳送
 
-在工作區開啟 **Settings → Daily report**，設定 **Timezone** 與傳送至 Telegram 的 **Push time**。若只想手動要求報告，Push time 可以留空。報告歷史紀錄會依工作區時區對應的當地日期顯示。
+在工作區開啟 **Settings → Daily report**，設定 **Timezone**、開啟 **Scheduled push**，再選擇 **Push time**。若只想手動要求報告，保持 Scheduled push 關閉即可。報告歷史紀錄會依工作區時區對應的當地日期顯示。
+
+<Frame caption="在 Settings 設定時區與當地傳送時間。">
+  ![Daily report 設定，顯示 Timezone 與 Push time](/assets/screenshots/report-schedule.webp)
+</Frame>
+
+報告使用與調查告警相同的傳送順序：優先送到綁定的 Discord 頻道，其次是 Telegram Notify bot，最後才使用 Telegram Agent bot。Telegram 目的地可以是私訊或群組；報告也可直接在 Corvo 閱讀。
 
 ## 要求並閱讀報告
 
-在已連接的 Telegram 對話 Bot 傳送 `/daily_report`，可要求即時產生報告。若系統正在產生報告，或仍在冷卻時間內，請依 Bot 的回覆稍後再試。
+若 Agent bot 綁定的是私訊，可在該私訊傳送 `/daily_report`，要求即時產生報告。群組目前不支援這個指令。若系統正在產生報告，或仍在冷卻時間內，請依 Bot 的回覆稍後再試。
 
 在 Corvo 開啟 **Daily reports**。**Report history** 以新到舊排序，每個當地日期顯示一份報告。開啟報告可查看涵蓋時段、摘要及錯誤群組。若群組提供 **Pull request** 或 **Error log** 連結，可用來檢查修正或原始日誌。**PR OPEN** 表示修正提案仍待審查。
 
-<Frame caption="報告歷史紀錄與詳細頁範例">
+<Frame caption="依當地日期排序的報告歷史紀錄">
   ![依當地日期排序的每日報告歷史紀錄](/assets/screenshots/reports-list.png)
 </Frame>
 
-<Frame caption="報告摘要與錯誤群組">
-  ![每日報告的摘要、錯誤群組與相關連結](/assets/screenshots/report-detail.png)
+<Frame caption="報告摘要與第一個錯誤群組；服務主機名稱已遮蔽。">
+  ![每日報告的摘要、發生次數與 Error log 連結](/assets/screenshots/report-detail.webp)
 </Frame>
 
-若定期報告未送達，請在 **Settings** 檢查 Telegram 目的地、時區與 Push time。也可用 `/daily_report` 測試手動傳送。
+若定期報告未送達，請在 **Settings** 檢查通知目的地、時區與 Scheduled push 設定。若綁定的是私訊，也可用 `/daily_report` 測試手動傳送。

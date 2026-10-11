@@ -7,20 +7,26 @@ A daily report summarizes the previous 24 hours of error activity. It groups rel
 
 ## Schedule delivery
 
-Open **Settings → Daily report** in your workspace. Choose a **Timezone** and **Push time** for Telegram delivery. Leave Push time unset if you only want reports on demand. The workspace's timezone determines the local calendar day used in report history.
+Open **Settings → Daily report** in your workspace. Choose a **Timezone**, turn on **Scheduled push**, and set a **Push time**. Leave Scheduled push off if you only want reports on demand. The workspace's timezone determines the local calendar day used in report history.
+
+<Frame caption="Set the timezone and local push time in Settings.">
+  ![Daily report settings with Timezone and Push time](/assets/screenshots/report-schedule.webp)
+</Frame>
+
+Reports use the same delivery order as investigation alerts: the bound Discord channel first, then the Telegram Notify bot, then the Telegram Agent bot as a fallback. Telegram destinations can be a DM or group. You can also read the report in Corvo.
 
 ## Request and read a report
 
-Send `/daily_report` to the connected Telegram chat bot for an on-demand report. If generation is already running or a cooldown applies, follow the bot's response before asking again.
+When the Agent bot is bound to a DM, send `/daily_report` in that DM to generate a report on demand. This command is not supported in groups. If generation is already running or a cooldown applies, follow the bot's response before asking again.
 
 Open **Daily reports** in Corvo. **Report history** lists the newest reports first, one per local calendar day. Open a report to read its time range, summary, and error groups. Follow a group's **Pull request** or **Error log** link when available. A **PR OPEN** label means the proposed fix still needs review.
 
-<Frame caption="Report history and a report detail example">
+<Frame caption="Report history, ordered by local date">
   ![Daily report history ordered by local date](/assets/screenshots/reports-list.png)
 </Frame>
 
-<Frame caption="Report summary and error groups">
-  ![Daily report detail with summary, error groups, and links](/assets/screenshots/report-detail.png)
+<Frame caption="Report summary and the first error group; the service hostname is hidden.">
+  ![Daily report detail with summary, occurrence count, and an Error log link](/assets/screenshots/report-detail.webp)
 </Frame>
 
-If a scheduled report does not arrive, check the connected Telegram destination, timezone, and Push time in **Settings**. Use `/daily_report` to test on-demand delivery.
+If a scheduled report does not arrive, check the notification destination, timezone, and Scheduled push setting in **Settings**. For a bound DM, use `/daily_report` to test on-demand delivery.

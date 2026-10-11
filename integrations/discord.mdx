@@ -1,15 +1,35 @@
 ---
 title: "Discord"
-description: "Bind a channel for investigation alerts and follow-up threads."
+description: "Choose an alert channel and enable conversations in your server."
 ---
 
-An admin can connect one Discord alert channel to a workspace.
+An admin can bind one Discord alert channel to a workspace. One Discord server belongs to one Corvo workspace. The same bot posts alerts and answers questions.
 
-1. Open **Integrations** and find **Discord**.
-2. Invite the Corvo bot to your Discord server.
-3. Select a server and a channel where the bot can post.
-4. Save the channel and check for **CHANNEL BOUND**.
+## Invite the bot and choose a channel
 
-Corvo posts investigation alerts to the bound channel. Reply to an alert to start its investigation thread; later replies stay with that thread. In a bound channel, mention the bot when starting a separate conversation. The `/stop` and `/steer` commands can stop or redirect an active agent turn.
+1. Open **Integrations → Discord**.
+2. If the bot is not in your server, select **Invite bot** and complete Discord's authorization flow. Return to Corvo and select **Check again**.
+3. Select your server, then the channel that should receive investigation alerts. Only channels where the bot can post appear in the list.
+4. Select **Save channel**.
 
-If a server or channel is missing from the picker, check the bot's Discord permissions and refresh the list. Use **Disconnect** on the integration card to remove the channel binding.
+<Frame caption="Select the server first, then the alert channel. The server name is hidden.">
+  ![Discord server and channel selectors with Refresh and Save channel](/assets/screenshots/discord-binding.webp)
+</Frame>
+
+The card should now show **CHANNEL BOUND**. The displayed identifier records the selected server and channel.
+
+<Frame caption="CHANNEL BOUND confirms that the alert destination was saved. The identifier is hidden.">
+  ![Discord integration after binding, with Channel bound and Disconnect](/assets/screenshots/discord-bound.webp)
+</Frame>
+
+## Verify the connection
+
+In a channel on that server where the bot has access, mention Corvo and ask a question. It should reply in the same channel. When an investigation alert arrives in the bound alert channel, use **Reply** on that message to open its investigation thread. See [Discord conversations](/features/discord) for the two interaction paths.
+
+Discord takes priority over Telegram for investigation alerts and daily report delivery. Telegram conversations still use the bound Agent bot.
+
+## Change the channel or troubleshoot
+
+Select **Disconnect**, then choose and save the new server and channel. If a server is missing, confirm that the bot has joined it and that it is not bound to another workspace. If a channel is missing, check the bot's permission to view and send messages there, then select **Refresh**.
+
+If the bot can post alerts but cannot open an investigation thread, check its permissions to create public threads and send messages in threads.

@@ -1,0 +1,32 @@
+---
+title: "Discord 對話"
+description: "在頻道提及 Corvo，或在討論串中延續某項調查。"
+---
+
+[綁定 Discord 頻道](/zh-Hant/integrations/discord) 後，你可以在該伺服器的頻道中提問，也可以針對告警繼續追問。兩者由同一個 Corvo Bot 處理。
+
+<Frame caption="在頻道提及 Bot 會開始一般對話；回覆告警則會開啟該調查的討論串。">
+  ![Discord 的頻道對話與調查討論串](/assets/diagrams/discord-conversations-zh.svg)
+</Frame>
+
+## 在頻道提問
+
+在已連接的伺服器中，找一個 Bot 有權存取的頻道，提及 Corvo 並附上問題。它會在同一頻道回覆，各頻道的對話紀錄分開保存。若不在調查討論串內，沒有提及 Bot 的一般訊息不會啟動任務。
+
+例如：「@Corvo 最近一小時有多少筆結帳付款失敗？」請提供服務與時間範圍，讓 Agent 查找對應證據。
+
+<Frame caption="在頻道提及 Corvo 後，Agent 開始處理問題；圖中正檢查可用工具。">
+  ![使用者在 Discord 提及 Corvo 詢問結帳失敗次數，Bot 開始處理](/assets/screenshots/discord-conversation.webp)
+</Frame>
+
+## 延續某項調查
+
+1. 在指定告警頻道找到調查通知。
+2. 使用該告警的**回覆**功能，傳送你的問題。
+3. Corvo 會為這筆告警開啟討論串。後續請在串內回覆，不需每次重新提及 Bot。
+
+討論串會使用該調查的對話與先前工作內容。在一般頻道提及 Bot，則使用該頻道獨立的對話紀錄。若 Corvo 表示告警仍在分派中，請等調查可用後再送出問題。調查功能上線前的舊告警為唯讀；若要詢問，請另開頻道對話。
+
+## 停止或調整工作
+
+在要控制的頻道或討論串使用 `/stop`，可停止目前的執行回合。使用 `/steer` 並填寫 **instruction**，可讓 Agent 從下一步調整方向，例如「修改前先檢查目前部署的版本」。一般追問可能會等待正在執行的回合結束。

@@ -1,10 +1,36 @@
 ---
 title: "Telegram 對話"
-description: "向 Corvo 詢問錯誤並接收調查更新。"
+description: "向 Agent bot 提問，並從 Notify bot 的告警查看調查進度。"
 ---
 
-[連接對話 Bot](/zh-Hant/integrations/telegram) 後，就能在已綁定的私訊或群組傳送訊息。詢問錯誤時，請提供工作負載、時間範圍與觀察到的狀況。Corvo 可回答與執行的操作，取決於已連接的資料來源、儲存庫、工具與權限。
+[連接 Telegram](/zh-Hant/integrations/telegram) 後，請向 Agent bot 提問或交付任務。Corvo 介面稱它為 **chat bot**；另一個 Notify bot（**alerts bot**）負責調查通知。
 
-另一個告警 Bot 會將調查更新傳送至其連接的目的地。開啟調查連結，可查看分組告警、分析結果與修正 PR。
+## 向 Agent bot 提問
 
-在對話中傳送 `/daily_report` 可要求近期錯誤摘要；`/stop` 可停止正在執行的 Agent 回合，`/steer` 可調整其方向。定期傳送方式請參閱[每日報告](/zh-Hant/features/daily-reports)。
+在已綁定的私訊中，直接傳送訊息即可。在已綁定的群組中，請提及 Agent bot 並附上要求，或回覆它的訊息。一般群組訊息不會啟動任務。整個群組共用同一段對話，請提供足夠脈絡，讓其他成員也能理解。
+
+例如，提及 Agent bot 並詢問：「檢查最近 30 分鐘的結帳錯誤，哪一種錯誤最常發生？」請附上服務、時間範圍與觀察到的狀況。Corvo 會使用工作區已連接的資料來源、儲存庫、工具與權限。
+
+<Frame caption="一般提問交給 Agent bot；告警通知則連到該項調查。">
+  ![Agent bot 與 Notify bot 的操作路徑](/assets/diagrams/telegram-bots-zh.svg)
+</Frame>
+
+## 從 Notify bot 告警查看調查
+
+通知會列出受影響的服務與錯誤，並提供 **View logs** 和 **Open in Corvo** 連結。調查進行時，通知內容也可能持續更新。
+
+<Frame caption="Telegram 中的調查通知；專案 ID 與服務網址已遮蔽。">
+  ![Notify bot 告警，包含服務資訊、View logs 與 Open in Corvo 連結](/assets/screenshots/telegram-alert.webp)
+</Frame>
+
+選擇 **Open in Corvo** 可閱讀調查。你也可以回覆 Notify bot 已追蹤的告警，取得其網頁連結；這個回覆不會在 Telegram 執行程式碼任務。若工作區的調查頁面提供訊息輸入欄，請在那裡追問以沿用調查脈絡。若要在 Telegram 另問一個問題，請向 Agent bot 發送訊息。
+
+## 控制目前的任務
+
+| 操作 | Agent bot 指令 |
+| --- | --- |
+| 停止正在執行的回合 | `/stop` |
+| 從下一步調整執行方向 | `/steer 修改程式碼前先檢查日誌` |
+| 在已綁定的私訊中要求每日報告 | `/daily_report` |
+
+若群組中有兩個 Bot，請將控制指令指定給 Agent bot，例如 `/stop@your_agent_bot`、`/steer@your_agent_bot 先檢查日誌`。請將使用者名稱換成工作區連接的 Bot。定期傳送方式請參閱[每日報告](/zh-Hant/features/daily-reports)。

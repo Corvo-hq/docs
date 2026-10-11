@@ -26,6 +26,14 @@ Google Cloud 設定分成兩部分：**讀取權**讓 Corvo 在調查時查詢�
 
 使用 **Manual · Console** 時，逐一開啟 API 連結，在 Corvo 顯示的專案中選擇 **Enable**。清單包含 Cloud Logging、IAM Service Account Credentials，以及你選擇的其他服務。使用 **Script · gcloud** 時，在已登入該專案的 Cloud Shell 或終端機執行頁面產生的指令。完成後回到 Corvo，選擇 **Continue**。
 
+<Frame caption="Manual · Console 列出要啟用的 API；圖中的專案 ID 已遮蔽。">
+  ![啟用 API 步驟，顯示 Logging、IAM Credentials、Run、Monitoring 與 Trace 連結](/assets/screenshots/gcp-api-console.webp)
+</Frame>
+
+<Frame caption="Script · gcloud 會產生同一組 API 的啟用指令。">
+  ![Script 模式顯示產生的 gcloud services enable 指令](/assets/screenshots/gcp-api-script.webp)
+</Frame>
+
 ## 步驟 2：建立服務帳戶
 
 建立帳戶 ID 為 `corvo-agent` 的服務帳戶。Corvo 會顯示完整電子郵件地址：
@@ -35,6 +43,10 @@ corvo-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com
 ```
 
 若帳戶已存在，確認地址一致即可。不要建立或下載金鑰。
+
+<Frame caption="帳戶 ID 必須是 corvo-agent；Corvo 會在地址中帶入你的專案。">
+  ![建立服務帳戶步驟，顯示帳戶 ID、地址與建立連結](/assets/screenshots/gcp-service-account.webp)
+</Frame>
 
 ## 步驟 3：授予讀取角色
 
@@ -46,23 +58,29 @@ corvo-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com
 
 這項授權要設在 `corvo-agent` 服務帳戶上。**Permissions** 分頁管理的是 `corvo-agent` 本身可存取的資源，不是這項授權的位置。Corvo 執行身分是被授權者，`corvo-agent` 是被模擬的帳戶。
 
+<Frame caption="第三步授予資料讀取權；第四步讓 Corvo 使用該服務帳戶。">
+  ![專案讀取角色與服務帳戶模擬身分分別授予不同主體](/assets/diagrams/gcp-iam-zh.svg)
+</Frame>
+
 ## 步驟 5：驗證存取權
 
 檢查專案、API、角色與模擬身分授權，選擇 **Bind & Verify**。Corvo 會檢查模擬身分、Cloud Logging，以及你選擇的其他服務。失敗項目會連回相關設定步驟。新啟用的 API 與 IAM 授權可能需要時間生效；請等待頁面顯示的重試結束再重新驗證。
 
-**確認：**每項檢查都顯示 **VERIFIED**，專案顯示 **CONNECTED**。
+**確認**：每項檢查都顯示 **VERIFIED**，專案顯示 **CONNECTED**。
 
 ## 步驟 6：選擇來源並連接串流
 
 選擇最低嚴重程度 **WARNING**、**ERROR** 或 **CRITICAL**，再至少選一個來源：
 
-- **Cloud Run：**全部服務或指定服務。
-- **GKE：**全部叢集、指定叢集、命名空間或容器。
-- **Compute Engine：**全部執行個體或指定執行個體。
+- **Cloud Run**：全部服務或指定服務。
+- **GKE**：全部叢集、指定叢集、命名空間或容器。
+- **Compute Engine**：全部執行個體或指定執行個體。
 
 一開始不會預選來源。選取上層項目也會包含日後在其下新增的資源。GKE 和 Compute Engine 建議清單來自最近七天有寫入的日誌；列出這些來源需要 Cloud Monitoring Viewer 權限。找不到資源時，選擇 **Can't find it? Add by name**，輸入確切識別值。來源選擇器也支援搜尋、重新整理及顯示系統命名空間。
 
-![來源選擇器，顯示 Cloud Run、GKE、Compute Engine 與產生的篩選條件](/assets/screenshots/gcp-sources.png)
+<Frame caption="圖為 Edit sources 中的來源選擇器。初次設定使用相同選項，最後按 Connect。">
+  ![來源選擇器，顯示 Cloud Run、GKE、Compute Engine 與產生的篩選條件](/assets/screenshots/gcp-sources.png)
+</Frame>
 
 使用 **Manual · Console** 時，在 **Log Router** 建立名為 `corvo-alert-sink` 的日誌接收器。將目的地設為 **Cloud Pub/Sub topic**，貼上 Corvo 產生的 Topic 和 **Inclusion filter**。使用 **Script · gcloud** 時，在已登入的 Cloud Shell 或終端機執行頁面產生的指令。請以 Corvo 當下顯示的篩選條件為準；例如選取所有 Cloud Run 服務且最低嚴重程度為 ERROR 時，條件是：
 
@@ -72,7 +90,7 @@ severity>=ERROR AND resource.type="cloud_run_revision"
 
 同時選取 Cloud Run、GKE 或 Compute Engine 時，條件會更長。回到 Corvo 選擇 **Connect**。系統會檢查日誌接收器、目的地、實際篩選條件、發佈權限與接收管線。通過後選擇 **Finish**。
 
-**確認：**告警串流顯示 **STREAMING**，且 **Active filter** 符合所選來源與嚴重程度。選擇 **Skip for now** 只會保留讀取權，不會開始自動傳送日誌。
+**確認**：告警串流顯示 **STREAMING**，且 **Active filter** 符合所選來源與嚴重程度。選擇 **Skip for now** 只會保留讀取權，不會開始自動傳送日誌。
 
 ## 變更或停止串流
 
@@ -80,8 +98,8 @@ severity>=ERROR AND resource.type="cloud_run_revision"
 
 ## 疑難排解
 
-- **API 檢查失敗：**確認 Corvo 列出的 API 都在指定專案啟用，包括 IAM Service Account Credentials。
-- **讀取角色檢查失敗：**在專案 IAM 核對 `corvo-agent` 地址，以及失敗項目指定的角色。
-- **Token Creator 檢查失敗：**在 `corvo-agent` → **Principals with access**，確認 Corvo 執行身分具有 `roles/iam.serviceAccountTokenCreator`。
-- **無法連接日誌接收器：**確認 `corvo-alert-sink` 已啟用，目的地及 Inclusion filter 與 Corvo 顯示的值完全相同，再選擇 **Retry**。
-- **沒有收到調查：**確認狀態為 **STREAMING**，檢查 **Active filter**，並確認所選來源有寫入達到最低嚴重程度的日誌。只有 **CONNECTED** 讀取權不會自動傳送日誌。
+- **API 檢查失敗**：確認 Corvo 列出的 API 都在指定專案啟用，包括 IAM Service Account Credentials。
+- **讀取角色檢查失敗**：在專案 IAM 核對 `corvo-agent` 地址，以及失敗項目指定的角色。
+- **Token Creator 檢查失敗**：在 `corvo-agent` → **Principals with access**，確認 Corvo 執行身分具有 `roles/iam.serviceAccountTokenCreator`。
+- **無法連接日誌接收器**：確認 `corvo-alert-sink` 已啟用，目的地及 Inclusion filter 與 Corvo 顯示的值完全相同，再選擇 **Retry**。
+- **沒有收到調查**：確認狀態為 **STREAMING**，檢查 **Active filter**，並確認所選來源有寫入達到最低嚴重程度的日誌。只有 **CONNECTED** 讀取權不會自動傳送日誌。

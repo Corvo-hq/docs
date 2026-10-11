@@ -3,8 +3,8 @@ title: "Investigation pipeline"
 description: "How a Google Cloud log entry becomes a continuing investigation."
 ---
 
-<Frame caption="From selected logs to investigations and review">
-  ![Selected Google Cloud logs flow through a sink, collection window, orchestrator, and continuing investigations](/assets/diagrams/investigation-pipeline.svg)
+<Frame caption="Related errors share an investigation; a later occurrence can resume it.">
+  ![Example showing two checkout errors assigned to investigation A and a worker error to investigation B](/assets/diagrams/investigation-pipeline.svg)
 </Frame>
 
 1. A Cloud Logging sink forwards entries that match your [selected sources and severity](/integrations/google-cloud).

@@ -27,6 +27,10 @@ Use **Add or configure repositories** to change the App installation later. Givi
 3. Select **Save & build**. Corvo runs each setup command and prepares an environment snapshot.
 4. Wait for **READY**. Runs start from that snapshot and fetch the latest code.
 
+<Frame caption="Add repositories, set their setup commands, and build until the environment shows READY. Repository names are hidden.">
+  ![Agent environment with two repositories, setup commands, READY, and Save and build](/assets/screenshots/agent-environment.webp)
+</Frame>
+
 If setup fails, read the log for the affected repository, fix its command, and run **Save & build** again. After changing repositories or setup commands, rebuild the environment so the next run uses the new configuration.
 
 ## Review a fix PR

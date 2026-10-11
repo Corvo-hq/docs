@@ -1,25 +1,67 @@
 ---
 title: "Telegram"
-description: "Connect chat and alerts bots to a workspace DM or group."
+description: "Connect the Agent bot for conversations and the Notify bot for investigation alerts."
 ---
 
-Open **Integrations → Telegram bot**. Each workspace has one active Telegram chat destination, either a direct message or a group. The chat bot handles conversations; the separate alerts bot posts investigation updates.
+Telegram uses two bots. The Agent bot answers questions and carries out tasks. The Notify bot sends investigation updates. Corvo calls them **chat bot** and **alerts bot** in the interface.
 
-## Connect a direct message
+| Bot | What it does | Where you use it |
+| --- | --- | --- |
+| Agent bot (chat bot) | Reads your request, runs the agent, and replies. | A bound DM or group. In a group, mention this bot or reply to its message. |
+| Notify bot (alerts bot) | Posts investigation alerts and progress. A reply to a tracked alert returns its Corvo web link. | Its own bound DM or group. It does not run an agent task from your reply. |
 
-1. Select **DM**, then **Direct message**.
-2. Open the Telegram link or scan the QR code.
-3. Start the chat bot in Telegram before the displayed token expires.
-4. Return to Corvo and confirm the chat destination is connected.
-5. Follow the prompt to connect the alerts bot to a DM or group if you want investigation posts.
+<Frame caption="The two connections serve different actions.">
+  ![Telegram routes questions to the Agent bot and investigation notifications to the Notify bot](/assets/diagrams/telegram-bots.svg)
+</Frame>
 
-## Connect a group
+An admin connects the bots from **Integrations → Telegram bot**. Each workspace has one Agent bot destination and a separate Notify bot destination. They can use the same group or different destinations.
 
-1. Select **Group**, then choose the group connection option.
-2. Add the chat bot to the group through the displayed Telegram link. If the bot is already there, send the binding command Corvo shows in that group.
-3. Return to Corvo and confirm the group is connected.
-4. Connect the alerts bot to the destination that should receive investigation posts.
+## 1. Connect the Agent bot
 
-To change from DM to group or back, select **Disconnect** on the existing destination before connecting another. If Corvo does not confirm a connection, reopen the flow for a fresh link or binding command.
+<Frame caption="Choose DM or Group for conversations with the Agent bot.">
+  ![Telegram integration before binding, with DM and Group buttons](/assets/screenshots/telegram-start.webp)
+</Frame>
 
-See [Telegram conversations](/features/telegram) for chat commands and [Daily reports](/features/daily-reports) for scheduled summaries.
+For a direct message:
+
+1. Select **DM**. The dialog opens with **Direct message** selected.
+2. Select **Open DM in Telegram**, or scan the QR code.
+3. Select **Start** in Telegram to send the binding token to the Agent bot.
+4. Return to Corvo. The card should show **DM CONNECTED**.
+
+For a group:
+
+1. Select **Group**, then **Add bot to group** in the dialog.
+2. Choose the group in Telegram and complete the add-bot flow. If the bot is already there, copy the `/bind@…` command shown by Corvo and send it in that group.
+3. Wait for the bot's confirmation. Return to Corvo and check for **GROUP CONNECTED**.
+
+The link and binding command expire after three minutes. Reopen the dialog if the token expires or has already been used.
+
+## 2. Connect the Notify bot
+
+After the Agent bot is connected, the card offers **Connect alerts bot**.
+
+<Frame caption="GROUP CONNECTED refers to the Agent bot. Connect alerts bot starts the second connection.">
+  ![Telegram card with the Agent bot connected and Connect alerts bot available](/assets/screenshots/telegram-chat-connected.webp)
+</Frame>
+
+1. Select **Connect alerts bot**.
+2. Choose **Direct message** or **Group chat** for investigation notifications.
+3. In a DM, select **Open alerts bot in Telegram**, then **Start**. For a group, select **Add alerts bot to group**, or use the Notify bot's own binding command from this dialog.
+4. Return to Corvo and check for **ALERTS BOT** (DM) or **ALERTS GROUP** (group), alongside the Agent bot's connection status.
+
+<Frame caption="The Notify bot has its own link and binding command. The QR code and token are hidden in this example.">
+  <img src="/assets/screenshots/telegram-notify-dialog.webp" alt="Connect alerts bot dialog with Direct message and Group chat choices" width="480" />
+</Frame>
+
+<Frame caption="Both bots are connected: GROUP CONNECTED for conversations, ALERTS GROUP for notifications.">
+  ![Telegram integration showing both Group connected and Alerts group](/assets/screenshots/telegram-connected.webp)
+</Frame>
+
+## Check where alerts will arrive
+
+A bound Discord channel takes priority for investigation alerts. Otherwise, Corvo uses the Telegram Notify bot destination; if that is not connected, it falls back to the Agent bot destination. Alerts are sent to the selected destination rather than broadcast to every integration.
+
+If notifications are missing, check this priority and both Telegram status badges. To change the Telegram setup, select **Disconnect**, reconnect the Agent bot, then reconnect the Notify bot. Disconnect clears both Telegram connections.
+
+See [Telegram conversations](/features/telegram) for mentions, replies, and commands.

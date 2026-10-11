@@ -7,6 +7,10 @@ Pub/Sub 若重送具有相同 `insertId` 的 Cloud Logging 項目，Corvo 只會
 
 告警收集時段結束後，分派流程會依可能的原因分組。新告警可能加入既有調查，讓 Agent 沿用先前脈絡；也可能建立新調查。過去的 PR 可提供判斷依據，但開啟中的 PR 不會自動阻止新告警或 Agent 執行。
 
-**例：**同一服務在多個時段寫入七次相同例外。Corvo 會保留七次發生紀錄，並可能在同一項持續追蹤的調查下顯示。Agent 可檢查原因或影響是否改變，也可能只回報再次發生的情況，不另外建立 PR。
+**例**：同一服務在多個時段寫入七次相同例外。Corvo 會保留七次發生紀錄，並可能在同一項持續追蹤的調查下顯示。Agent 可檢查原因或影響是否改變，也可能只回報再次發生的情況，不另外建立 PR。
+
+<Frame caption="同一項調查中的七次發生，仍保留為七筆紀錄。">
+  <img src="/assets/screenshots/investigation-alerts.webp" alt="同一項調查內的七筆告警紀錄" width="360" />
+</Frame>
 
 完整流程請參閱[調查流程](/zh-Hant/how-corvo-works/investigation-pipeline)。

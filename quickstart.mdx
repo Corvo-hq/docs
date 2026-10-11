@@ -7,9 +7,13 @@ You need a Corvo workspace, access to a GitHub App installation, and permission 
 
 ## 1. Connect a notification channel
 
-Open **Integrations**. Connect the **Telegram bot** in a DM or group, or [bind a Discord channel](/integrations/discord). Telegram has separate chat and alerts bot connections: after binding the chat bot, connect the alerts bot to receive investigation posts. Each workspace has one active Telegram chat destination.
+Open **Integrations** and [connect Telegram](/integrations/telegram) or [bind a Discord channel](/integrations/discord). For Telegram, bind the Agent bot for conversations, then select **Connect alerts bot** to bind the Notify bot for alerts. A bound Discord channel takes priority for alerts; otherwise Corvo uses the Notify bot, falling back to the Agent bot when needed.
 
 **Check:** Telegram shows the connected chat and alerts destinations, or Discord shows **CHANNEL BOUND**.
+
+<Frame caption="Telegram is ready when both the chat connection and alerts connection appear.">
+  ![Telegram with Group connected and Alerts group badges](/assets/screenshots/telegram-connected.webp)
+</Frame>
 
 ## 2. Prepare GitHub
 

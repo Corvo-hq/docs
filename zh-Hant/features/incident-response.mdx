@@ -5,16 +5,22 @@ description: "在同一項調查中追蹤相關告警、分析結果與修正提
 
 從工作區側欄開啟 **Investigations**。每列是一項調查，可能包含多筆原因相同的告警。**Active** 顯示執行中的調查，**Needs attention** 顯示執行失敗的調查，**Done** 顯示已完成的調查；**All** 顯示全部狀態。Corvo 收集新告警、等待調查時段結束時，頁面可能顯示 **Collecting**。
 
-![調查列表，顯示兩項已完成調查及各自的告警數](/assets/screenshots/investigations.png)
+<Frame caption="每列是一項調查；告警數量代表這項調查包含的發生次數。">
+  ![Investigations 列表，顯示狀態篩選與告警數量](/assets/screenshots/investigations.png)
+</Frame>
 
 ## 閱讀調查內容
 
 選擇一列，開啟對話與詳細資料欄。詳細資料欄包含：
 
-- **Alerts：**依錯誤分組的告警，以及各筆原始日誌。
-- **Pull requests：**這項調查已記錄的 PR；若沒有 PR，會顯示空狀態。
-- **Agent summary：**Agent 最近一次的處理摘要。
-- **Links：**對應日誌的 Cloud Logging 查詢連結。
+- **Alerts**：依錯誤分組的告警，以及各筆原始日誌。
+- **Pull requests**：這項調查已記錄的 PR；若沒有 PR，會顯示空狀態。
+- **Agent summary**：Agent 最近一次的處理摘要。
+- **Links**：對應日誌的 Cloud Logging 查詢連結。
+
+<Frame caption="展開 Alerts 可查看每筆紀錄。範例保留了七次發生紀錄；服務網址已遮蔽。">
+  <img src="/assets/screenshots/investigation-alerts.webp" alt="調查詳細資料，顯示七筆告警、沒有 PR，以及 Cloud Logging 連結" width="380" />
+</Frame>
 
 對話會顯示調查過程與結果。若工作區顯示訊息輸入欄，你可以在這裡追問，後續對話會沿用同一項調查。新告警在完成分派前，可能暫時沒有可用的對話。
 

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="555" viewBox="0 0 1000 555" role="img" aria-labelledby="title desc">
+<title id="title">Conversations in Discord</title><desc id="desc">Mention Corvo for a channel conversation. Reply to an alert to open the investigation thread.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#315fbd" stroke-width="1.7"/></marker></defs>
+<rect width="1000" height="555" fill="#ffffff"/>
+<g font-family="Inter, Noto Sans CJK TC, Arial, sans-serif">
+<text x="40" y="48" font-size="28" fill="#202124" font-weight="600" text-anchor="start">Two ways to talk in Discord</text>
+<text x="40" y="111" font-size="21" fill="#202124" font-weight="600" text-anchor="start">Ask in a channel</text>
+<rect x="40" y="133" width="416" height="86" rx="6" fill="#fafafa" stroke="#dadce0"/>
+<text x="60" y="169" font-size="18" fill="#315fbd" font-weight="600" text-anchor="start">@Corvo</text>
+<text x="150" y="169" font-size="18" fill="#202124" font-weight="400" text-anchor="start">check the checkout errors</text>
+<text x="60" y="199" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">In a channel the bot can access</text>
+<path d="M456 177H576" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="603" y="166" font-size="21" fill="#202124" font-weight="600" text-anchor="start">Corvo replies in that channel</text>
+<text x="603" y="199" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">Each channel has its own conversation</text>
+<path d="M40 259L960 259" stroke="#dadce0" fill="none"/>
+<text x="40" y="307" font-size="21" fill="#202124" font-weight="600" text-anchor="start">Follow up on an alert</text>
+<rect x="40" y="332" width="416" height="86" rx="6" fill="#fafafa" stroke="#dadce0"/>
+<text x="60" y="368" font-size="19" fill="#202124" font-weight="600" text-anchor="start">Alert in the bound channel</text>
+<text x="60" y="398" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">Use Discord’s Reply action</text>
+<path d="M456 376H545V481H582" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="604" y="340" width="356" height="170" rx="0" fill="#f0f4fc" stroke="none"/>
+<text x="626" y="377" font-size="22" fill="#202124" font-weight="600" text-anchor="start">Investigation thread</text>
+<text x="626" y="415" font-size="18" fill="#202124" font-weight="400" text-anchor="start">First reply opens the thread</text>
+<text x="626" y="449" font-size="17" fill="#202124" font-weight="400" text-anchor="start">Continue here without @mention</text>
+<text x="626" y="483" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">Uses the investigation’s context</text>
+<text x="40" y="540" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">Use /stop or /steer in the conversation you want to control.</text>
+</g></svg>

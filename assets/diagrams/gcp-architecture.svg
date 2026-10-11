@@ -1,1 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="465" viewBox="0 0 1100 465" role="img" aria-label="Google Cloud to Corvo"><style>.title{font:700 25px Arial,sans-serif;fill:#0f172a}.subtitle{font:15px Arial,sans-serif;fill:#475569}.head{font:700 17px Arial,sans-serif;fill:#0f172a}.body{font:14px Arial,sans-serif;fill:#475569}.label{font:700 13px Arial,sans-serif;fill:#475569}</style><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b"/></marker></defs><rect x="1" y="1" width="1098" height="463" rx="20" fill="#f8fafc" stroke="#e2e8f0"/><text x="40" y="48" class="title">Google Cloud to Corvo</text><text x="40" y="77" class="subtitle">Alert delivery and investigation access are separate.</text><g><rect x="40" y="112" width="230" height="104" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/><rect x="40" y="112" width="8" height="104" rx="4" fill="#4285f4"/><text x="62" y="150" class="head">Cloud Logging</text><text x="62" y="179" class="body">Selected error entries</text></g><g><rect x="310" y="112" width="230" height="104" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/><rect x="310" y="112" width="8" height="104" rx="4" fill="#34a853"/><text x="332" y="150" class="head">Log sink</text><text x="332" y="179" class="body">Severity + source filter</text></g><g><rect x="580" y="112" width="230" height="104" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/><rect x="580" y="112" width="8" height="104" rx="4" fill="#10b981"/><text x="602" y="150" class="head">Corvo Pub/Sub</text><text x="602" y="179" class="body">Sink writer publishes</text></g><g><rect x="850" y="112" width="230" height="104" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/><rect x="850" y="112" width="8" height="104" rx="4" fill="#6366f1"/><text x="872" y="150" class="head">Investigations</text><text x="872" y="179" class="body">Alerts grouped by cause</text></g><path d="M270 164 H298 M540 164 H568 M810 164 H838" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/><path d="M405 362 H683" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/><text x="40" y="282" class="label">INVESTIGATION ACCESS</text><g><rect x="175" y="310" width="230" height="104" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/><rect x="175" y="310" width="8" height="104" rx="4" fill="#f59e0b"/><text x="197" y="348" class="head">Corvo runtime</text><text x="197" y="377" class="body">Short-lived credentials</text></g><g><rect x="695" y="310" width="230" height="104" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/><rect x="695" y="310" width="8" height="104" rx="4" fill="#6366f1"/><text x="717" y="348" class="head">corvo-agent</text><text x="717" y="377" class="body">Read roles in your project</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650" role="img" aria-labelledby="title desc">
+<title id="title">Google Cloud and Corvo</title><desc id="desc">Selected logs are pushed to Corvo. Investigations separately use your service account to read approved data.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#315fbd" stroke-width="1.7"/></marker></defs>
+<rect width="1000" height="650" fill="#ffffff"/>
+<g font-family="Inter, Noto Sans CJK TC, Arial, sans-serif">
+<text x="40" y="48" font-size="28" fill="#202124" font-weight="600" text-anchor="start">Google Cloud and Corvo</text>
+<rect x="40" y="82" width="450" height="521" rx="0" fill="#fafafa" stroke="none"/>
+<text x="64" y="123" font-size="22" fill="#202124" font-weight="600" text-anchor="start">Your Google Cloud project</text>
+<text x="570" y="123" font-size="22" fill="#202124" font-weight="600" text-anchor="start">Corvo</text>
+<path d="M530 100L530 599" stroke="#dadce0" fill="none" stroke-dasharray="5 6"/>
+<text x="64" y="173" font-size="17" fill="#315fbd" font-weight="600" text-anchor="start">Log delivery</text>
+<text x="64" y="218" font-size="21" fill="#202124" font-weight="600" text-anchor="start">Cloud Logging</text>
+<text x="64" y="249" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">Cloud Run · GKE · Compute Engine</text>
+<path d="M212 267V300" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="64" y="306" width="396" height="89" rx="6" fill="#ffffff" stroke="#dadce0"/>
+<text x="84" y="339" font-size="19" fill="#202124" font-weight="600" text-anchor="start">corvo-alert-sink</text>
+<text x="84" y="370" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">Selected sources + minimum severity</text>
+<path d="M460 350H569" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="582" y="339" font-size="21" fill="#202124" font-weight="600" text-anchor="start">Pub/Sub</text>
+<text x="582" y="370" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">Receive matching logs</text>
+<path d="M790 350H833" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="848" y="340" font-size="18" fill="#202124" font-weight="600" text-anchor="start">Investigate</text>
+<path d="M64 427L960 427" stroke="#dadce0" fill="none"/>
+<text x="64" y="466" font-size="17" fill="#315fbd" font-weight="600" text-anchor="start">Read access during an investigation</text>
+<text x="64" y="511" font-size="21" fill="#202124" font-weight="600" text-anchor="start">corvo-agent</text>
+<text x="64" y="544" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">Read roles you granted</text>
+<path d="M768 512H367" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="404" y="497" font-size="17" fill="#315fbd" font-weight="400" text-anchor="start">Impersonate</text>
+<text x="788" y="511" font-size="19" fill="#202124" font-weight="600" text-anchor="start">Corvo runtime</text>
+<text x="788" y="542" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">Short-lived token</text>
+<text x="40" y="632" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">The source filter controls delivery; IAM roles control what the agent can read.</text>
+</g></svg>

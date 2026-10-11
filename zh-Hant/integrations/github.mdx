@@ -27,6 +27,10 @@ GitHub 設定有兩個階段：**Corvo GitHub App** 決定可存取的儲存庫�
 3. 選擇 **Save & build**。Corvo 會執行每個設定指令並準備環境快照。
 4. 等待狀態顯示 **READY**。Agent 執行時會從快照啟動，再取得最新程式碼。
 
+<Frame caption="加入儲存庫、填寫設定指令，再建立環境直到顯示 READY。圖中的儲存庫名稱已遮蔽。">
+  ![Agent environment，顯示兩個儲存庫、設定指令、READY 與 Save and build](/assets/screenshots/agent-environment.webp)
+</Frame>
+
 設定失敗時，先查看該儲存庫的執行日誌，修正指令後重新選擇 **Save & build**。修改儲存庫或指令後，也要重新建立環境，後續執行才會使用新設定。
 
 ## 審查修正 PR

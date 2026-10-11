@@ -7,9 +7,13 @@ description: "連接通知管道、GitHub 和 Google Cloud，開始接收調查�
 
 ## 1. 連接通知管道
 
-開啟 **Integrations**。你可以連接 **Telegram bot** 的私訊或群組，也可以[綁定 Discord 頻道](/zh-Hant/integrations/discord)。Telegram 的對話 Bot 與告警 Bot 分開連接；綁定對話 Bot 後，還要連接告警 Bot 才會收到調查通知。每個工作區只能有一個有效的 Telegram 對話目的地。
+開啟 **Integrations**，選擇[連接 Telegram](/zh-Hant/integrations/telegram) 或[綁定 Discord 頻道](/zh-Hant/integrations/discord)。Telegram 先連接 Agent bot（對話用），再按 **Connect alerts bot** 連接 Notify bot（告警用）。若同時綁定 Discord，告警會優先送到 Discord；否則使用 Notify bot，尚未連接時才使用 Agent bot。
 
-**確認：**Telegram 顯示已連接的對話與告警目的地，或 Discord 顯示 **CHANNEL BOUND**。
+**確認**：Telegram 顯示已連接的對話與告警目的地，或 Discord 顯示 **CHANNEL BOUND**。
+
+<Frame caption="Telegram 完成設定後，會同時顯示對話與告警的連線狀態。">
+  ![Telegram 顯示 Group connected 與 Alerts group 狀態](/assets/screenshots/telegram-connected.webp)
+</Frame>
 
 ## 2. 準備 GitHub
 
@@ -34,7 +38,7 @@ GitHub App 的安裝範圍是可存取的上限；Agent environment 才決定 Co
 
 第一個畫面的讀取權選項與第六步的日誌串流範圍是兩回事。只選擇你要傳送至 Corvo 的資源。Google Cloud Console 的詳細操作請參閱 [Google Cloud 設定](/zh-Hant/integrations/google-cloud)。
 
-**確認：**專案顯示 **CONNECTED**，告警串流顯示 **STREAMING**，且 Active filter 符合所選來源。
+**確認**：專案顯示 **CONNECTED**，告警串流顯示 **STREAMING**，且 Active filter 符合所選來源。
 
 ## 4. 追蹤調查
 

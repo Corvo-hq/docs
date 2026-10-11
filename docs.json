@@ -77,7 +77,8 @@
               "features/daily-reports",
               "features/agent-settings",
               "features/memory",
-              "features/telegram"
+              "features/telegram",
+              "features/discord"
             ]
           },
           {
@@ -144,7 +145,8 @@
               "zh-Hant/features/daily-reports",
               "zh-Hant/features/agent-settings",
               "zh-Hant/features/memory",
-              "zh-Hant/features/telegram"
+              "zh-Hant/features/telegram",
+              "zh-Hant/features/discord"
             ]
           },
           {

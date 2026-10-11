@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="565" viewBox="0 0 1000 565" role="img" aria-labelledby="title desc">
+<title id="title">Telegram：對話與通知</title><desc id="desc">Agent bot 在 Telegram 處理提問；Notify bot 發送告警，並提供網頁調查連結。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#315fbd" stroke-width="1.7"/></marker></defs>
+<rect width="1000" height="565" fill="#ffffff"/>
+<g font-family="Inter, Noto Sans CJK TC, Arial, sans-serif">
+<text x="40" y="48" font-size="28" fill="#202124" font-weight="600" text-anchor="start">Telegram：兩個 Bot 的分工</text>
+<path d="M40 266L960 266" stroke="#dadce0" fill="none"/>
+<text x="40" y="136" font-size="19" fill="#202124" font-weight="600" text-anchor="start">你提出問題</text>
+<text x="40" y="168" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">私訊或 @提及</text>
+<path d="M269 151H357" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="380" y="111" width="240" height="114" rx="6" fill="#fafafa" stroke="#dadce0"/>
+<text x="402" y="150" font-size="25" fill="#202124" font-weight="600" text-anchor="start">Agent bot</text>
+<text x="402" y="189" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">介面稱為 chat bot</text>
+<path d="M620 151H706" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="729" y="138" font-size="21" fill="#315fbd" font-weight="600" text-anchor="start">在 Telegram 回覆</text>
+<text x="729" y="172" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">向 Agent bot 繼續追問</text>
+<path d="M40 473L960 473" stroke="#dadce0" fill="none"/>
+<text x="40" y="343" font-size="19" fill="#202124" font-weight="600" text-anchor="start">調查有新進度</text>
+<text x="40" y="375" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">發送通知</text>
+<path d="M269 358H357" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="380" y="318" width="240" height="114" rx="6" fill="#fafafa" stroke="#dadce0"/>
+<text x="402" y="357" font-size="25" fill="#202124" font-weight="600" text-anchor="start">Notify bot</text>
+<text x="402" y="396" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">介面稱為 alerts bot</text>
+<path d="M620 358H706" fill="none" stroke="#315fbd" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="729" y="345" font-size="21" fill="#315fbd" font-weight="600" text-anchor="start">Open in Corvo</text>
+<text x="729" y="379" font-size="16" fill="#62656b" font-weight="400" text-anchor="start">閱讀調查；可用時在網頁追問</text>
+<text x="40" y="514" font-size="18" fill="#202124" font-weight="400" text-anchor="start">回覆已追蹤的告警 → Notify bot 回傳該調查的網頁連結。</text>
+<text x="40" y="546" font-size="17" fill="#62656b" font-weight="400" text-anchor="start">先綁定 Agent bot，再按「Connect alerts bot」連接 Notify bot。</text>
+</g></svg>

@@ -1,10 +1,36 @@
 ---
 title: "Telegram conversations"
-description: "Ask Corvo questions and receive investigation updates."
+description: "Ask the Agent bot questions and follow alerts from the Notify bot."
 ---
 
-After [connecting the chat bot](/integrations/telegram), send a message in the bound DM or group. Include the workload, time range, and symptom when asking about an error. Corvo's answers and actions depend on the connected data sources, repositories, tools, and permissions.
+After [connecting Telegram](/integrations/telegram), use the Agent bot for questions and tasks. Corvo calls this the **chat bot**. The other identity, the Notify bot (**alerts bot**), handles investigation notifications.
 
-The separate alerts bot sends investigation posts to its connected destination. Follow the investigation link to inspect grouped alerts, findings, and any proposed PR.
+## Ask the Agent bot
 
-Send `/daily_report` in the chat to request a recent error summary. `/stop` stops an active agent turn; `/steer` lets you redirect it. See [Daily reports](/features/daily-reports) for scheduled delivery.
+In the bound DM, send your message directly. In a bound group, mention the Agent bot together with your request, or reply to one of its messages. Ordinary group messages do not start a task. The group shares one conversation, so include enough context for teammates to follow.
+
+For example, mention the Agent bot and ask: “Check checkout errors in the last 30 minutes. Which error is happening most often?” Include the workload, time range, and symptom. Corvo uses the workspace's connected sources, repositories, tools, and permissions.
+
+<Frame caption="Questions stay with the Agent bot; alert notifications link to the investigation.">
+  ![Agent bot and Notify bot interaction paths](/assets/diagrams/telegram-bots.svg)
+</Frame>
+
+## Follow an alert from the Notify bot
+
+A notification identifies the affected service and error, with **View logs** and **Open in Corvo** links. It can be updated as the investigation progresses.
+
+<Frame caption="An investigation notification in Telegram. The project ID and service URL are hidden.">
+  ![Notify bot alert with service details, View logs, and Open in Corvo](/assets/screenshots/telegram-alert.webp)
+</Frame>
+
+Select **Open in Corvo** to read the investigation. You can also reply to a tracked Notify bot alert to receive its web link. That reply does not run a coding task in Telegram. If your workspace provides a message field on the investigation page, continue there to retain that investigation's context. For a separate question in Telegram, address the Agent bot.
+
+## Control the current task
+
+| Action | Agent bot command |
+| --- | --- |
+| Stop the active turn | `/stop` |
+| Change the instructions from the next step | `/steer Check the logs before changing code` |
+| Request a daily report in the bound DM | `/daily_report` |
+
+In a group containing both bots, address control commands to the Agent bot, for example `/stop@your_agent_bot` and `/steer@your_agent_bot Check the logs first`. Replace the username with the bot connected to your workspace. See [Daily reports](/features/daily-reports) for scheduled delivery.
