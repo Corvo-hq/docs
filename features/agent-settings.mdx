@@ -7,7 +7,7 @@ description: "Add standing instructions and connect external MCP tools."
 
 Open **Agent** in the sidebar and find **Custom instructions**. Enter your team's guidance in Markdown, then select **Save**.
 
-These instructions apply to agent runs, including chat, alert investigations, and PR replies. The agent's safety rules and tool constraints still apply.
+These instructions apply to agent runs, including chat, alert investigations, and PR replies. Use them for how the agent should work. Put facts about your services and team in [Memory](/features/memory). The agent's safety rules and tool constraints still apply.
 
 For example:
 
@@ -17,7 +17,13 @@ Include the affected service and validation results in each PR description.
 Use our deployment branch when checking recent changes.
 ```
 
-Use instructions for context the agent should have across tasks. Use [Agent Permissions](/how-corvo-works/agent-permissions) to control allowed Git and GitHub operations.
+Use [Agent Permissions](/how-corvo-works/agent-permissions) to control allowed Git and GitHub operations.
+
+## Manage skills
+
+The **Skills** section contains operating procedures the agent can read when relevant. Required built-in skills are always on. Other built-in skills can be switched on or off. To create a custom skill, select **Add skill**, fill in **Name**, **Description**, and **Instructions**, then save. Use its switch to enable it. You can edit or delete custom skills later.
+
+Describe when the agent should use a custom skill and the steps it should follow. Skills guide the agent; they do not grant additional Git, GitHub, or external tool access.
 
 ## Connect an MCP server
 

@@ -7,7 +7,7 @@ description: "新增固定指示並連接外部 MCP 工具。"
 
 在側欄開啟 **Agent**，找到 **Custom instructions**。以 Markdown 輸入團隊指示，然後選擇 **Save**。
 
-這些指示會套用至 Agent 的對話、告警調查與 PR 回覆。Agent 仍會遵循既有的安全規則與工具限制。
+這些指示會套用至 Agent 的對話、告警調查與 PR 回覆。這裡適合寫工作方式；服務與團隊的長期事實請放在[記憶](/zh-Hant/features/memory)。Agent 仍會遵循既有的安全規則與工具限制。
 
 例如：
 
@@ -17,7 +17,13 @@ description: "新增固定指示並連接外部 MCP 工具。"
 檢查近期變更時，使用團隊的部署分支。
 ```
 
-自訂指示適合保存 Agent 在不同任務中都需要的背景資訊。若要控制允許的 Git 與 GitHub 操作，請使用 [Agent 權限](../how-corvo-works/agent-permissions)。
+若要控制允許的 Git 與 GitHub 操作，請使用 [Agent 權限](../how-corvo-works/agent-permissions)。
+
+## 管理技能
+
+**Skills** 區列出 Agent 可依任務讀取的操作程序。必要的內建技能會保持啟用；其他內建技能可開啟或停用。若要建立自訂技能，選擇 **Add skill**，填寫 **Name**、**Description** 與 **Instructions**，儲存後用開關決定是否啟用。自訂技能也可編輯或刪除。
+
+請在技能中說明適用情境與操作步驟。技能只提供工作指引，不會額外授予 Git、GitHub 或外部工具權限。
 
 ## 連接 MCP Server
 

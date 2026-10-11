@@ -1,0 +1,15 @@
+---
+title: "Discord"
+description: "綁定接收調查告警的頻道，並在討論串追問。"
+---
+
+管理員可以為工作區連接一個 Discord 告警頻道。
+
+1. 開啟 **Integrations**，找到 **Discord**。
+2. 邀請 Corvo Bot 加入你的 Discord 伺服器。
+3. 選擇 Bot 可以發文的伺服器與頻道。
+4. 儲存後確認狀態為 **CHANNEL BOUND**。
+
+Corvo 會將調查告警傳送至綁定的頻道。回覆告警即可開始該調查的討論串；後續回覆會留在同一串。在已綁定的頻道中，若要開始其他對話，請提及 Bot。`/stop` 和 `/steer` 指令可停止或調整正在執行的 Agent 回合。
+
+若選單沒有顯示預期的伺服器或頻道，請檢查 Bot 在 Discord 的權限，再重新整理清單。可在整合卡片選擇 **Disconnect**，移除頻道綁定。

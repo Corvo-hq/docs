@@ -1,44 +1,34 @@
 ---
 title: "GitHub"
-description: "Install the Corvo GitHub App and map services to repositories."
+description: "Install the GitHub App and prepare repositories in the agent environment."
 ---
 
-## Install the GitHub App
+GitHub setup has two stages. The **Corvo GitHub App** determines which repositories may be accessed. **Agent environment** selects the repositories Corvo prepares for agent runs.
 
-1. Open **Integrations**, then **Manage** on the GitHub card.
+## Install the Corvo GitHub App
+
+1. Open **Integrations → GitHub**.
 2. Select **Install the Corvo GitHub App**.
-3. Choose the account and repositories the app can access.
-4. Complete GitHub's authorization and return to Corvo.
+3. Choose the GitHub account and the repositories the App may access. An organization may require administrator approval.
+4. Return to Corvo and check for **CONNECTED**.
 
-Check that Corvo lists the connected account and intended repositories. Organization policies may require administrator approval.
+Use **Add or configure repositories** to change the App installation later. Giving the App access to every repository does not add every repository to the agent environment.
 
-## Change repository access
+## Prepare the agent environment
 
-Select **Add or configure repositories** on the GitHub integration page. Review the repositories granted to the app.
+1. In **Agent environment**, select **Add repo** and choose a repository available to the App. Repeat for each repository Corvo should use.
+2. Enter a setup command for each repository. Corvo runs it from the repository root on a clean machine with Node, Git, and `gh`. Install the package manager and dependencies your project needs. For example, a pnpm repository may use:
 
-The GitHub App provides Corvo's bot identity for repository operations. Agent operations also depend on [Agent Permissions](/how-corvo-works/agent-permissions).
+   ```sh
+   npm install -g pnpm
+   pnpm install --frozen-lockfile
+   ```
 
-## Bind a Cloud Run service to a repository
+3. Select **Save & build**. Corvo runs each setup command and prepares an environment snapshot.
+4. Wait for **READY**. Runs start from that snapshot and fetch the latest code.
 
-The binding form is on the **Google Cloud integration** page.
+If setup fails, read the log for the affected repository, fix its command, and run **Save & build** again. After changing repositories or setup commands, rebuild the environment so the next run uses the new configuration.
 
-1. Find **Bind services to their GitHub repos**.
-2. Enter the **Cloud Run service name**.
-3. Enter the **GitHub owner** and **Repo**.
-4. Select **Bind** and check the resulting mapping.
+## Review a fix PR
 
-The repository must be available to the GitHub App. Without a binding, the alert workflow falls back to reporting findings.
-
-## Troubleshooting
-
-### Installation needs approval
-
-Ask a GitHub organization administrator to approve the installation request. Return to Corvo after approval and check the integration status.
-
-### Installation could not be linked
-
-Start the installation from Corvo again. Use a GitHub account that can access the installation. An installation already connected to another Corvo account cannot be linked again.
-
-### No fix PR appears
-
-Check the service mapping, repository access, and agent permissions. A completed investigation does not always produce a code change.
+A completed investigation can report findings without changing code. If the agent opens a PR, review the proposed change and test results in GitHub. The [Permissions](/how-corvo-works/agent-permissions) page controls Git and GitHub operations separately from the App installation.

@@ -1,38 +1,25 @@
 ---
 title: "Telegram"
-description: "連接私訊或群組，用於 Agent 對話與更新通知。"
+description: "將對話與告警 Bot 連接至工作區的私訊或群組。"
 ---
 
-## 選擇目的地
-
-開啟 **Integrations** 並找到 **Telegram bot**。你可以連接私訊或群組。每個帳號只能有一個有效的 Telegram 目的地。
-
-<Frame caption="Corvo 中已連接的 Telegram 目的地">
-  ![Telegram bot 卡片顯示已連接的私訊](/assets/screenshots/telegram.png)
-</Frame>
+開啟 **Integrations → Telegram bot**。每個工作區只能有一個有效的 Telegram 對話目的地，可選私訊或群組。對話 Bot 負責聊天；另一個告警 Bot 負責傳送調查更新。
 
 ## 連接私訊
 
-1. 在 Telegram 卡片選擇私訊。
+1. 選擇 **DM**，再選擇 **Direct message**。
 2. 開啟 Telegram 連結或掃描 QR Code。
-3. 在 Telegram 完成 Bot 的啟動流程。
-4. 回到 Corvo，確認卡片顯示 **DM CONNECTED**。
+3. 在畫面顯示的 Token 到期前，於 Telegram 啟動對話 Bot。
+4. 回到 Corvo，確認對話目的地已連接。
+5. 如需接收調查通知，依頁面提示把告警 Bot 連接至私訊或群組。
 
 ## 連接群組
 
-1. 在 Telegram 卡片選擇 **Group**。
-2. 選擇 **Add bot to group** 或掃描 QR Code。
-3. 在 Telegram 選擇群組並完成連接。
-4. 回到 Corvo，確認卡片顯示 **GROUP CONNECTED**。
+1. 選擇 **Group**，再選擇群組連接方式。
+2. 透過畫面顯示的 Telegram 連結，將對話 Bot 加入群組。若 Bot 已在群組中，請在該群組傳送 Corvo 顯示的綁定指令。
+3. 回到 Corvo，確認群組已連接。
+4. 將告警 Bot 連接至要接收調查通知的目的地。
 
-如果 Corvo 已經在群組中，請將連接視窗顯示的綁定指令貼到該群組。
+若要在私訊與群組之間切換，請先對目前目的地選擇 **Disconnect**。若 Corvo 沒有確認連接成功，請重新開啟流程，取得新的連結或綁定指令。
 
-## 切換目的地
-
-在 Telegram 卡片選擇 **Disconnect**，再連接新的私訊或群組。
-
-## 疑難排解
-
-如果卡片沒有顯示已連接狀態，請重新開啟 Telegram 連接流程，並完成啟動或綁定步驟。切換目的地時，請先中斷現有連接。
-
-日常使用方式請參閱 [Telegram 對話](../features/telegram)。
+聊天指令請參閱 [Telegram 對話](/zh-Hant/features/telegram)；定期摘要請參閱[每日報告](/zh-Hant/features/daily-reports)。

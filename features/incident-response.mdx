@@ -1,36 +1,29 @@
 ---
-title: "Incident Response"
-description: "Follow an alert from investigation to findings and a fix pull request."
+title: "Investigations"
+description: "Follow related alerts, findings, and proposed fixes in one investigation."
 ---
 
-## From alert to result
+Open **Investigations** from the workspace sidebar. Each row represents an investigation, which may contain several alerts sharing a cause. **Active** shows running investigations, **Needs attention** shows failed runs, and **Done** shows completed runs; **All** shows every state. New alerts can appear as **Collecting** while Corvo gathers them for an investigation window.
 
-Corvo receives a matching alert, checks for earlier occurrences, and decides whether to start an investigation. It uses available Google Cloud data and the repository mapped to the affected service to investigate the error.
+![Investigations list with two completed investigations and their alert counts](/assets/screenshots/investigations.png)
 
-The result can include findings, a Telegram update, and a fix pull request. A PR depends on the investigation, the service mapping, repository access, and the agent's permissions.
+## Read an investigation
 
-## Prepare your service
+Select a row to open its conversation and details panel. The panel contains:
 
-Complete the [Quickstart](/quickstart) to connect Telegram, GitHub, and Google Cloud. Bind the Cloud Run service to its repository on the Google Cloud integration page.
+- **Alerts:** grouped occurrences and the individual log entries behind them.
+- **Pull requests:** PRs recorded for this investigation, when available.
+- **Agent summary:** the latest result of the agent's work.
+- **Links:** a Cloud Logging query for the relevant logs.
 
-Without a repository binding, the workflow falls back to reporting its findings.
+The conversation shows the investigation's work and findings. If the message field is available in your workspace, you can ask a follow-up question there; it continues the same investigation. Alerts are assigned before a conversation is available, so a newly collected alert may briefly have no chat.
 
-## Review an event
+**Done** means the latest run finished. It does not mean the underlying service has been fixed. An investigation can end with a report, a PR, or a failure. Review the findings and any PR before deciding what to deploy.
 
-Open **Incidents** in the sidebar. The event table shows the time, project, revision, policy, processing status, and available links.
+Alerts created before the investigation view may appear in a separate legacy section. Their past conversation is available for reference, but new follow-ups belong in current investigations.
 
-<Frame caption="Incident events with processing status and related links">
-  ![Incident event table showing Cloud Logging policies, completed statuses, and link controls](/assets/screenshots/incidents.png)
-</Frame>
+## Prepare code access
 
-Use the links to open the matching Google Cloud log or resulting pull request. Some events have no PR or log link; unavailable links are shown as inactive icons.
+Connect GitHub and build an [Agent environment](/integrations/github) with the repositories Corvo should use. Corvo may identify a repository from the evidence it reads; it does not require the old Cloud Run service-to-repository binding. The agent's ability to branch, push, and open a draft PR also depends on [Permissions](/how-corvo-works/agent-permissions).
 
-A **COMPLETED** status describes the processing run. Review the findings and PR to determine whether the underlying error has been fixed.
-
-## Review the proposed fix
-
-Open the linked PR to inspect the changes and validation results. Corvo's ability to create branches, push commits, and open draft PRs is controlled through **Permissions**.
-
-## When an error repeats
-
-Corvo may record a recent duplicate silently, point to an existing open PR, or investigate again after an earlier fix was closed or merged. See [Deduplication](/how-corvo-works/deduplication) for examples.
+For the alert path and repeat behavior, see [Investigation pipeline](/how-corvo-works/investigation-pipeline) and [Repeated alerts](/how-corvo-works/deduplication).

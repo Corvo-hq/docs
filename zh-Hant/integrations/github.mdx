@@ -1,44 +1,34 @@
 ---
 title: "GitHub"
-description: "安裝 Corvo GitHub App，並將服務對應至儲存庫。"
+description: "安裝 GitHub App，並在 Agent environment 準備儲存庫。"
 ---
 
-## 安裝 GitHub App
+GitHub 設定有兩個階段：**Corvo GitHub App** 決定可存取的儲存庫範圍；**Agent environment** 決定要為 Agent 執行預先準備哪些儲存庫。
 
-1. 開啟 **Integrations**，然後在 GitHub 卡片選擇 **Manage**。
+## 安裝 Corvo GitHub App
+
+1. 開啟 **Integrations → GitHub**。
 2. 選擇 **Install the Corvo GitHub App**。
-3. 選擇 App 可以存取的帳號與儲存庫。
-4. 完成 GitHub 授權並回到 Corvo。
+3. 選擇要授權的 GitHub 帳號與儲存庫。組織可能要求管理員核准。
+4. 回到 Corvo，確認狀態為 **CONNECTED**。
 
-確認 Corvo 顯示已連接的帳號及預期的儲存庫。組織政策可能要求管理員核准安裝。
+日後可用 **Add or configure repositories** 修改 App 的安裝範圍。即使 App 能存取所有儲存庫，也不代表所有儲存庫都會加入 Agent environment。
 
-## 變更儲存庫存取權
+## 準備 Agent environment
 
-在 GitHub 整合頁面選擇 **Add or configure repositories**，檢查並調整授予 App 的儲存庫。
+1. 在 **Agent environment** 選擇 **Add repo**，加入 GitHub App 可存取、且 Corvo 需要使用的儲存庫。
+2. 為每個儲存庫輸入設定指令。Corvo 會在僅預先安裝 Node、Git 和 `gh` 的乾淨環境中，從儲存庫根目錄執行。請自行安裝專案需要的套件管理器與依賴。例如 pnpm 專案可使用：
 
-GitHub App 提供 Corvo 執行儲存庫操作時使用的 Bot 身分。Agent 可執行的操作也取決於 [Agent 權限](../how-corvo-works/agent-permissions)。
+   ```sh
+   npm install -g pnpm
+   pnpm install --frozen-lockfile
+   ```
 
-## 將 Cloud Run 服務綁定至儲存庫
+3. 選擇 **Save & build**。Corvo 會執行每個設定指令並準備環境快照。
+4. 等待狀態顯示 **READY**。Agent 執行時會從快照啟動，再取得最新程式碼。
 
-綁定表單位於 **Google Cloud 整合**頁面。
+設定失敗時，先查看該儲存庫的執行日誌，修正指令後重新選擇 **Save & build**。修改儲存庫或指令後，也要重新建立環境，後續執行才會使用新設定。
 
-1. 找到 **Bind services to their GitHub repos**。
-2. 輸入 **Cloud Run service name**。
-3. 輸入 **GitHub owner** 與 **Repo**。
-4. 選擇 **Bind**，並確認產生的對應關係。
+## 審查修正 PR
 
-GitHub App 必須能存取所選的儲存庫。若未設定綁定，告警流程只會回報調查發現。
-
-## 疑難排解
-
-### 安裝需要核准
-
-請 GitHub 組織管理員核准安裝要求。核准後回到 Corvo，確認整合狀態。
-
-### 無法連結安裝項目
-
-從 Corvo 重新開始安裝，並使用可以存取該安裝項目的 GitHub 帳號。已連接至其他 Corvo 帳號的安裝項目無法重複綁定。
-
-### 沒有出現修正 PR
-
-檢查服務對應、儲存庫存取權與 Agent 權限。調查完成後不一定會產生程式碼變更。
+調查完成後可能只有分析結果，不一定會修改程式碼。若 Agent 建立 PR，請到 GitHub 審查變更與測試結果。[Permissions](/zh-Hant/how-corvo-works/agent-permissions) 會另外控制 Git 與 GitHub 操作，與 App 安裝範圍分開設定。

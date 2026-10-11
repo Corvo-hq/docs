@@ -1,38 +1,25 @@
 ---
 title: "Telegram"
-description: "Connect a direct message or group for agent conversations and updates."
+description: "Connect chat and alerts bots to a workspace DM or group."
 ---
 
-## Choose a destination
-
-Open **Integrations** and find **Telegram bot**. You can connect a direct message or a group. Each account has one active Telegram destination.
-
-<Frame caption="A connected Telegram destination in Corvo">
-  ![Telegram bot card showing a connected direct message](/assets/screenshots/telegram.png)
-</Frame>
+Open **Integrations → Telegram bot**. Each workspace has one active Telegram chat destination, either a direct message or a group. The chat bot handles conversations; the separate alerts bot posts investigation updates.
 
 ## Connect a direct message
 
-1. Choose the direct message option on the Telegram card.
+1. Select **DM**, then **Direct message**.
 2. Open the Telegram link or scan the QR code.
-3. Complete the bot's start flow in Telegram.
-4. Return to Corvo and check for **DM CONNECTED**.
+3. Start the chat bot in Telegram before the displayed token expires.
+4. Return to Corvo and confirm the chat destination is connected.
+5. Follow the prompt to connect the alerts bot to a DM or group if you want investigation posts.
 
 ## Connect a group
 
-1. Choose **Group** on the Telegram card.
-2. Select **Add bot to group** or scan the QR code.
-3. Choose the group in Telegram and complete the connection.
-4. Return to Corvo and check for **GROUP CONNECTED**.
+1. Select **Group**, then choose the group connection option.
+2. Add the chat bot to the group through the displayed Telegram link. If the bot is already there, send the binding command Corvo shows in that group.
+3. Return to Corvo and confirm the group is connected.
+4. Connect the alerts bot to the destination that should receive investigation posts.
 
-If Corvo is already in the group, paste the binding command shown in the connection dialog into that group.
+To change from DM to group or back, select **Disconnect** on the existing destination before connecting another. If Corvo does not confirm a connection, reopen the flow for a fresh link or binding command.
 
-## Switch destinations
-
-Select **Disconnect** on the Telegram card, then connect the new direct message or group.
-
-## Troubleshooting
-
-If the card does not show a connected state, return to the Telegram connection flow and complete the start or binding step. If you are switching destinations, disconnect the existing one first.
-
-See [Telegram conversations](/features/telegram) for daily use.
+See [Telegram conversations](/features/telegram) for chat commands and [Daily reports](/features/daily-reports) for scheduled summaries.

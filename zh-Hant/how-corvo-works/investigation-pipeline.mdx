@@ -1,0 +1,16 @@
+---
+title: "調查流程"
+description: "了解 Google Cloud 日誌如何形成持續追蹤的調查。"
+---
+
+<Frame caption="從指定日誌到調查與審查">
+  ![指定的 Google Cloud 日誌經由接收器、告警收集時段、分派流程，進入可持續追蹤的調查](/assets/diagrams/investigation-pipeline-zh.svg)
+</Frame>
+
+1. Cloud Logging 日誌接收器轉送符合[指定來源與嚴重程度](/zh-Hant/integrations/google-cloud)的項目。
+2. Corvo 儲存新項目，並在短暫的時段內收集告警。
+3. 分派流程比較這批告警與既有調查，依可能的原因分組，將每筆告警交給新調查或既有調查。
+4. 每項調查都有可繼續使用的 Agent 對話；日後若收到相關告警，可沿用脈絡。Agent 會查看可用的日誌、其他已授權的 Google Cloud 資料、儲存庫程式碼，以及核准的[工作區記憶](/zh-Hant/features/memory)。
+5. 調查會記錄結果，也可能建立草稿 PR。你可以在 **Investigations** 和已連接的通知管道查看結果與連結。
+
+同一項調查可能跨越多個告警收集時段，包含多筆告警。狀態描述的是最近一次 Agent 執行結果。變更正式環境前，請先檢查證據與修正提案。

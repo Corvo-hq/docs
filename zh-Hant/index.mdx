@@ -1,40 +1,23 @@
 ---
-title: "簡介"
-description: "調查正式環境錯誤、檢視修正內容，並掌握服務狀態。"
+title: "Corvo 文件"
+description: "連接服務，追蹤正式環境錯誤的調查進度。"
 ---
 
-Corvo 會使用 Google Cloud 日誌與 GitHub 儲存庫調查正式環境錯誤，透過 Telegram 回報結果，並可建立修正用的 Pull Request 供團隊審查。
-
-連接服務、選擇 Corvo 可以存取的儲存庫後，即可從告警開始追蹤整個調查流程與最終結果。
-
-<Card title="從快速入門開始" href="./quickstart">
-  連接 Telegram、GitHub 與 Google Cloud，確認各項連線並啟用告警串流。
-</Card>
-
-## Corvo 可以做什麼
+Corvo 接收你選定的 Google Cloud 錯誤日誌，將相關告警整理成調查，並使用已連接的儲存庫與雲端資料找出原因。調查結果可能是分析報告，也可能附上修正用的草稿 Pull Request。
 
 <CardGroup cols={2}>
-  <Card title="事件應變" href="./features/incident-response">
-    調查告警、查看處理狀態，並開啟相關日誌與修正 Pull Request。
+  <Card title="開始設定" href="/zh-Hant/quickstart">
+    連接通知管道、GitHub 和 Google Cloud。
   </Card>
-
-  <Card title="Telegram" href="./features/telegram">
-    透過私訊或群組向 Agent 提問並接收事件更新。
+  <Card title="追蹤調查" href="/zh-Hant/features/incident-response">
+    閱讀調查結果、查看告警並審查修正提案。
   </Card>
-
-  <Card title="每日報告" href="./features/daily-reports">
-    檢視近期錯誤、重複發生的錯誤群組及修正狀態。
+  <Card title="設定 Agent" href="/zh-Hant/features/agent-settings">
+    管理指示、技能、外部工具與記憶。
   </Card>
-
-  <Card title="Agent 設定" href="./features/agent-settings">
-    新增自訂指示，並依團隊工作流程設定 Agent。
+  <Card title="團隊協作" href="/zh-Hant/workspace">
+    邀請成員，設定誰可以管理整合與權限。
   </Card>
 </CardGroup>
 
-## 了解系統運作方式
-
-閱讀[重複告警處理機制](./how-corvo-works/deduplication)，了解 Corvo 如何處理重複告警。技術說明也涵蓋 GCP 存取方式，以及 Agent 執行 Git 與 GitHub 操作時使用的權限。
-
-## 即將推出
-
-[Workspace](./coming-soon/workspace) 將提供團隊成員、共用整合與設定的集中管理空間。
+目前可選擇 Cloud Run、GKE 和 Compute Engine 日誌來源。串流範圍與存取權的設定方式，請參閱 [Google Cloud 設定](/zh-Hant/integrations/google-cloud)。

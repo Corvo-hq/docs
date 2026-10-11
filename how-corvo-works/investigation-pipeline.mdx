@@ -1,0 +1,16 @@
+---
+title: "Investigation pipeline"
+description: "How a Google Cloud log entry becomes a continuing investigation."
+---
+
+<Frame caption="From selected logs to investigations and review">
+  ![Selected Google Cloud logs flow through a sink, collection window, orchestrator, and continuing investigations](/assets/diagrams/investigation-pipeline.svg)
+</Frame>
+
+1. A Cloud Logging sink forwards entries that match your [selected sources and severity](/integrations/google-cloud).
+2. Corvo stores each new entry and collects incoming alerts for a short window.
+3. The orchestrator compares the collected alerts with existing investigations. It groups alerts by likely cause and assigns every alert to a new or continuing investigation.
+4. Each investigation has an agent session that can resume when related alerts arrive later. The agent reads available logs, other selected Google Cloud data, repository code, and approved [workspace memory](/features/memory).
+5. The investigation records its findings and may open a draft PR. Its result and links appear in **Investigations** and in the connected notification channel.
+
+A single investigation may span several windows and many alerts. Its status describes the latest agent run. Review the evidence and any proposed fix before changing production.
